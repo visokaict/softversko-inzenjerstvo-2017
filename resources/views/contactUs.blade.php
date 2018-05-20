@@ -51,7 +51,7 @@
                           <div class="form-group">
                               <label for="name">
                                   Message</label>
-                              <textarea name="message" id="message" class="form-control" rows="9" cols="25" name="tbMessage" required="required"
+                              <textarea name="message" id="message" class="form-control no-resize" rows="9" cols="25" name="tbMessage" required="required"
                                   placeholder="Message"></textarea>
                           </div>
                       </div>

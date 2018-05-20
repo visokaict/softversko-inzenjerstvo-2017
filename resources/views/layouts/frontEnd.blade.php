@@ -66,7 +66,7 @@
             <a href="{{asset('/login')}}">Login</a>
           </li>
           <li>
-            <a href="{{asset('/registre')}}">Register</a>
+            <a href="{{asset('/register')}}">Register</a>
           </li>
           <li>
             <a href="{{asset('/logout')}}">Logout</a>
