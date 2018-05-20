@@ -1,5 +1,7 @@
 @extends('layouts.frontEnd')
 
+@section('pageTitle', 'Registration');
+
 @section('content')
 <div class="auth-box-body">
     <p class="auth-box-msg auth-title">Register a new membership</p>
