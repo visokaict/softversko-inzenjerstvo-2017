@@ -25,8 +25,8 @@
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="name">
-                                  Name</label>
-                              <input type="text" class="form-control" id="name" placeholder="Enter name" required="required" />
+                                  Full Name</label>
+                              <input type="text" class="form-control" id="name" name="tbFullName" placeholder="Enter name" required="required" />
                           </div>
                           <div class="form-group">
                               <label for="email">
@@ -34,12 +34,12 @@
                               <div class="input-group">
                                   <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
                                   </span>
-                                  <input type="email" class="form-control" id="email" placeholder="Enter email" required="required" /></div>
+                                  <input type="email" class="form-control" id="email" name="tbEmail" placeholder="Enter email" required="required" /></div>
                           </div>
                           <div class="form-group">
                               <label for="subject">
                                   Subject</label>
-                              <select id="subject" name="subject" class="form-control" required="required">
+                              <select id="subject" name="subject" class="form-control" name="soSubject" required="required">
                                   <option value="na" selected="">Choose One:</option>
                                   <option value="service">General Customer Service</option>
                                   <option value="suggestions">Suggestions</option>
@@ -51,7 +51,7 @@
                           <div class="form-group">
                               <label for="name">
                                   Message</label>
-                              <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                              <textarea name="message" id="message" class="form-control" rows="9" cols="25" name="tbMessage" required="required"
                                   placeholder="Message"></textarea>
                           </div>
                       </div>
