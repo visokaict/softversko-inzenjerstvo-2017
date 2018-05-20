@@ -19,7 +19,7 @@
               <h4 class="card-title">
                 <a href="#">Game title</a>
               </h4>
-              <h6 class="card-subtitle mb-2 text-muted">Submitted by: <span>Some Guy</span></h6
+              <h6 class="card-subtitle mb-2 text-muted">Submitted by: <span>Some Guy</span></h6>
               <p class="card-subtitle mb-2 text-muted p-joind-submissions">Categories</p>
             </div>
           </div>
