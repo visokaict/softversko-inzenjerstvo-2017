@@ -1,5 +1,9 @@
 @extends('layouts.frontEnd')
 
+@section('pageTitle')
+  Login
+@endsection
+
 @section('content')
 <div class="auth-box-body">
     <p class="auth-box-msg auth-title">Login to start your session</p>

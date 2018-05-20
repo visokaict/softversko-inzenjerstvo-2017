@@ -1,5 +1,9 @@
 @extends('layouts.frontEnd')
 
+@section('pageTitle')
+  Game Jams
+@endsection
+
 @section('cssfiles')
     <link rel="stylesheet" href="https://rawgit.com/almende/vis/master/dist/vis-timeline-graph2d.min.css">
 @endsection
