@@ -21,4 +21,8 @@ class FrontEndController extends Controller
     public function login(){
         return view('login');
     }
+
+    public function about(){
+        return view('about');
+    }
 }
