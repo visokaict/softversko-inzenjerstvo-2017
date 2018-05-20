@@ -120,3 +120,55 @@ header {
 .table-user-information tr td {
   padding: 15px 0 !important;
 }
+
+/* Edit profile */
+.user-edit-content {
+  width: 500px;
+  margin: 0 auto;
+}
+.user-edit-file{
+  height: 50px;
+}
+.user-edit-file input {
+  height: auto;
+}
+.user-edit-title {
+  font-size: 20px;
+  padding: 20px 0;
+  
+}
+.btn-update-profile {
+  margin-top: 15px;
+}
+/* Edit profile */
+.user-edit-content {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.user-edit-file{
+  height: 50px;
+}
+
+.user-edit-file input {
+  height: auto;
+}
+.user-edit-title {
+  font-size: 20px;
+  padding: 20px 0;
+  
+}
+.btn-update-profile {
+  margin-top: 15px;
+}
+textarea.no-resize { 
+  resize: none; 
+}
+
+textarea.resize-vertical {
+  resize: vertical;
+}
+
+footer.custom-footer{
+  margin-top: 40px;
+}
