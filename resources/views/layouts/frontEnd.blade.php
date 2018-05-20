@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Modern Business - Start Bootstrap Template</title>
+    <title>Game Jams - @yield('pageTitle')</title>
 
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
@@ -90,7 +90,8 @@
         <div class="row">
             <div class="col-lg-4  col-md-4 col-sm-6 col-xs-6">
                 <h3> Slam Jam </h3>
-                <p>Something gose here</p>
+                <p>Slam Jam is a place for hosting and participating in game jams online. Anyone can start hosting a game jam immediately.</p>
+
             </div>
             <div class="col-lg-4  col-md-4 col-sm-6 col-xs-6">
                 <h3> Contact info </h3>

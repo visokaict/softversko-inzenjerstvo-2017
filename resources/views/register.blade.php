@@ -24,7 +24,7 @@
         <!-- /.col -->
         <div class="col-xs-8">
             <label>
-              <a href="#" style="font-weight:normal">I already have an account</a>
+              <a href="{{asset('/login')}}" style="font-weight:normal">I already have an account</a>
             </label>
         </div>
         <!-- /.col -->
