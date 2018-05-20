@@ -105,6 +105,17 @@ header {
   width: 800px;
 }
 
-.bg-white{
+.bg-white {
   background-color: white;
+}
+
+/* User profile */
+.user-profile {
+  padding-top: 35px;
+  width: 700px;
+  margin-left:50%;
+  transform: translateX(-50%);
+}
+.table-user-information tr td{
+  padding: 15px 0 !important;
 }

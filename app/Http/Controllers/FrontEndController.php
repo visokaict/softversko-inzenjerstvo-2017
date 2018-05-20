@@ -29,4 +29,8 @@ class FrontEndController extends Controller
     public function contactUs(){
         return view('contactUs');
     }
+
+    public function profile(){
+        return view('userProfile');
+    }
 }
