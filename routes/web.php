@@ -10,3 +10,5 @@ Route::get('/login', 'FrontEndController@login');
 Route::get('/about', 'FrontEndController@about');
 
 Route::get('/profile', 'FrontendController@profile');
+
+Route::get('/profile/edit', 'FrontendController@editProfile');
