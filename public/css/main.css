@@ -119,3 +119,15 @@ header {
 .table-user-information tr td{
   padding: 15px 0 !important;
 }
+
+textarea.no-resize { 
+  resize: none; 
+}
+
+textarea.resize-vertical {
+  resize: vertical;
+}
+
+footer.custom-footer{
+  margin-top: 40px;
+}

@@ -10,10 +10,19 @@ class FrontEndController extends Controller
         return view('gameJams');
     }
 
+    //
+    // games submissions views
     public function games(){
-        return view('games');
+        return view('gameSubmissions.games');
     }
 
+    public function createGameSubmission(){
+        return view('gameSubmissions.createGameSubmission');
+    }
+
+
+    //
+    // auth 
     public function register(){
         return view('register');
     }
@@ -22,6 +31,9 @@ class FrontEndController extends Controller
         return view('login');
     }
 
+
+    //
+    // other
     public function about(){
         return view('about');
     }
