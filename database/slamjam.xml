@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.7.4
+- https://www.phpmyadmin.net
+-
+- Host: 127.0.0.1
+- Generation Time: May 20, 2018 at 03:46 PM
+- Server version: 10.1.30-MariaDB
+- PHP Version: 7.2.1
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="slamjam" collation="utf8mb4_unicode_ci" charset="utf8mb4">
+            <pma:table name="comments">
+                CREATE TABLE `comments` (
+                  `idComment` int(32) NOT NULL AUTO_INCREMENT,
+                  `text` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `idUserCreator` int(32) NOT NULL,
+                  `createdAt` int(15) NOT NULL,
+                  `editedAt` int(15) NOT NULL,
+                  PRIMARY KEY (`idComment`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="downloadfiles">
+                CREATE TABLE `downloadfiles` (
+                  `idDownloadFile` int(32) NOT NULL AUTO_INCREMENT,
+                  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`idDownloadFile`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamebadges">
+                CREATE TABLE `gamebadges` (
+                  `idGameBadges` int(32) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `idImage` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameBadges`),
+                  KEY `fk_gamebages_images` (`idImage`),
+                  CONSTRAINT `fk_gamebages_images` FOREIGN KEY (`idImage`) REFERENCES `images` (`idImage`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamecategories">
+                CREATE TABLE `gamecategories` (
+                  `idGameCategory` int(32) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`idGameCategory`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamecriteries">
+                CREATE TABLE `gamecriteries` (
+                  `idGameCriteria` int(32) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`idGameCriteria`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamejams">
+                CREATE TABLE `gamejams` (
+                  `idGameJam` int(32) NOT NULL AUTO_INCREMENT,
+                  `title` int(11) NOT NULL,
+                  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `idCoverImage` int(32) NOT NULL,
+                  `startDate` int(15) NOT NULL,
+                  `endDate` int(15) NOT NULL,
+                  `votingEndDate` int(15) NOT NULL,
+                  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `lockSubmissionAfterSubmitting` int(1) NOT NULL,
+                  `othersCanVote` int(1) NOT NULL,
+                  `isBlocked` int(1) NOT NULL,
+                  `idUserCreator` int(32) NOT NULL,
+                  `numOfViews` int(64) NOT NULL,
+                  PRIMARY KEY (`idGameJam`),
+                  KEY `fk_gamejams_coverimage` (`idCoverImage`),
+                  KEY `fk_gamejams_usercreator` (`idUserCreator`),
+                  CONSTRAINT `fk_gamejams_coverimage` FOREIGN KEY (`idCoverImage`) REFERENCES `images` (`idImage`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamejams_usercreator` FOREIGN KEY (`idUserCreator`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamejams_criterias">
+                CREATE TABLE `gamejams_criterias` (
+                  `idGameJamCriteria` int(32) NOT NULL AUTO_INCREMENT,
+                  `idGameJam` int(32) NOT NULL,
+                  `idCriteria` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameJamCriteria`),
+                  KEY `fk_gamejamcriteria_gamejam` (`idGameJam`),
+                  KEY `fk_gamejamscriteria_gamecriteries` (`idCriteria`),
+                  CONSTRAINT `fk_gamejamcriteria_gamejam` FOREIGN KEY (`idGameJam`) REFERENCES `gamejams` (`idGameJam`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamejamscriteria_gamecriteries` FOREIGN KEY (`idCriteria`) REFERENCES `gamecriteries` (`idGameCriteria`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamesubmissions">
+                CREATE TABLE `gamesubmissions` (
+                  `idGameSubmission` int(32) NOT NULL AUTO_INCREMENT,
+                  `idGameJam` int(32) NOT NULL,
+                  `idTeaserImage` int(32) NOT NULL,
+                  `idCoverImage` int(32) NOT NULL,
+                  `idUserCreator` int(32) NOT NULL,
+                  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `createdAt` int(15) NOT NULL,
+                  `editedAt` int(15) NOT NULL,
+                  `numOfViews` int(64) NOT NULL,
+                  `numOfDownloads` int(64) NOT NULL,
+                  `isBlocked` int(1) NOT NULL,
+                  `numberOfVotes` int(64) NOT NULL,
+                  `sumOfVotes` int(64) NOT NULL,
+                  PRIMARY KEY (`idGameSubmission`),
+                  KEY `fk_gamesubmission_gamejams` (`idGameJam`),
+                  KEY `fk_gamesubmission_coverimage` (`idCoverImage`),
+                  KEY `fk_gamesubmission_teaserimage` (`idTeaserImage`),
+                  KEY `fk_gamesubmission_user` (`idUserCreator`),
+                  CONSTRAINT `fk_gamesubmission_coverimage` FOREIGN KEY (`idCoverImage`) REFERENCES `images` (`idImage`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmission_gamejams` FOREIGN KEY (`idGameJam`) REFERENCES `gamejams` (`idGameJam`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmission_teaserimage` FOREIGN KEY (`idTeaserImage`) REFERENCES `images` (`idImage`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmission_user` FOREIGN KEY (`idUserCreator`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamesubmissions_badges">
+                CREATE TABLE `gamesubmissions_badges` (
+                  `idGameSubmissionsBage` int(32) NOT NULL AUTO_INCREMENT,
+                  `idGameSubmission` int(32) NOT NULL,
+                  `idBadge` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameSubmissionsBage`),
+                  KEY `fk_gamesubmissionbages_gamesubmission` (`idGameSubmission`),
+                  KEY `fk_gamesubmissionbages_gamebage` (`idBadge`),
+                  CONSTRAINT `fk_gamesubmissionbages_gamebage` FOREIGN KEY (`idBadge`) REFERENCES `gamebadges` (`idGameBadges`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmissionbages_gamesubmission` FOREIGN KEY (`idGameSubmission`) REFERENCES `gamesubmissions` (`idGameSubmission`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamesubmissions_categories">
+                CREATE TABLE `gamesubmissions_categories` (
+                  `idGameSubmissionCategory` int(32) NOT NULL AUTO_INCREMENT,
+                  `idGameSubmission` int(32) NOT NULL,
+                  `idCategory` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameSubmissionCategory`),
+                  KEY `fk_gamesubmissioncategories_gamecategories` (`idCategory`),
+                  KEY `fk_gamesubmissioncategories_gamesubmission` (`idGameSubmission`),
+                  CONSTRAINT `fk_gamesubmissioncategories_gamecategories` FOREIGN KEY (`idCategory`) REFERENCES `gamecategories` (`idGameCategory`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmissioncategories_gamesubmission` FOREIGN KEY (`idGameSubmission`) REFERENCES `gamesubmissions` (`idGameSubmission`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamesubmissions_comments">
+                CREATE TABLE `gamesubmissions_comments` (
+                  `idGameSubmissionComment` int(32) NOT NULL AUTO_INCREMENT,
+                  `idGameSubmission` int(32) NOT NULL,
+                  `idComment` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameSubmissionComment`),
+                  KEY `fk_gamesubmissioncomment_gamesubmission` (`idGameSubmission`),
+                  KEY `fk_gamesubmissioncomment_comment` (`idComment`),
+                  CONSTRAINT `fk_gamesubmissioncomment_comment` FOREIGN KEY (`idComment`) REFERENCES `comments` (`idComment`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmissioncomment_gamesubmission` FOREIGN KEY (`idGameSubmission`) REFERENCES `gamesubmissions` (`idGameSubmission`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamesubmissions_downloadfiles">
+                CREATE TABLE `gamesubmissions_downloadfiles` (
+                  `idGameSubmissionDownloadFile` int(32) NOT NULL AUTO_INCREMENT,
+                  `idGameSubmission` int(32) NOT NULL,
+                  `idDownloadFile` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameSubmissionDownloadFile`),
+                  KEY `fk_gamesubmissionsdownloadfile_gamesubmission` (`idGameSubmission`),
+                  KEY `fk_gamesubmissionsdownloadfile_downloadfiles` (`idDownloadFile`),
+                  CONSTRAINT `fk_gamesubmissionsdownloadfile_downloadfiles` FOREIGN KEY (`idDownloadFile`) REFERENCES `downloadfiles` (`idDownloadFile`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmissionsdownloadfile_gamesubmission` FOREIGN KEY (`idGameSubmission`) REFERENCES `gamesubmissions` (`idGameSubmission`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamesubmissions_reports">
+                CREATE TABLE `gamesubmissions_reports` (
+                  `idGameSubmissionReport` int(32) NOT NULL AUTO_INCREMENT,
+                  `idGameSubmission` int(32) NOT NULL,
+                  `idReport` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameSubmissionReport`),
+                  KEY `fk_gamesubmissionreports_gamesubmission` (`idGameSubmission`),
+                  KEY `fk_gamesubmissionreports_reports` (`idReport`),
+                  CONSTRAINT `fk_gamesubmissionreports_gamesubmission` FOREIGN KEY (`idGameSubmission`) REFERENCES `gamesubmissions` (`idGameSubmission`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmissionreports_reports` FOREIGN KEY (`idReport`) REFERENCES `reports` (`idReport`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamesubmissions_screenshots">
+                CREATE TABLE `gamesubmissions_screenshots` (
+                  `idGameSubmissionScreenShot` int(32) NOT NULL AUTO_INCREMENT,
+                  `idGameSubmission` int(32) NOT NULL,
+                  `idImage` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameSubmissionScreenShot`),
+                  KEY `fk_gamesubmissionsscreenshot_gamesubmission` (`idGameSubmission`),
+                  KEY `fk_gamesubmissionsscreenshot_image` (`idImage`),
+                  CONSTRAINT `fk_gamesubmissionsscreenshot_gamesubmission` FOREIGN KEY (`idGameSubmission`) REFERENCES `gamesubmissions` (`idGameSubmission`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmissionsscreenshot_image` FOREIGN KEY (`idImage`) REFERENCES `images` (`idImage`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="gamesubmissions_votes">
+                CREATE TABLE `gamesubmissions_votes` (
+                  `idGameSubmissionVote` int(32) NOT NULL AUTO_INCREMENT,
+                  `idUserVoter` int(32) NOT NULL,
+                  `rating` int(6) NOT NULL,
+                  `idGameSubmission` int(32) NOT NULL,
+                  PRIMARY KEY (`idGameSubmissionVote`),
+                  KEY `fk_gamesubmissionvotes_users` (`idUserVoter`),
+                  KEY `fk_gamesubmissionvotes_gamesubmission` (`idGameSubmission`),
+                  CONSTRAINT `fk_gamesubmissionvotes_gamesubmission` FOREIGN KEY (`idGameSubmission`) REFERENCES `gamesubmissions` (`idGameSubmission`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_gamesubmissionvotes_users` FOREIGN KEY (`idUserVoter`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="imagecategories">
+                CREATE TABLE `imagecategories` (
+                  `idImageCategory` int(32) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`idImageCategory`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="images">
+                CREATE TABLE `images` (
+                  `idImage` int(32) NOT NULL AUTO_INCREMENT,
+                  `idImageCategory` int(32) NOT NULL,
+                  `alt` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`idImage`),
+                  KEY `fk_images_imagecategory` (`idImageCategory`),
+                  CONSTRAINT `fk_images_imagecategory` FOREIGN KEY (`idImageCategory`) REFERENCES `imagecategories` (`idImageCategory`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="pollanswers">
+                CREATE TABLE `pollanswers` (
+                  `idPollAnswer` int(32) NOT NULL AUTO_INCREMENT,
+                  `text` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `idPollQuestion` int(32) NOT NULL,
+                  `numberOfVotes` int(64) NOT NULL,
+                  PRIMARY KEY (`idPollAnswer`),
+                  KEY `fk_pollanswers_pollquestion` (`idPollQuestion`),
+                  CONSTRAINT `fk_pollanswers_pollquestion` FOREIGN KEY (`idPollQuestion`) REFERENCES `pollquestions` (`idPollQuestion`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="pollquestions">
+                CREATE TABLE `pollquestions` (
+                  `idPollQuestion` int(32) NOT NULL AUTO_INCREMENT,
+                  `text` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`idPollQuestion`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="pollvotes">
+                CREATE TABLE `pollvotes` (
+                  `idPollVotes` int(32) NOT NULL AUTO_INCREMENT,
+                  `idUserVoter` int(32) NOT NULL,
+                  `idPollAnswer` int(32) NOT NULL,
+                  PRIMARY KEY (`idPollVotes`),
+                  KEY `fk_pollvotes_users` (`idUserVoter`),
+                  KEY `fk_pollvotes_pollanswers` (`idPollAnswer`),
+                  CONSTRAINT `fk_pollvotes_pollanswers` FOREIGN KEY (`idPollAnswer`) REFERENCES `pollanswers` (`idPollAnswer`) ON DELETE CASCADE ON UPDATE CASCADE,
+                  CONSTRAINT `fk_pollvotes_users` FOREIGN KEY (`idUserVoter`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="reports">
+                CREATE TABLE `reports` (
+                  `idReport` int(32) NOT NULL AUTO_INCREMENT,
+                  `reason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `idUserCreator` int(32) NOT NULL,
+                  `createdAt` int(15) NOT NULL,
+                  PRIMARY KEY (`idReport`),
+                  KEY `fk_reports_user` (`idUserCreator`),
+                  CONSTRAINT `fk_reports_user` FOREIGN KEY (`idUserCreator`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="roles">
+                CREATE TABLE `roles` (
+                  `idRole` int(32) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  PRIMARY KEY (`idRole`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="users">
+                CREATE TABLE `users` (
+                  `idUser` int(32) NOT NULL AUTO_INCREMENT,
+                  `email` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `username` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `createdAt` int(15) NOT NULL,
+                  `updatedAt` int(15) NOT NULL,
+                  `avatarImagePath` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                  `idRole` int(32) NOT NULL,
+                  `isBanned` int(1) NOT NULL,
+                  PRIMARY KEY (`idUser`),
+                  KEY `fk_users_roles` (`idRole`),
+                  CONSTRAINT `fk_users_roles` FOREIGN KEY (`idRole`) REFERENCES `roles` (`idRole`) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'slamjam'
+    -->
+    <database name="slamjam">
+        <!-- Table comments -->
+        <!-- Table downloadfiles -->
+        <!-- Table gamebadges -->
+        <!-- Table gamecategories -->
+        <!-- Table gamecriteries -->
+        <!-- Table gamejams -->
+        <!-- Table gamejams_criterias -->
+        <!-- Table gamesubmissions -->
+        <!-- Table gamesubmissions_badges -->
+        <!-- Table gamesubmissions_categories -->
+        <!-- Table gamesubmissions_comments -->
+        <!-- Table gamesubmissions_downloadfiles -->
+        <!-- Table gamesubmissions_reports -->
+        <!-- Table gamesubmissions_screenshots -->
+        <!-- Table gamesubmissions_votes -->
+        <!-- Table imagecategories -->
+        <!-- Table images -->
+        <!-- Table pollanswers -->
+        <!-- Table pollquestions -->
+        <!-- Table pollvotes -->
+        <!-- Table reports -->
+        <!-- Table roles -->
+        <!-- Table users -->
+    </database>
+</pma_xml_export>
