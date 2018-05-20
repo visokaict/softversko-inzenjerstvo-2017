@@ -36,18 +36,18 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li class="active">
-            <a href="#">Game Jams
+            <a href="{{asset('/')}}">Game Jams
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li>
-            <a href="#">Games</a>
+            <a href="{{asset('/games')}}">Games</a>
           </li>
           <li>
-            <a href="#">About</a>
+            <a href="{{asset('/about')}}">About</a>
           </li>
           <li>
-            <a href="#">Contact us</a>
+            <a href="{{asset('/contact-us')}}">Contact us</a>
           </li>
         </ul>
 
@@ -63,13 +63,13 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#">Login</a>
+            <a href="{{asset('/login')}}">Login</a>
           </li>
           <li>
-            <a href="#">Register</a>
+            <a href="{{asset('/registre')}}">Register</a>
           </li>
           <li>
-            <a href="#">Logout</a>
+            <a href="{{asset('/logout')}}">Logout</a>
           </li>
         </ul>
       </div>

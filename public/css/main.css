@@ -104,3 +104,7 @@ header {
 .about-content {
   width: 800px;
 }
+
+.bg-white{
+  background-color: white;
+}
