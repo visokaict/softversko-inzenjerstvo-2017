@@ -1,0 +1,70 @@
+/*!
+ * Start Bootstrap - Modern Business (https://startbootstrap.com/template-overviews/modern-business)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
+ */
+
+* {
+  padding: 0;
+  margin: 0;
+}
+.custom-footer {
+  background-color: #222;
+  color: #eee;
+}
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+button.host-own-game-jam {
+  width: 100%;
+  margin-top: 75px;
+}
+
+@media screen and (max-width: 768px) {
+  button.host-own-game-jam{
+    margin-top: 20px;
+  }
+}
+
+#visualization {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 100px;
+      height: 100%;
+      margin-bottom: 40px;
+}
+
+div.no-padding{
+  padding: 0;
+}
+p.margin-bottom-5{
+  margin-bottom: 5px;
+}
+
+h2.margin-bottom-40{
+  margin-bottom: 40px;
+}
+h3.no-game-jam{
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+
+p.p-joind-submissions{
+  margin-top:10px;
+  margin-bottom: 0px;
+  font-size: small;
+}
+
+.main-container{
+  min-height:600px;
+}
