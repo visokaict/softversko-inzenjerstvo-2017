@@ -13,4 +13,8 @@ class FrontEndController extends Controller
     public function games(){
         return view('games');
     }
+
+    public function register(){
+        return view('register');
+    }
 }
