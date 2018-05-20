@@ -1,5 +1,9 @@
 @extends('layouts.frontEnd')
 
+@section('pageTitle')
+  Game
+@endsection
+
 @section('content')
     <!-- Page Content -->
     <div class="container">
