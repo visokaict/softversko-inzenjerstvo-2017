@@ -9,6 +9,8 @@
 .game-cover-image {
     background-image: url('http://profilerehab.com/facebook_covers/funny/recycle_congress_cover_1.jpg');
     background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
     height: 280px;
 }
 .game-header {
@@ -17,7 +19,7 @@
     color: #fff;
 }
 .game-header-inner {
-    width: 1000px;
+    width: 850px;
     margin: 0 auto;
 }
 .game-header span {
