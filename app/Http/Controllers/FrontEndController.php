@@ -53,4 +53,13 @@ class FrontEndController extends Controller
     public function contactUs() {
         return view('other.contactUs');
     }
+    
+    // user
+    public function profile() {
+        return view('user.userProfile');
+    }
 
+    public function editProfile() {
+        return view('user.userEdit');
+    }
+}
