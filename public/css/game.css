@@ -20,13 +20,12 @@
 }
 .game-header-inner {
     width: 820px;
-    margin: 0 auto;
 }
 .game-header span {
     display: inline-block;
 }
 .game-content {
-    width: 1000px;
+   
     margin: 15px auto;
 }
 .game-content-left {

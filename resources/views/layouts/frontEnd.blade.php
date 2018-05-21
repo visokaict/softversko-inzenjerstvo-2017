@@ -88,12 +88,12 @@
 <div class="footer" id="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4  col-md-4 col-sm-6 col-xs-6">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                 <h3> Slam Jam </h3>
                 <p>Slam Jam is a place for hosting and participating in game jams online. Anyone can start hosting a game jam immediately.</p>
 
             </div>
-            <div class="col-lg-4  col-md-4 col-sm-6 col-xs-6">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                 <h3> Contact info </h3>
                 <ul>
                     <li> <a href="#"> Lorem Ipsum </a> </li>
@@ -103,7 +103,7 @@
                 </ul>
             </div>
 
-            <div class="col-lg-4  col-md-4 col-sm-6 col-xs-6">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                 <h3> Social links </h3>
                 <ul class="social">
                     <li><a href="#"><i class="fab fa-facebook"></i></a></li>
