@@ -31,6 +31,11 @@ class FrontEndController extends Controller
         //move to own controller
         return view('gameSubmissions.oneGameSubmission');
     }
+    public function editGameSubmission($id){
+        //todo
+        //move to own controller
+        return view('gameSubmissions.editGameSubmission');
+    }
 
 
     //
