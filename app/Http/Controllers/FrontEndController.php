@@ -54,18 +54,3 @@ class FrontEndController extends Controller
         return view('other.contactUs');
     }
 
-    
-    //
-    // profile
-    public function profile() {
-        //todo
-        //move to own controller
-        return view('user.userProfile');
-    }
-
-    public function editProfile() {
-        //todo
-        //move to own controller
-        return view('user.userEdit');
-    }
-}

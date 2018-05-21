@@ -1,6 +1,6 @@
 @extends('layouts.frontEnd')
 
-@section('pageTitle', 'Registration');
+@section('pageTitle', 'Registration')
 
 @section('content')
 <div class="user-edit-content">
