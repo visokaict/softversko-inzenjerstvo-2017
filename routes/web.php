@@ -9,6 +9,7 @@ Route::get('/', 'FrontEndController@gameJams');
 Route::get('/games', 'FrontEndController@games');
 Route::get('/games/create', 'FrontEndController@createGameSubmission');
 Route::get('/games/{id}', 'FrontEndController@oneGameSubmission');
+Route::get('/games/{id}/edit', 'FrontEndController@editGameSubmission');
 
 //
 //auth
