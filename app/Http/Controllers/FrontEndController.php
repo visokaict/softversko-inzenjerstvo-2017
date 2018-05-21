@@ -36,22 +36,22 @@ class FrontEndController extends Controller
     //
     // auth 
     public function register(){
-        return view('register');
+        return view('auth.register');
     }
 
     public function login(){
-        return view('login');
+        return view('auth.login');
     }
 
 
     //
     // other
     public function about(){
-        return view('about');
+        return view('other.about');
     }
 
     public function contactUs() {
-        return view('contactUs');
+        return view('other.contactUs');
     }
 
     
@@ -60,12 +60,12 @@ class FrontEndController extends Controller
     public function profile() {
         //todo
         //move to own controller
-        return view('userProfile');
+        return view('user.userProfile');
     }
 
     public function editProfile() {
         //todo
         //move to own controller
-        return view('userEdit');
+        return view('user.userEdit');
     }
 }
