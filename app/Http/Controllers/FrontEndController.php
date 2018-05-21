@@ -24,29 +24,30 @@ class FrontEndController extends Controller
     //
     // auth 
     public function register(){
-        return view('register');
+        return view('auth.register');
     }
 
     public function login(){
-        return view('login');
+        return view('auth.login');
     }
 
 
     //
     // other
     public function about(){
-        return view('about');
+        return view('other.about');
     }
 
     public function contactUs() {
-        return view('contactUs');
+        return view('other.contactUs');
     }
 
+    // user
     public function profile() {
-        return view('userProfile');
+        return view('user.userProfile');
     }
 
     public function editProfile() {
-        return view('userEdit');
+        return view('user.userEdit');
     }
 }
