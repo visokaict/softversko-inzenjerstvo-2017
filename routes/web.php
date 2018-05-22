@@ -40,3 +40,8 @@ Route::get('/profile/edit', 'FrontendController@editProfile');
 //other
 Route::get('/contact-us', 'FrontEndController@contactUs');
 Route::get('/about', 'FrontEndController@about');
+
+
+//
+//admin stuff
+Route::get("/admin", "AdminController@index");
