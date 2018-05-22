@@ -45,7 +45,7 @@
 
 
 <!-- game jam content -->
-<div class="game-content">
+<div class="game-content one-game-jam-content">
   <div class="row">
 
     <div class="countdown-timer text-center">
