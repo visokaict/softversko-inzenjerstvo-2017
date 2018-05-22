@@ -6,13 +6,25 @@ use Illuminate\Http\Request;
 
 class FrontEndController extends Controller
 {
+    //
+    // game jams
     public function gameJams(){
         //todo
         //move to own controller
-        return view('gameJams');
+        return view('gameJams.gameJams');
     }
 
+    public function oneGameJam($id){
+        return view('gameJams.oneGameJam');
+    }
 
+    public function createGameJam(){
+        return view('gameJams.createGameJam');
+    }
+
+    public function editGameJam($id){
+        return view('gameJams.editGameJam');
+    }
     //
     // games submissions views
     public function games(){
