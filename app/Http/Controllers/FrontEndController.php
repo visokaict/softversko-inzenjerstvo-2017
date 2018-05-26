@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Navigations;
+use App\Http\Models\Polls;
 use App\Http\Models\Roles;
 use Illuminate\Http\Request;
 use App\Http\Models\GameCriteria;
@@ -86,6 +87,17 @@ class FrontEndController extends Controller
     }
 
     public function contactUs() {
+
+        $poll = new Polls();
+
+        $question = $poll->getActivePollQuestion();
+
+
+        if(!empty($question)) {
+            $this->viewData['pollQuestion'] = $question;
+            $this->viewData['pollAnswers'] = $poll->getAnswersByQuestionId($question->idPollQuestion);
+        }
+
         return view('other.contactUs', $this->viewData);
     }
     

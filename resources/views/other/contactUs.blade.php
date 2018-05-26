@@ -64,21 +64,26 @@
               </div>
           </div>
           <div class="col-md-4">
-              <form>
-              <legend><span class="glyphicon glyphicon-globe"></span> Our office</legend>
-              <address>
-                  <strong>Twitter, Inc.</strong><br>
-                  795 Folsom Ave, Suite 600<br>
-                  San Francisco, CA 94107<br>
-                  <abbr title="Phone">
-                      P:</abbr>
-                  (123) 456-7890
-              </address>
-              <address>
-                  <strong>Full Name</strong><br>
-                  <a href="mailto:#">first.last@example.com</a>
-              </address>
-              </form>
+
+              @isset($pollQuestion)
+                  <form action="{{asset('/pollVote')}}" method="POST">
+                      {{csrf_field()}}
+                      <input type="hidden" name="idPollQuestion" value="{{$pollQuestion->idPollQuestion}}">
+
+                      <h3>{{$pollQuestion->text}}</h3>
+
+                      @foreach($pollAnswers as $a)
+                          <div class="checkbox">
+                              <label>
+                                  <input type="radio" name="pollAnswer" value="{{$a->idPollAnswer}}"> {{$a->text}}
+                              </label>
+                          </div>
+                      @endforeach
+                      <button type="submit" class="btn btn-primary" id="btnSubmit" name="btnSubmit">Vote</button>
+                  </form>
+
+              @endif
+
           </div>
       </div>
   </div>

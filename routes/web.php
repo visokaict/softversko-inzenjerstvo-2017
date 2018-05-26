@@ -35,6 +35,10 @@ Route::get('/profile/edit', 'FrontendController@editProfile')->middleware('isLog
 Route::get('/contact-us', 'FrontEndController@contactUs');
 Route::get('/about', 'FrontEndController@about');
 
+//
+// Contact us page stuff
+Route::post('/pollVote', 'ContactUsController@pollVote')->middleware('isLoggedIn');
+
 
 //
 //admin stuff
