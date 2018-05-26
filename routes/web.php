@@ -3,38 +3,30 @@
 //
 // game submissions
 Route::get('/games', 'FrontEndController@games');
-Route::get('/games/create', 'FrontEndController@createGameSubmission');
+Route::get('/games/create', 'FrontEndController@createGameSubmission')->middleware('isLoggedIn');
 Route::get('/games/{id}', 'FrontEndController@oneGameSubmission');
-Route::get('/games/{id}/edit', 'FrontEndController@editGameSubmission');
+Route::get('/games/{id}/edit', 'FrontEndController@editGameSubmission')->middleware('isLoggedIn');
 
 //
 // game jams
 Route::get('/', 'FrontEndController@gameJams');
-Route::get('/game-jams/create', 'FrontEndController@createGameJam');
+Route::get('/game-jams/create', 'FrontEndController@createGameJam')->middleware('isLoggedIn');
 Route::get('/game-jams/{id}', 'FrontEndController@oneGameJam');
-Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam');
+Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam')->middleware('isLoggedIn');
 
 Route::get('/contact-us', 'FrontEndController@contactUs');
 
-//
-// game jams
-Route::get('/', 'FrontEndController@gameJams');
-Route::get('/game-jams/create', 'FrontEndController@createGameJam');
-Route::get('/game-jams/{id}', 'FrontEndController@oneGameJam');
-Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam');
-
-Route::get('/contact-us', 'FrontEndController@contactUs');
 
 //
 // login, register
-Route::get('/register', 'FrontEndController@register');
-Route::get('/login', 'FrontEndController@login');
+Route::get('/register', 'FrontEndController@register')->middleware('isNotLoggedIn');
+Route::get('/login', 'FrontEndController@login')->middleware('isNotLoggedIn');
 
 
 //
 //profile
-Route::get('/profile', 'FrontendController@profile');
-Route::get('/profile/edit', 'FrontendController@editProfile');
+Route::get('/profile', 'FrontendController@profile')->middleware('isLoggedIn');
+Route::get('/profile/edit', 'FrontendController@editProfile')->middleware('isLoggedIn');
 
 //
 //other
@@ -44,11 +36,11 @@ Route::get('/about', 'FrontEndController@about');
 
 //
 //admin stuff
-Route::get("/admin", "AdminController@index");
+Route::get("/admin", "AdminController@index")->middleware('isLoggedIn');
 
 
 //
 // auth
-Route::post("/login", "AuthController@login");
-Route::get("/logout", "AuthController@logout");
-Route::post("/register", "AuthController@register");
+Route::post("/login", "AuthController@login")->middleware('isNotLoggedIn');
+Route::get("/logout", "AuthController@logout")->middleware('isLoggedIn');
+Route::post("/register", "AuthController@register")->middleware('isNotLoggedIn');
