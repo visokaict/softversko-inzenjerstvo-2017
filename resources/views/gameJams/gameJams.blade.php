@@ -11,7 +11,7 @@
 @section('content')
     <header>
        <section class="about-us py-5 " id="about-us">
-      <div class="container mt-5">
+      <div class="mt-5">
     <div class="row">
       <div class="col-md-8">
           <h2 class="text-center">Game Jams on Slam Jam</h2>
