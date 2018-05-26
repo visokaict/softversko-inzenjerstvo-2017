@@ -23,4 +23,20 @@ class Roles extends Generic
             ->where('isAvailableForUser','=', 1) //bool => true
             ->get();
     }
+
+    public function arrayOfRolesHasRoleByName($roles, $roleName)
+    {
+        if(!empty($roles))
+        {
+            foreach($roles as $role)
+            {
+                if($role->name == $roleName)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

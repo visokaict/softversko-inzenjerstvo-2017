@@ -53,4 +53,13 @@ class Users extends Generic
             ]);
     }
 
+    public function getAllRoles($userId)
+    {
+        return \DB::table('users_roles')
+            ->join('roles', 'users_roles.idRole', '=', 'roles.idRole')
+            ->select('*')
+            ->where('users_roles.idUser', '=', $userId)
+            ->get();
+    }
+
 }
