@@ -7,6 +7,17 @@
 @section('content')
 <div class="auth-box-body">
     <p class="auth-box-msg auth-title">Login to start your session</p>
+
+    @isset($errors)
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
+    @endisset
+
     <form action="{{ asset('/login') }}" method="post">
 
       <div class="form-group has-feedback">

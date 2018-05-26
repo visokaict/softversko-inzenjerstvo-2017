@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use \App\Http\Interfaces\IAuthorization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use \App\Http\Models\Users;
 
 class AuthController extends Controller implements IAuthorization
 {
@@ -15,23 +16,28 @@ class AuthController extends Controller implements IAuthorization
             'tbPassword' => 'required'
         ]);
 
+        $validation->setAttributeNames([
+            'tbUsernameEmail' => 'username',
+            'tbPassword' => 'password'
+        ]);
+
         if($validation->fails()){
             return back()->withErrors($validation);
         } else {
-            /*$user = new Korisnik();
-            $user->korisnicko_ime = $request->get('tbKorisnickoIme');
+            $user = new Users();
+            $user->username = $request->get('tbUsernameEmail');
 
-            $user->lozinka = $request->get('tbLozinka');
+            $user->password = $request->get('tbPassword');
 
             $dbUser = $user->getByUsernameAndPassword();
 
             if(!empty($dbUser)){
                 $request->session()->push("user", $dbUser);
-                return redirect('/admin')->with('uspeh', "Uspesno ste se ulogovali!");
+                return redirect('/admin');
             } else {
-                return redirect('/')->with('uspeh', 'Niste registrovani!');
+                return redirect()->back();
             }
-            */
+            
         }
     }
 
