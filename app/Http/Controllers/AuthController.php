@@ -23,10 +23,9 @@ class AuthController extends Controller implements IAuthorization
     public function register(Request $request)
     {
         $validacija = Validator::make($request->all(), [
-            'tbUsername' => 'required',
-            'tbEmail' => 'required',
-            'tbPassword' => 'required',
-            'tbConfirmPassword' => 'required',
+            'tbUsername' => 'required|unique:users,username',
+            'tbEmail' => 'required|unique:users,email',
+            'tbPassword' => 'required|confirmed|min:6',
         ]);
 
         if ($validacija->fails()) {
