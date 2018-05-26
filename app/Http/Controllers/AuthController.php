@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use \App\Http\Interfaces\IAuthorization;
+use App\Http\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,34 +24,34 @@ class AuthController extends Controller implements IAuthorization
     public function register(Request $request)
     {
         $validacija = Validator::make($request->all(), [
-            'tbUsername' => 'required|unique:users,username',
             'tbEmail' => 'required|unique:users,email',
+            'tbUsername' => 'required|unique:users,username',
             'tbPassword' => 'required|confirmed|min:6',
+        ]);
+        $validacija->setAttributeNames([
+            'tbEmail' => 'email',
+            'tbUsername' => 'username',
+            'tbPassword' => 'password',
         ]);
 
         if ($validacija->fails()) {
             // redirecija na pocetnu i ispis gresaka
-            return back()->withErrors($validacija);
+            return back()->withInput()->withErrors($validacija);
         }
 
-        // provera u bazi
+        $user = new Users();
+        $userId = $user->insert(
+            $request->get('tbEmail'),
+            $request->get('tbUsername'),
+            $request->get('tbPassword')
+        );
 
-        /*
-        $korisnik = new Korisnik();
-        $korisnik->korisnicko_ime = $request->get('tbKorisnickoIme');
-
-        $korisnik->lozinka = $request->get('tbLozinka');
-
-        $dbUser = $korisnik->getByUsernameAndPassword();
-
-        if (!empty($dbUser)) {
-            // postoji korisnik u bazi
-            $request->session()->push("korisnik", $dbUser);
-            return redirect('/admin')->with('uspeh', "Uspesno ste se ulogovali!");
-        } else {
-            return redirect('/')->with('uspeh', 'Niste registrovani!');
+        //something went wrong and user isn't inserted
+        if(empty($userId))
+        {
+            return back()->withInput()->with('messages', 'Registration failed!');
         }
-*/
 
+        return redirect('/login')->with('messages', 'You are successfully registered!');
     }
 }

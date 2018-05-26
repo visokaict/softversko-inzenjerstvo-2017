@@ -25,7 +25,7 @@ class Generic
 
     public function getById($id)
     {
-        DB::table($this->tableName)
+        return DB::table($this->tableName)
             ->select('*')
             ->where( $this->idName,'=', $id)
             ->first();
