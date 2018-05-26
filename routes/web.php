@@ -3,9 +3,9 @@
 //
 // game submissions
 Route::get('/games', 'FrontEndController@games');
-Route::get('/games/create', 'FrontEndController@createGameSubmission')->middleware('isLoggedIn');
+Route::get('/games/create', 'FrontEndController@createGameSubmission')->middleware('isLoggedIn, isJamDeveloper');
 Route::get('/games/{id}', 'FrontEndController@oneGameSubmission');
-Route::get('/games/{id}/edit', 'FrontEndController@editGameSubmission')->middleware('isLoggedIn');
+Route::get('/games/{id}/edit', 'FrontEndController@editGameSubmission')->middleware('isLoggedIn, isJamDeveloper');
 
 //
 // game jams
