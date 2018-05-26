@@ -26,7 +26,7 @@ Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam');
 Route::get('/contact-us', 'FrontEndController@contactUs');
 
 //
-//auth
+// login, register
 Route::get('/register', 'FrontEndController@register');
 Route::get('/login', 'FrontEndController@login');
 
@@ -45,3 +45,8 @@ Route::get('/about', 'FrontEndController@about');
 //
 //admin stuff
 Route::get("/admin", "AdminController@index");
+
+
+// auth 
+Route::post("/login", "AuthController@login");
+Route::get("/logout", "AuthController@logout");
