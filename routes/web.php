@@ -46,8 +46,9 @@ Route::get('/about', 'FrontEndController@about');
 //admin stuff
 Route::get("/admin", "AdminController@index");
 
+
 //
-// auth 
+// auth
 Route::post("/login", "AuthController@login");
 Route::get("/logout", "AuthController@logout");
 Route::post("/register", "AuthController@register");
