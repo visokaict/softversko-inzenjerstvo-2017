@@ -44,4 +44,13 @@ class Users extends Generic
 		return $result;
 	}
 
+	public function addRole($idRole, $idUser)
+    {
+        return \DB::table('users_roles')
+            ->insert([
+                'idUser' => $idUser,
+                'idRole' => $idRole,
+            ]);
+    }
+
 }
