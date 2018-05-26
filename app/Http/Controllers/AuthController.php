@@ -6,19 +6,46 @@ use \App\Http\Interfaces\IAuthorization;
 use App\Http\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use \App\Http\Models\Users;
 
 class AuthController extends Controller implements IAuthorization
 {
     public function login(Request $request)
     {
-        //todo
-        dd($request);
+        $validation = Validator::make($request->all(), [
+            'tbUsernameEmail' => 'required',
+            'tbPassword' => 'required'
+        ]);
+
+        $validation->setAttributeNames([
+            'tbUsernameEmail' => 'username',
+            'tbPassword' => 'password'
+        ]);
+
+        if($validation->fails()){
+            return back()->withErrors($validation);
+        } else {
+            $user = new Users();
+            $user->username = $request->get('tbUsernameEmail');
+
+            $user->password = $request->get('tbPassword');
+
+            $dbUser = $user->getByUsernameAndPassword();
+
+            if(!empty($dbUser)){
+                $request->session()->push("user", $dbUser);
+                return redirect('/admin');
+            } else {
+                return redirect()->back();
+            }
+            
+        }
     }
 
     public function logout(Request $request)
     {
-        //todo
-        dd($request);
+        $request->session()->flush();
+        return redirect('/');
     }
 
     public function register(Request $request)
