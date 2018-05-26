@@ -14,16 +14,11 @@ Route::get('/game-jams/create', 'FrontEndController@createGameJam');
 Route::get('/game-jams/{id}', 'FrontEndController@oneGameJam');
 Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam');
 
-Route::get('/contact-us', 'FrontEndController@contactUs');
+Route::post('/game-jams/create', 'GameJamController@insert');
 
-//
-// game jams
-Route::get('/', 'FrontEndController@gameJams');
-Route::get('/game-jams/create', 'FrontEndController@createGameJam');
-Route::get('/game-jams/{id}', 'FrontEndController@oneGameJam');
-Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam');
 
 Route::get('/contact-us', 'FrontEndController@contactUs');
+
 
 //
 // login, register

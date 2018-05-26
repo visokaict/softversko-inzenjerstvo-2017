@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Models\GameCriteria;
 
 class FrontEndController extends Controller
 {
+    private $data = [];
     //
     // game jams
     public function gameJams(){
@@ -19,7 +21,9 @@ class FrontEndController extends Controller
     }
 
     public function createGameJam(){
-        return view('gameJams.createGameJam');
+        $gameCriteria = new GameCriteria();
+        $this->data['criteria'] = $gameCriteria->getAll();
+        return view('gameJams.createGameJam', $this->data);
     }
 
     public function editGameJam($id){
