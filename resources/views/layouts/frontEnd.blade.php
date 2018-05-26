@@ -62,15 +62,18 @@
           </div>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="{{asset('/login')}}">Login</a>
-          </li>
-          <li>
-            <a href="{{asset('/register')}}">Register</a>
-          </li>
-          <li>
-            <a href="{{asset('/logout')}}">Logout</a>
-          </li>
+            @if(!session()->has('user'))
+                <li>
+                    <a href="{{asset('/login')}}">Login</a>
+                </li>
+                <li>
+                    <a href="{{asset('/register')}}">Register</a>
+                </li>
+            @else
+                <li>
+                    <a href="{{asset('/logout')}}">Logout</a>
+                </li>
+            @endif
         </ul>
       </div>
       <!-- /.navbar-collapse -->
