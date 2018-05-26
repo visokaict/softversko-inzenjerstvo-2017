@@ -210,3 +210,9 @@ footer.custom-footer{
 .one-game-jam-content{
   min-height: 500px;
 }
+
+.reg-role-description {
+  display: block;
+  margin-left: 20px;
+  color: #aaa;
+}

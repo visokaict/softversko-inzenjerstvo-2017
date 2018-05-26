@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use \App\Http\Interfaces\IAuthorization;
+use App\Http\Models\Roles;
 use App\Http\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -32,8 +33,21 @@ class AuthController extends Controller implements IAuthorization
             $dbUser = $user->getByUsernameAndPassword();
 
             if(!empty($dbUser)){
+                $userRoles = $user->getAllRoles($dbUser->idUser);
+
                 $request->session()->push("user", $dbUser);
-                return redirect('/admin');
+                $request->session()->push("roles", $userRoles);
+
+                $roles = new Roles();
+                $isAdmin = $roles->arrayOfRolesHasRoleByName($userRoles, 'admin');
+
+                if($isAdmin)
+                {
+                    return redirect('/admin');
+                }
+
+                //default redirect
+                return redirect('/');
             } else {
                 return redirect()->back();
             }
@@ -65,7 +79,9 @@ class AuthController extends Controller implements IAuthorization
             return back()->withInput()->withErrors($validacija);
         }
 
+        $userRoles = $request->get('userRoles');
         $user = new Users();
+
         $userId = $user->insert(
             $request->get('tbEmail'),
             $request->get('tbUsername'),
@@ -76,6 +92,15 @@ class AuthController extends Controller implements IAuthorization
         if(empty($userId))
         {
             return back()->withInput()->with('messages', 'Registration failed!');
+        }
+
+
+        //add roles
+        if(!empty($userRoles)) {
+            foreach ($userRoles as $role)
+            {
+                $user->addRole($role, $userId);
+            }
         }
 
         return redirect('/login')->with('messages', 'You are successfully registered!');
