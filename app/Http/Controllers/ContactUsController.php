@@ -17,7 +17,7 @@ class ContactUsController extends Controller
     public function pollVote(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'idPollQuestion' => 'required',
+            'idPollQuestion' => 'required|numeric',
             'pollAnswer' => 'required|numeric'
         ]);
 
