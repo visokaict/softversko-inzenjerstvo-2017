@@ -7,14 +7,14 @@
 @section('content')
 <div class="auth-box-body">
     <p class="auth-box-msg auth-title">Login to start your session</p>
-    <form action="#" method="post">
+    <form action="{{ asset('/login') }}" method="post">
 
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="tbUsernameEmail" placeholder="Username or Email">
+        <input type="text" class="form-control" name="tbUsernameEmail" placeholder="Username or Email" value="{{ old('tbUsernameEmail') }}">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Password" name="tbPassword">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -29,8 +29,8 @@
         </div>
 
       </div>
+
+      {{ csrf_field() }}
     </form>
-
-
   </div>
 @endsection
