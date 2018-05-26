@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2018 at 04:07 PM
+-- Generation Time: May 26, 2018 at 05:35 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -316,8 +316,20 @@ CREATE TABLE `reports` (
 
 CREATE TABLE `roles` (
   `idRole` int(32) NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isAvailableForUser` int(1) NOT NULL DEFAULT '1',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`idRole`, `name`, `text`, `isAvailableForUser`, `description`) VALUES
+(1, 'admin', 'Administrator', 0, 'User with this role can manage everyting on website.'),
+(2, 'jamMaker', 'Jam Maker', 1, 'User with this role can Host game jams.'),
+(3, 'jamDeveloper', 'Jam Developer', 1, 'User with this role can create Game submission.');
 
 -- --------------------------------------------------------
 
@@ -336,6 +348,15 @@ CREATE TABLE `users` (
   `isBanned` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`idUser`, `email`, `username`, `password`, `createdAt`, `updatedAt`, `avatarImagePath`, `isBanned`) VALUES
+(1, 'goran@gmail.com', 'goran', '336eaae94eec2c96eebec51af6f1a7fd', 1527343576, 1527343576, 'https://api.adorable.io/avatars/285/goran@gmail.com', 0),
+(2, 'nikola@gmail.com', 'nikola', '5f4dcc3b5aa765d61d8327deb882cf99', 1527343576, 1527343576, 'https://api.adorable.io/avatars/285/nikola@gmail.com', 0),
+(3, 'test1@gmail.com', 'test1', 'cc03e747a6afbbcbf8be7668acfebee5', 1527348467, 1527348467, 'https://api.adorable.io/avatars/285/test1@gmail.com', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -347,6 +368,19 @@ CREATE TABLE `users_roles` (
   `idUser` int(32) NOT NULL,
   `idRole` int(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users_roles`
+--
+
+INSERT INTO `users_roles` (`idUserRoles`, `idUser`, `idRole`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 2, 1),
+(5, 2, 2),
+(6, 2, 3),
+(7, 3, 2);
 
 --
 -- Indexes for dumped tables
@@ -674,19 +708,19 @@ ALTER TABLE `reports`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `idRole` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `idRole` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUser` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users_roles`
 --
 ALTER TABLE `users_roles`
-  MODIFY `idUserRoles` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUserRoles` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

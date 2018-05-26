@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Roles;
 use Illuminate\Http\Request;
 
 class FrontEndController extends Controller
@@ -53,7 +54,11 @@ class FrontEndController extends Controller
     //
     // auth 
     public function register(){
-        return view('auth.register');
+        $roles = new Roles();
+        $userRoles = $roles->getAllAvailable();
+        return view('auth.register', [
+            'userAvailableRoles' => $userRoles
+        ]);
     }
 
     public function login(){

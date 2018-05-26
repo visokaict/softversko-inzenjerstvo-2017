@@ -65,7 +65,9 @@ class AuthController extends Controller implements IAuthorization
             return back()->withInput()->withErrors($validacija);
         }
 
+        $userRoles = $request->get('userRoles');
         $user = new Users();
+
         $userId = $user->insert(
             $request->get('tbEmail'),
             $request->get('tbUsername'),
@@ -76,6 +78,15 @@ class AuthController extends Controller implements IAuthorization
         if(empty($userId))
         {
             return back()->withInput()->with('messages', 'Registration failed!');
+        }
+
+
+        //add roles
+        if(!empty($userRoles)) {
+            foreach ($userRoles as $role)
+            {
+                $user->addRole($role, $userId);
+            }
         }
 
         return redirect('/login')->with('messages', 'You are successfully registered!');

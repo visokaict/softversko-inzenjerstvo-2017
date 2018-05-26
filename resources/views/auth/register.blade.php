@@ -38,6 +38,18 @@
                        name="tbPassword_confirmation">
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
+
+            @isset($userAvailableRoles)
+                @foreach($userAvailableRoles as $role)
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="userRoles[]" value="{{$role->idRole}}"> {{$role->text}}
+                        </label>
+                        <i class="reg-role-description">{{$role->description}}</i>
+                    </div>
+                @endforeach
+            @endisset
+
             <div class="row">
                 <!-- /.col -->
                 <div class="col-xs-8">
