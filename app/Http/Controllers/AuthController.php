@@ -6,7 +6,6 @@ use \App\Http\Interfaces\IAuthorization;
 use App\Http\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use \App\Http\Models\Users;
 
 class AuthController extends Controller implements IAuthorization
 {
@@ -23,7 +22,7 @@ class AuthController extends Controller implements IAuthorization
         ]);
 
         if($validation->fails()){
-            return back()->withErrors($validation);
+            return back()->withInput()->withErrors($validation);
         } else {
             $user = new Users();
             $user->username = $request->get('tbUsernameEmail');
