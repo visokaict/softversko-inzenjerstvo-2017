@@ -10,14 +10,35 @@ class AuthController extends Controller implements IAuthorization
 {
     public function login(Request $request)
     {
-        //todo
-        dd($request);
+        $validation = Validator::make($request->all(), [
+            'tbUsernameEmail' => 'required',
+            'tbPassword' => 'required'
+        ]);
+
+        if($validation->fails()){
+            return back()->withErrors($validation);
+        } else {
+            /*$user = new Korisnik();
+            $user->korisnicko_ime = $request->get('tbKorisnickoIme');
+
+            $user->lozinka = $request->get('tbLozinka');
+
+            $dbUser = $user->getByUsernameAndPassword();
+
+            if(!empty($dbUser)){
+                $request->session()->push("user", $dbUser);
+                return redirect('/admin')->with('uspeh', "Uspesno ste se ulogovali!");
+            } else {
+                return redirect('/')->with('uspeh', 'Niste registrovani!');
+            }
+            */
+        }
     }
 
     public function logout(Request $request)
     {
-        //todo
-        dd($request);
+        $request->session()->flush();
+        return redirect('/');
     }
 
     public function register(Request $request)
