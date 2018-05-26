@@ -36,7 +36,7 @@ Route::get('/about', 'FrontEndController@about');
 
 //
 //admin stuff
-Route::get("/admin", "AdminController@index")->middleware('isLoggedIn');
+Route::get("/admin", "AdminController@index")->middleware('isLoggedIn', 'isAdmin');
 
 
 //

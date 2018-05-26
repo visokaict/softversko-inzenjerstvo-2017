@@ -80,6 +80,12 @@
 
   <!-- Page Content -->
   <div class="container main-container">
+      <div class="row">
+          @if(session()->has('message'))
+              <div class="col-md-offset-1 col-md-10 alert alert-info">{{session()->get('message')}}</div>
+          @endif
+      </div>
+
       @yield('content')
   </div>
   <!-- /.container -->
