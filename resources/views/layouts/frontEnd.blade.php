@@ -65,6 +65,7 @@
                 </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
+
                 <li>
                     <a href="{{asset('/login')}}">Login</a>
                 </li>
