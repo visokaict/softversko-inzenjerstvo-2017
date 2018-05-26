@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\Navigations;
 use App\Http\Models\Roles;
 use Illuminate\Http\Request;
+use App\Http\Models\GameCriteria;
 
 class FrontEndController extends Controller
 {
@@ -30,6 +31,8 @@ class FrontEndController extends Controller
     }
 
     public function createGameJam(){
+        $gameCriteria = new GameCriteria();
+        $this->viewData['criteria'] = $gameCriteria->getAll();
         return view('gameJams.createGameJam', $this->viewData);
     }
 

@@ -14,6 +14,8 @@ Route::get('/game-jams/create', 'FrontEndController@createGameJam')->middleware(
 Route::get('/game-jams/{id}', 'FrontEndController@oneGameJam');
 Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam')->middleware('isLoggedIn');
 
+Route::post('/game-jams/create', 'GameJamController@insert');
+
 Route::get('/contact-us', 'FrontEndController@contactUs');
 
 
