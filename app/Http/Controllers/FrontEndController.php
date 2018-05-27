@@ -14,7 +14,6 @@ class FrontEndController extends Controller
 
     public function __construct()
     {
-        //todo
         $navs = new Navigations();
         $this->viewData['navigation'] = $navs->getAllSortedByPosition();
     }

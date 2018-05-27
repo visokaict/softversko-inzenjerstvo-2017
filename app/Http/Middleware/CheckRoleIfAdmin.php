@@ -18,8 +18,7 @@ class CheckRoleIfAdmin
     {
         $userRoles = $request->session()->get('roles');
 
-        $roles = new Roles();
-        $canAccess = $roles->arrayOfRolesHasRoleByName($userRoles[0], 'admin');
+        $canAccess = Roles::arrayOfRolesHasRoleByName($userRoles[0], 'admin');
 
         if($canAccess)
         {

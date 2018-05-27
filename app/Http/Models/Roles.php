@@ -24,7 +24,7 @@ class Roles extends Generic
             ->get();
     }
 
-    public function arrayOfRolesHasRoleByName($roles, $roleName)
+    public static function arrayOfRolesHasRoleByName($roles, $roleName)
     {
         if(!empty($roles))
         {
