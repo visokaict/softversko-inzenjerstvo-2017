@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" style="margin-right:10px">Slam Jam</a>
+            <a class="navbar-brand" href="{{asset('/')}}" style="margin-right:10px">Slam Jam</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -51,6 +51,12 @@
                         @endif
                     @endforeach
                 @endisset
+
+                @if(session()->has('roles'))
+                    @if(\App\Http\Models\Roles::arrayOfRolesHasRoleByName(session()->get('roles')[0], 'admin'))
+                        <li><a href="{{ asset('/admin') }}" style="color: red !important;">Admin panel</a></li>
+                    @endif
+                @endif
 
             </ul>
 
@@ -123,11 +129,16 @@
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                     <h3> Social links </h3>
                     <div class="center-block gray-color-social">
-                        <a href="https://www.facebook.com/#"><i id="social-fb" class="fab fa-facebook-square fa-3x social"></i></a>
-                        <a href="https://twitter.com/#"><i id="social-tw" class="fab fa-twitter-square fa-3x social"></i></a>
-                        <a href="https://plus.google.com/#"><i id="social-gp" class="fab fa-google-plus-square fa-3x social"></i></a>
-                        <a href="https://www.pinterest.com/#"><i id="social-pr" class="fab fa-pinterest fa-3x social"></i></a>
-                        <a href="https://www.youtube.com/#"><i id="social-yt" class="fab fa-youtube fa-3x social"></i></a>
+                        <a href="https://www.facebook.com/#"><i id="social-fb"
+                                                                class="fab fa-facebook-square fa-3x social"></i></a>
+                        <a href="https://twitter.com/#"><i id="social-tw"
+                                                           class="fab fa-twitter-square fa-3x social"></i></a>
+                        <a href="https://plus.google.com/#"><i id="social-gp"
+                                                               class="fab fa-google-plus-square fa-3x social"></i></a>
+                        <a href="https://www.pinterest.com/#"><i id="social-pr"
+                                                                 class="fab fa-pinterest fa-3x social"></i></a>
+                        <a href="https://www.youtube.com/#"><i id="social-yt"
+                                                               class="fab fa-youtube fa-3x social"></i></a>
                     </div>
                 </div>
 

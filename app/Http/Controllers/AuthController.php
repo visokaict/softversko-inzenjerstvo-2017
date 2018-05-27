@@ -38,8 +38,7 @@ class AuthController extends Controller implements IAuthorization
                 $request->session()->push("user", $dbUser);
                 $request->session()->push("roles", $userRoles);
 
-                $roles = new Roles();
-                $isAdmin = $roles->arrayOfRolesHasRoleByName($userRoles, 'admin');
+                $isAdmin = Roles::arrayOfRolesHasRoleByName($userRoles, 'admin');
 
                 if($isAdmin)
                 {
