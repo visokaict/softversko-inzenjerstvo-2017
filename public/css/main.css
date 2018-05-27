@@ -312,6 +312,10 @@ footer.custom-footer {
     color: #fff;
 }
 
+.split-left, .split-right {
+    height: 305px;
+}
+
 .split-image img {
     border: 5px solid rgba(0,0,0,0.2);
     width: 100%;
