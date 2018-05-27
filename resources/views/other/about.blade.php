@@ -3,22 +3,62 @@
 @section('pageTitle', 'About us')
 
 @section('content')
-<div class="container">
-    <h2 class="h-bold text-center about-title">About Slam Jams project</h2>
-      <div class="container about-content">
-        <div class="row">		
+    <div>
+        <h2 class="h-bold text-center about-title">About Slam Jams project</h2>
+
+        <div class="row text-center">
+            <p>
+                This is school project about Game jams, people who has ideas and they would like to see what people can prototype around that idea.
+            </p>
+        </div>
+
+
+        <h2 class="h-bold text-center about-title">About developers</h2>
+
+        <div class="row">
             <div class="text-center">
-              <p>
-                Uneasy barton seeing remark happen his has. 
-                Am possible offering at contempt mr distance stronger an.
-                Attachment excellence announcing or reasonable am on if indulgence. Exeter talked in agreed spirit no he unable do. Uneasy barton seeing remark happen his has.
-              </p>
-              <p>
-                Betrayed shutters in vicinity it unpacked in.
-                In so impossible appearance considered mr. Mrs him left find are good. Every great inspiration is but an experiment - though every experiment we know, is not a great inspiration.
-              </p>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+
+                        <div style="width: 100%; padding: 30px;" class="split-left">
+                            <div class="split-image">
+                                <img src="https://goranurukalo.github.io/images/Goran_Urukalo.png">
+                            </div>
+                            <h3>Goran Urukalo</h3>
+                            <p>
+                                Hi, i'm Full stack Developer, i'm enjoying making websites and applications.
+                            </p>
+                            <div>
+                                <i class="fab fa-github"></i>
+                                <a style="color: white;" target="_blank" href="https://github.com/goranurukalo">@goranurukalo</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+
+                        <div style="width: 100%; padding: 30px;" class="split-right">
+                            <div class="split-image">
+                                <img src="https://api.adorable.io/avatars/285/nikola.simonovic.1021.17@ict.edu.rs">
+                            </div>
+                            <h3>Nikola Simonovic</h3>
+                            <p>
+                                nesto o sebi
+                            </p>
+                            <div>
+                                <i class="fab fa-github"></i>
+                                <a target="_blank" href="#">@?</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
             </div>
-        </div>		
-      </div>
-</div>
+        </div>
+
+    </div>
 @endsection

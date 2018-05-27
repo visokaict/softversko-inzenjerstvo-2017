@@ -79,9 +79,18 @@
                         <a href="{{asset('/register')}}">Register</a>
                     </li>
                 @else
-                    <li>
+                    <!--<li>
                         <a href="{{asset('/logout')}}">Logout</a>
-                    </li>
+                    </li>-->
+
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{session()->get('user')[0]->username}} <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{asset('/profile')}}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{asset('/logout')}}"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+                            </ul>
+                        </li>
+
                 @endif
             </ul>
         </div>
