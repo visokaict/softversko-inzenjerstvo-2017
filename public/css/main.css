@@ -48,13 +48,13 @@
     margin-bottom: 30px;
 }
 
-button.host-own-game-jam {
+a.host-own-game-jam, button.host-own-game-jam {
     width: 100%;
     margin: 25px 0;
 }
 
 @media screen and (max-width: 768px) {
-    button.host-own-game-jam {
+    a.host-own-game-jam, button.host-own-game-jam  {
         margin-top: 20px;
     }
 }
