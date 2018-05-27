@@ -16,8 +16,6 @@ Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam')->middleware
 
 Route::post('/game-jams/create', 'GameJamController@insert')->middleware('isLoggedIn', 'isJamMaker');
 
-Route::get('/contact-us', 'FrontEndController@contactUs');
-
 
 //
 // login, register
@@ -33,6 +31,8 @@ Route::get('/profile/edit', 'FrontendController@editProfile')->middleware('isLog
 //
 //other
 Route::get('/contact-us', 'FrontEndController@contactUs');
+Route::post('/contact-us', 'ContactUsController@postContact');
+
 Route::get('/about', 'FrontEndController@about');
 
 //
