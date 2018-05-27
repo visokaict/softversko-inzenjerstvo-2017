@@ -13,13 +13,12 @@
        <section class="about-us py-5 " id="about-us">
       <div class="mt-5">
     <div class="row">
-      <div class="col-md-8">
+      <div class="container">
           <h2 class="text-center">Game Jams on Slam Jam</h2>
           <hr>
-          <p>Slam Jam is a place for hosting and participating in game jams online. Anyone can start hosting a game jam immediately. Here you can find some of the game jams that are going on.</p>
-
+          <p class="col-md-8 col-md-offset-2 text-center">Slam Jam is a place for hosting and participating in game jams online. Anyone can start hosting a game jam immediately. Here you can find some of the game jams that are going on.</p>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 col-md-offset-4">
           <button type="button" class="btn btn-success host-own-game-jam">Host own Game Jam</button>
       </div>
     </div>

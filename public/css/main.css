@@ -1,245 +1,265 @@
-/*!
- * Start Bootstrap - Modern Business (https://startbootstrap.com/template-overviews/modern-business)
- * Copyright 2013-2017 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
- */
-
 * {
-  padding: 0;
-  margin: 0;
+    margin: 0;
+    padding: 0;
 }
+
 .float-left {
     float: left;
 }
+
 .float-right {
     float: right;
 }
+
 .custom-footer {
-  background-color: #222;
-  color: #eee;
+    background-color: #222;
+    color: #eee;
 }
+
 .carousel-item {
-  height: 65vh;
-  min-height: 300px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+    height: 65vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
+
 .portfolio-item {
-  margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 button.host-own-game-jam {
-  width: 100%;
-  margin-top: 75px;
+    width: 100%;
+    margin: 25px 0;
 }
 
 @media screen and (max-width: 768px) {
-  button.host-own-game-jam{
-    margin-top: 20px;
-  }
+    button.host-own-game-jam {
+        margin-top: 20px;
+    }
 }
 
 #visualization {
-      box-sizing: border-box;
-      width: 100%;
-      min-height: 100px;
-      height: 100%;
-      margin-bottom: 40px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100px;
+    height: 100%;
+    margin-bottom: 40px;
 }
 
-div.no-padding{
-  padding: 0;
-}
-p.margin-bottom-5{
-  margin-bottom: 5px;
+div.no-padding {
+    padding: 0;
 }
 
-h2.margin-bottom-40{
-  margin-bottom: 40px;
-}
-h3.no-game-jam{
-  padding-top: 30px;
-  padding-bottom: 40px;
+p.margin-bottom-5 {
+    margin-bottom: 5px;
 }
 
-p.p-joind-submissions{
-  margin-top:10px;
-  margin-bottom: 0px;
-  font-size: small;
+h2.margin-bottom-40 {
+    margin-bottom: 40px;
 }
 
-.main-container{
-  min-height:600px;
+h3.no-game-jam {
+    padding-top: 30px;
+    padding-bottom: 40px;
+}
+
+p.p-joind-submissions {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font-size: small;
+}
+
+.main-container {
+    min-height: 600px;
 }
 
 .show {
-  visibility: visible !important;
+    visibility: visible !important;
 }
 
 header {
-  margin-bottom: 30px;
-  margin-top: 30px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .card-img-top {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 /* Registration - login */
-.auth-box-body{
-  width: 500px;
-  margin: 0 auto;
-}
-.auth-box-msg{
-  text-align: center;
-}
-.auth-title{
-  font-size: 20px;
-  padding: 20px 0;
+
+.auth-box-body {
+    width: 500px;
+    margin: 0 auto;
 }
 
+.auth-box-msg {
+    text-align: center;
+}
+
+.auth-title {
+    font-size: 20px;
+    padding: 20px 0;
+}
 
 /* About */
+
 .about-title {
-  padding: 20px 0;
+    padding: 20px 0;
 }
+
 .about-content {
-  width: 800px;
+    width: 800px;
 }
 
 .bg-white {
-  background-color: white;
+    background-color: white;
 }
 
 /* User profile */
+
 .user-profile {
-  padding-top: 35px;
-  width: 700px;
-  margin-left: 50%;
-  transform: translateX(-50%);
+    padding-top: 35px;
+    width: 700px;
+    margin-left: 50%;
+    transform: translateX(-50%);
 }
 
 .table-user-information tr td {
-  padding: 15px 0 !important;
+    padding: 15px 0 !important;
 }
 
 /* Edit profile */
+
 .user-edit-content {
-  width: 500px;
-  margin: 0 auto;
+    width: 500px;
+    margin: 0 auto;
 }
-.user-edit-file{
-  height: 50px;
+
+.user-edit-file {
+    height: 50px;
 }
+
 .user-edit-file input {
-  height: auto;
+    height: auto;
 }
+
 .user-edit-title {
-  font-size: 20px;
-  padding: 20px 0;
-  
+    font-size: 20px;
+    padding: 20px 0;
 }
+
 .btn-update-profile {
-  margin-top: 15px;
+    margin-top: 15px;
 }
+
 /* Edit profile */
+
 .user-edit-content {
-  width: 500px;
-  margin: 0 auto;
+    width: 500px;
+    margin: 0 auto;
 }
 
-.user-edit-file{
-  height: 50px;
+.user-edit-file {
+    height: 50px;
 }
 
 .user-edit-file input {
-  height: auto;
+    height: auto;
 }
+
 .user-edit-title {
-  font-size: 20px;
-  padding: 20px 0;
-  
+    font-size: 20px;
+    padding: 20px 0;
 }
+
 .btn-update-profile {
-  margin-top: 15px;
+    margin-top: 15px;
 }
-textarea.no-resize { 
-  resize: none; 
+
+textarea.no-resize {
+    resize: none;
 }
 
 textarea.resize-vertical {
-  resize: vertical;
+    resize: vertical;
 }
 
-footer.custom-footer{
-  margin-top: 40px;
+footer.custom-footer {
+    margin-top: 40px;
 }
 
-#clockdiv{
-	font-family: sans-serif;
-	color: #fff;
-	display: inline-block;
-	font-weight: 100;
-	text-align: center;
-	font-size: 30px;
+#clockdiv {
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
 }
 
-#clockdiv > div{
-	padding: 10px;
-	border-radius: 3px;
-	background: #00BF96;
-	display: inline-block;
+#clockdiv>div {
+    padding: 10px;
+    border-radius: 3px;
+    background: #00BF96;
+    display: inline-block;
 }
 
-#clockdiv div > span{
-	padding: 15px;
-	border-radius: 3px;
-	background: #00816A;
-	display: inline-block;
+#clockdiv div>span {
+    padding: 15px;
+    border-radius: 3px;
+    background: #00816A;
+    display: inline-block;
 }
 
-.smalltext{
-	padding-top: 5px;
-	font-size: 16px;
+.smalltext {
+    padding-top: 5px;
+    font-size: 16px;
 }
 
-.one-game-jam-content{
-  min-height: 500px;
+.one-game-jam-content {
+    min-height: 500px;
 }
 
 .reg-role-description {
-  display: block;
-  margin-left: 20px;
-  color: #aaa;
+    display: block;
+    margin-left: 20px;
+    color: #aaa;
 }
 
-.gray-color-social a{
-  color: #4e555b;
-  margin-right: 5px;
+.gray-color-social a {
+    color: #4e555b;
+    margin-right: 5px;
 }
+
 #social-fb:hover {
-  color: #3B5998;
-}
-#social-yt:hover {
-  color: red;
-}
-#social-tw:hover {
-  color: #4099FF;
-}
-#social-gp:hover {
-  color: #d34836;
-}
-#social-em:hover {
-  color: #f39c12;
-}
-#social-pr:hover {
-  color: #bd081c;
+    color: #3B5998;
 }
 
-.list-no-style{
-  list-style: none;
+#social-yt:hover {
+    color: red;
+}
+
+#social-tw:hover {
+    color: #4099FF;
+}
+
+#social-gp:hover {
+    color: #d34836;
+}
+
+#social-em:hover {
+    color: #f39c12;
+}
+
+#social-pr:hover {
+    color: #bd081c;
+}
+
+.list-no-style {
+    list-style: none;
 }
