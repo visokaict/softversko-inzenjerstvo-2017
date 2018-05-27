@@ -187,6 +187,9 @@ header {
 .btn-update-profile {
     margin-top: 15px;
 }
+.user-edit-control {
+    position: relative;
+}
 
 /* Edit profile */
 

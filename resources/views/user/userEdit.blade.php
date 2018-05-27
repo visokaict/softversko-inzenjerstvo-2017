@@ -6,19 +6,19 @@
 <div class="user-edit-content">
     <p class="text-center user-edit-title">Edit profile</p>
     <form action="../../index.html" method="post">
-      <div class="form-group">
+      <div class="form-group user-edit-control">
         <input type="text" class="form-control" placeholder="Username">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
-      <div class="form-group">
+      <div class="form-group user-edit-control">
         <input type="email" class="form-control" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
-      <div class="form-group">
+      <div class="form-group user-edit-control">
         <input type="password" class="form-control" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div class="form-group">
+      <div class="form-group user-edit-control">
         <input type="password" class="form-control" placeholder="Retype password">
         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
       </div>
