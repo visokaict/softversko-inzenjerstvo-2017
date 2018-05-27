@@ -33,7 +33,7 @@ class Users extends Generic
         $result = \DB::table("users")
                     ->select('*')
                     ->where('password', '=', md5($password))
-                    ->where(function ($query) {
+                    ->where(function ($query) use ($usernameEmail) {
                         $query->where('username', '=', strtolower($usernameEmail))
                             ->orWhere('email', '=', strtolower($usernameEmail));
                     })
