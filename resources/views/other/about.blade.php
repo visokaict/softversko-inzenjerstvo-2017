@@ -18,7 +18,7 @@
         <div class="row">
             <div class="text-center">
 
-                <div class="row">
+                <div>
                     <div class="col-sm-12 col-md-6">
 
                         <div style="width: 100%; padding: 30px;" class="split-left">
