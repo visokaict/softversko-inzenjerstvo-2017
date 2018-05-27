@@ -6,6 +6,7 @@ use App\Http\Models\Navigations;
 use App\Http\Models\Polls;
 use App\Http\Models\Roles;
 use Illuminate\Http\Request;
+use App\Http\Models\Users;
 use App\Http\Models\GameCriteria;
 
 class FrontEndController extends Controller
@@ -100,13 +101,39 @@ class FrontEndController extends Controller
         //return view('mailPages.contactUs', $this->viewData);
         return view('other.contactUs', $this->viewData);
     }
-    
-    // user
+
     public function profile() {
+        $this->viewData['isEditButtonDisplayed'] = true;
+        $this->viewData['userData'] = session()->get('user')[0];
+        $this->viewData['userRoles'] = session()->get('roles')[0];
+
         return view('user.userProfile', $this->viewData);
     }
 
     public function editProfile() {
+        $this->viewData['userData'] = session()->get('user')[0];
+        $this->viewData['userRoles'] = session()->get('roles')[0];
+
         return view('user.userEdit', $this->viewData);
     }
+
+    public function getUserProfileInfo($username)
+    {
+        $this->viewData['isEditButtonDisplayed'] = false;
+
+        $user = new Users();
+        $userData = $user->getByUsername($username);
+
+        if(empty($userData))
+        {
+            return back()->with('message', 'Sorry but user with that username does not exist!');
+        }
+
+        $userRoles = $user->getAllRoles($userData->idUser);
+        $this->viewData['userData'] = $userData;
+        $this->viewData['userRoles'] = $userRoles;
+
+        return view('user.userProfile', $this->viewData);
+    }
+
 }

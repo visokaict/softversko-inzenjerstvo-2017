@@ -25,8 +25,10 @@ Route::get('/login', 'FrontEndController@login')->middleware('isNotLoggedIn');
 
 //
 //profile
-Route::get('/profile', 'FrontendController@profile')->middleware('isLoggedIn');
-Route::get('/profile/edit', 'FrontendController@editProfile')->middleware('isLoggedIn');
+Route::get('/profile', 'FrontEndController@profile')->middleware('isLoggedIn');
+Route::get('/profile/edit', 'FrontEndController@editProfile')->middleware('isLoggedIn');
+Route::get('/user/{username}', 'FrontEndController@getUserProfileInfo')->where('username', '\w+');
+
 
 //
 //other
