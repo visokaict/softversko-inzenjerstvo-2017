@@ -14,7 +14,6 @@ class FrontEndController extends Controller
 
     public function __construct()
     {
-        //todo
         $navs = new Navigations();
         $this->viewData['navigation'] = $navs->getAllSortedByPosition();
     }
@@ -98,6 +97,7 @@ class FrontEndController extends Controller
             $this->viewData['pollAnswers'] = $poll->getAnswersByQuestionId($question->idPollQuestion);
         }
 
+        //return view('mailPages.contactUs', $this->viewData);
         return view('other.contactUs', $this->viewData);
     }
     

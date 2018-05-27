@@ -18,8 +18,7 @@ class CheckRoleIfJamMaker
     {
         $userRoles = $request->session()->get('roles');
 
-        $roles = new Roles();
-        $canAccess = $roles->arrayOfRolesHasRoleByName($userRoles[0], 'jamMaker');
+        $canAccess = Roles::arrayOfRolesHasRoleByName($userRoles[0], 'jamMaker');
 
         if($canAccess)
         {
