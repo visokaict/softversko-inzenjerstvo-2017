@@ -56,7 +56,7 @@
 
             <form class="navbar-form navbar-left">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="tbSearch">
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
@@ -150,6 +150,16 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script type="text/javascript">
+    $("#tbSearch").focus(function () {
+        $(this).addClass("expand-width");
+        $(this).removeClass("shrink-width");
+    });
+    $("#tbSearch").blur(function () {
+        $(this).addClass("shrink-width");
+        $(this).removeClass("expand-width");
+    });
+</script>
 
 @yield('jsfiles')
 
