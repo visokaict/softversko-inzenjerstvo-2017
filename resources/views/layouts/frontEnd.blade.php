@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{asset('/')}}" style="margin-right:10px">Slam Jam</a>
+            <a class="navbar-brand nav-title" href="{{ asset('/') }}"><span>Slam Jam</span><img src="{{ asset('/images/logo.png') }}" class="slam-jam-logo" alt="Logo"/></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
