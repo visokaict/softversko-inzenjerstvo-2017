@@ -29,7 +29,8 @@ class Users extends Generic
         return parent::insertGetId($insertData);
     }
 
-    public function getByUsernameOrEmailAndPassword($usernameEmail, $password){
+    public function getByUsernameOrEmailAndPassword($usernameEmail, $password)
+    {
         $result = \DB::table("users")
                     ->select('*')
                     ->where('password', '=', md5($password))
@@ -40,6 +41,14 @@ class Users extends Generic
 					->first();
 		return $result;
 	}
+
+	public function getByUsername($username)
+    {
+        return \DB::table('users')
+            ->select('*')
+            ->where('username', '=', $username)
+            ->first();
+    }
 
 	public function addRole($idRole, $idUser)
     {
