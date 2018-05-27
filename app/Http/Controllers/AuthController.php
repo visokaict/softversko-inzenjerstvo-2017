@@ -26,11 +26,8 @@ class AuthController extends Controller implements IAuthorization
             return back()->withInput()->withErrors($validation);
         } else {
             $user = new Users();
-            $user->username = $request->get('tbUsernameEmail');
 
-            $user->password = $request->get('tbPassword');
-
-            $dbUser = $user->getByUsernameAndPassword();
+            $dbUser = $user->getByUsernameOrEmailAndPassword($request->get('tbUsernameEmail'), $request->get('tbPassword'));
 
             if(!empty($dbUser)){
                 $userRoles = $user->getAllRoles($dbUser->idUser);
@@ -83,8 +80,8 @@ class AuthController extends Controller implements IAuthorization
         $user = new Users();
 
         $userId = $user->insert(
-            $request->get('tbEmail'),
-            $request->get('tbUsername'),
+            strtolower($request->get('tbEmail')),
+            strtolower($request->get('tbUsername')),
             $request->get('tbPassword')
         );
 
