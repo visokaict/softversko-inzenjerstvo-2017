@@ -310,6 +310,15 @@ footer.custom-footer {
 .split-left {
     background: #7b5a9e;
     color: #fff;
+    -webkit-box-ordinal-group: 0;
+    -webkit-order: -1;
+    -ms-flex-order: -1;
+    order: -1;
+    background-image: url("../images/trianglify-guran-background.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
 }
 
 .split-left, .split-right {
