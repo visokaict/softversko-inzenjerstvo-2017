@@ -108,23 +108,27 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                     <h3> Contact info </h3>
-                    <ul>
-                        <li><a href="#"> Lorem Ipsum </a></li>
-                        <li><a href="#"> Lorem Ipsum </a></li>
-                        <li><a href="#"> Lorem Ipsum </a></li>
-                        <li><a href="#"> Lorem Ipsum </a></li>
+                    <ul class="list-no-style">
+                        <li>Keas 69 Str.</li>
+                        <li>15234, Chalandri</li>
+                        <li>Athens,</li>
+                        <li>Greece</li>
+                        <li></li>
+                        <li>+30-2106019311 (landline)</li>
+                        <li>+30-6977664062 (mobile phone)</li>
+                        <li>+30-2106398905 (fax)</li>
                     </ul>
                 </div>
 
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                     <h3> Social links </h3>
-                    <ul class="social">
-                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
-                        <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                    </ul>
+                    <div class="center-block gray-color-social">
+                        <a href="https://www.facebook.com/#"><i id="social-fb" class="fab fa-facebook-square fa-3x social"></i></a>
+                        <a href="https://twitter.com/#"><i id="social-tw" class="fab fa-twitter-square fa-3x social"></i></a>
+                        <a href="https://plus.google.com/#"><i id="social-gp" class="fab fa-google-plus-square fa-3x social"></i></a>
+                        <a href="https://www.pinterest.com/#"><i id="social-pr" class="fab fa-pinterest fa-3x social"></i></a>
+                        <a href="https://www.youtube.com/#"><i id="social-yt" class="fab fa-youtube fa-3x social"></i></a>
+                    </div>
                 </div>
 
             </div>
@@ -133,7 +137,8 @@
         <!--/.container-->
     </div>
     <!--/.footer-->
-
+    <br>
+    <br>
     <div class="footer-bottom">
         <div class="container">
             <p class="pull-left"> Copyright © Slam Jam 2018. All right reserved. </p>

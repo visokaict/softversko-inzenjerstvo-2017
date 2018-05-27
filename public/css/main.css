@@ -216,3 +216,30 @@ footer.custom-footer{
   margin-left: 20px;
   color: #aaa;
 }
+
+.gray-color-social a{
+  color: #4e555b;
+  margin-right: 5px;
+}
+#social-fb:hover {
+  color: #3B5998;
+}
+#social-yt:hover {
+  color: red;
+}
+#social-tw:hover {
+  color: #4099FF;
+}
+#social-gp:hover {
+  color: #d34836;
+}
+#social-em:hover {
+  color: #f39c12;
+}
+#social-pr:hover {
+  color: #bd081c;
+}
+
+.list-no-style{
+  list-style: none;
+}
