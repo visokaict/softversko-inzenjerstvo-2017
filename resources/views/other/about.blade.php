@@ -41,15 +41,15 @@
 
                         <div style="width: 100%; padding: 30px;" class="split-right">
                             <div class="split-image">
-                                <img src="https://api.adorable.io/avatars/285/nikola.simonovic.1021.17@ict.edu.rs">
+                                <img src="{{ asset('images/lolwtf.jpg') }}">
                             </div>
                             <h3>Nikola Simonovic</h3>
                             <p>
-                                nesto o sebi
+                            It is easier to stay awake till 6 AM than to wake up at 6 AM.
                             </p>
                             <div>
                                 <i class="fab fa-github"></i>
-                                <a target="_blank" href="#">@?</a>
+                                <a target="_blank" href="https://omfgdogs.com">@niksimon</a>
                             </div>
                         </div>
 

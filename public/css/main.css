@@ -299,8 +299,12 @@ footer.custom-footer {
     -webkit-order: -1;
     -ms-flex-order: -1;
     order: -1;
-    color: #7b5a9e;
+    color: #333;
     background: #fff;
+    background-image: url("../images/about-background2.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .split-left {
