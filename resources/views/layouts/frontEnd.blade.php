@@ -80,11 +80,11 @@
                     </li>
                 @else
                         <li class="avatar-li">
-                            <img src="{{session()->get('user')[0]->avatarImagePath}}" class="user-nav-avatar" />
+                            <img src="{{ asset($userDataProvider->avatarImagePath) }}" class="user-nav-avatar" />
                         </li>
                         <li class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                                {{session()->get('user')[0]->username}} <b class="caret"></b>
+                                {{ session()->get('user')[0]->username }} <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{asset('/profile')}}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
@@ -92,7 +92,6 @@
                                 <li><a href="{{asset('/logout')}}"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
                             </ul>
                         </li>
-
                 @endif
             </ul>
         </div>

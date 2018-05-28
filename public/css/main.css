@@ -3,6 +3,8 @@
     padding: 0;
 }
 
+/* Search input */
+
 #tbSearch {
     transition: .2s width;
     width: 150px;
@@ -21,6 +23,8 @@
         width: 100%;
     }
 }
+
+/*  ---------------------  */
 
 .nav-title { 
     margin-right:6px; 
@@ -121,6 +125,8 @@ header {
     height: 100%;
 }
 
+/*  ---------------------  */
+
 /* Registration - login */
 
 .auth-box-body {
@@ -137,6 +143,8 @@ header {
     padding: 20px 0;
 }
 
+/*  ---------------------  */
+
 /* About */
 
 .about-title {
@@ -151,6 +159,8 @@ header {
     background-color: white;
 }
 
+/*  ---------------------  */
+
 /* User profile */
 
 .user-profile {
@@ -164,15 +174,13 @@ header {
     padding: 15px 0 !important;
 }
 
+/*  ---------------------  */
+
 /* Edit profile */
 
 .user-edit-content {
     width: 500px;
     margin: 0 auto;
-}
-
-.user-edit-file {
-    height: 50px;
 }
 
 .user-edit-file input {
@@ -187,33 +195,81 @@ header {
 .btn-update-profile {
     margin-top: 15px;
 }
+
 .user-edit-control {
     position: relative;
 }
-
-/* Edit profile */
-
-.user-edit-content {
-    width: 500px;
-    margin: 0 auto;
+.user-edit-roles {
+    padding: 5px 0 0;
+    margin-bottom: 0;
 }
 
 .user-edit-file {
-    height: 50px;
+    height: 260px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    position: relative;
 }
 
-.user-edit-file input {
-    height: auto;
+input.user-edit-upload-file-control {
+    display: block;
+    height: 260px;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+    border: 1px solid #000;
 }
-
-.user-edit-title {
-    font-size: 20px;
-    padding: 20px 0;
+.drag-and-drop-overlay {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+    opacity: 1;
+    transition: .2s opacity;
 }
-
-.btn-update-profile {
+.drag-and-drop-overlay i{
+    color: skyblue;
+    font-size: 64px;
+}
+.drag-and-drop-overlay p {
+    font-size: 22px;
     margin-top: 15px;
 }
+.user-edit-file img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -113px;
+    margin-left: -100px;
+    z-index: 9;
+    opacity: 0;
+    transition: 2s opacity;
+}
+.image-filename {
+    position: absolute;
+    bottom: 3px;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transition: 1s opacity;
+}
+
+/*  ---------------------  */
 
 textarea.no-resize {
     resize: none;

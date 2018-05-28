@@ -5,32 +5,76 @@
 @section('content')
 <div class="user-edit-content">
     <p class="text-center user-edit-title">Edit profile</p>
-    <form action="../../index.html" method="post">
-      <div class="form-group user-edit-control">
-        <input type="text" class="form-control" placeholder="Username">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-      </div>
-      <div class="form-group user-edit-control">
-        <input type="email" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group user-edit-control">
-        <input type="password" class="form-control" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="form-group user-edit-control">
-        <input type="password" class="form-control" placeholder="Retype password">
-        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-      </div>
-      <div class="form-group user-edit-file">
-        <p>Upload avatar image</p>
-        <input type="file" class="form-control">
-      </div>
-      <div class="row">
-        <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat btn-update-profile">Update</button>
+
+    @isset($errors)
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
+    @endisset
+
+    @if(session()->has('messages'))
+        <div class="alert alert-success">
+            <div>{{ session('messages') }}</div>
         </div>
-      </div>
+    @endif
+
+    <form action="{{ asset('/profile/edit') }}" method="post" enctype="multipart/form-data">
+        <div class="form-group user-edit-control">
+            <input type="password" name="tbPassword" class="form-control" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group user-edit-control">
+            <input type="password" name="tbPassword_confirmation" class="form-control" placeholder="Retype password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <p>Upload avatar image:</p>
+        <div class="form-group user-edit-file">
+            <input type="file" accept="image/*" class="user-edit-upload-file-control" id="userUploadAvatar" name="fAvatarImage"/>
+            <div class="drag-and-drop-overlay" id="drag-and-drop-overlay">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click or Drag &amp; Drop Your File Here</p>
+            </div>
+            
+                <img id="uploadedImage" />
+                <p class="image-filename" id="image-filename">Filename.jpg</p>
+            
+        </div>
+        <div class="form-group user-edit-roles">
+        @isset($userAvailableRoles)
+            @foreach($userAvailableRoles as $role)
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" @if(in_array($role->idRole, $userHasRoles)) checked @endif name="userRoles[]" value='{{$role->idRole}}'> {{$role->text}}
+                    </label>
+                    <i class="reg-role-description">{{$role->description}}</i>
+                </div>
+            @endforeach
+        @endisset
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat btn-update-profile">Update</button>
+            </div>
+        </div>
+         {{ csrf_field() }}
     </form>
-  </div>
+</div>
+@endsection
+
+@section('jsfiles')
+    <script>
+        document.getElementById("userUploadAvatar").addEventListener("change", function(){
+            var img = document.getElementById('uploadedImage');
+            var imgFilename = document.getElementById("image-filename");
+            img.src = window.URL.createObjectURL(this.files[0]);
+            img.style.opacity = 1;
+            imgFilename.style.opacity = 1;
+            imgFilename.innerHTML = this.files[0].name;
+            document.getElementById("drag-and-drop-overlay").style.opacity = 0;
+        });
+    </script>
 @endsection

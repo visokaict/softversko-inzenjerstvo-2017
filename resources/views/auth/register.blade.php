@@ -36,7 +36,7 @@
             <div class="form-group has-feedback">
                 <input type="password" class="form-control" placeholder="Retype password"
                        name="tbPassword_confirmation">
-                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
 
             @isset($userAvailableRoles)

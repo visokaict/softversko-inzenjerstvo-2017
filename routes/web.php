@@ -29,6 +29,7 @@ Route::get('/profile', 'FrontEndController@profile')->middleware('isLoggedIn');
 Route::get('/profile/edit', 'FrontEndController@editProfile')->middleware('isLoggedIn');
 Route::get('/user/{username}', 'FrontEndController@getUserProfileInfo')->where('username', '\w+');
 
+Route::post('/profile/edit', 'ProfileController@edit')->middleware('isLoggedIn');
 
 //
 //other
