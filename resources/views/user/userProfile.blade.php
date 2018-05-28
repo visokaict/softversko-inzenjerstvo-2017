@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-md-3 col-lg-3 " align="center">
                         <img alt="User Avatar"
-                             src="{{$userData->avatarImagePath}}"
+                             src="{{ asset($userData->avatarImagePath) }}"
                              style="padding-bottom: 15px;"
                              class="img-circle img-responsive">
                     </div>

@@ -23,10 +23,16 @@ class Users extends Generic
             'password' => md5($password),
             'createdAt' => $timeCreatedAt,
             'updatedAt' => $timeCreatedAt,
-            'avatarImagePath' => 'https://api.adorable.io/avatars/285/'.$email,
+            'avatarImagePath' => 'https://api.adorable.io/avatars/285/' . $email,
             'isBanned' => 0,
         ];
         return parent::insertGetId($insertData);
+    }
+
+    public function updateUser($idUser, $updateData){
+        $updateData['updatedAt'] = time();
+
+        return parent::update($idUser, $updateData);
     }
 
     public function getByUsernameOrEmailAndPassword($usernameEmail, $password)
@@ -57,6 +63,13 @@ class Users extends Generic
                 'idUser' => $idUser,
                 'idRole' => $idRole,
             ]);
+    }
+
+    public function deleteRole($userId, $roleId){
+        return \DB::table('users_roles')
+            ->where("idUser", "=", $userId)
+            ->where("idRole", "=", $roleId)
+            ->delete();
     }
 
     public function getAllRoles($userId)

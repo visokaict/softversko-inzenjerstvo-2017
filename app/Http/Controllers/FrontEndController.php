@@ -104,7 +104,10 @@ class FrontEndController extends Controller
 
     public function profile() {
         $this->viewData['isEditButtonDisplayed'] = true;
-        $this->viewData['userData'] = session()->get('user')[0];
+
+        $users = new Users();
+        
+        $this->viewData['userData'] = $users->getById(session()->get('user')[0]->idUser);
         $this->viewData['userRoles'] = session()->get('roles')[0];
 
         return view('user.userProfile', $this->viewData);
@@ -113,6 +116,23 @@ class FrontEndController extends Controller
     public function editProfile() {
         $this->viewData['userData'] = session()->get('user')[0];
         $this->viewData['userRoles'] = session()->get('roles')[0];
+
+        $roles = new Roles();
+        $userRoles = $roles->getAllAvailable();
+
+        $users = new Users();
+        $userHasRolesDb = $users->getAllRoles(session()->get('user')[0]->idUser);
+        $userHasRoles = [];
+
+        $this->viewData['userAvailableRoles'] = $userRoles;
+
+        foreach($userHasRolesDb as $e){
+            if($e->name != 'admin'){
+                $userHasRoles[] = $e->idRole;
+            }
+        }
+
+        $this->viewData['userHasRoles'] = $userHasRoles;
 
         return view('user.userEdit', $this->viewData);
     }

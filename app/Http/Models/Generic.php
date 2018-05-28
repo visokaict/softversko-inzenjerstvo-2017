@@ -26,7 +26,7 @@ class Generic
     {
         return DB::table($this->tableName)
             ->select('*')
-            ->where( $this->idName,'=', $id)
+            ->where($this->idName,'=', $id)
             ->first();
     }
 
@@ -36,10 +36,17 @@ class Generic
             ->insertGetId($model);
     }
 
+    public function update($id, $data)
+    {
+        return DB::table($this->tableName)
+            ->where($this->idName, '=', $id)
+            ->update($data);
+    }
+
     public function delete($id)
     {
         return DB::table($this->tableName)
-            ->where( $this->idName,'=', $id)
+            ->where($this->idName, '=', $id)
             ->delete();
     }
 }

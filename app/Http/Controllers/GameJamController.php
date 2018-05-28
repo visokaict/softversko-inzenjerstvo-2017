@@ -60,12 +60,16 @@ class GameJamController extends Controller
 
                 // others can vote, locked
                 $othersCanVote = $lock = 0;
-                if($request->has('chbOthers')){
+
+                $othersCanVote = $request->has('chbOthers') ? 1 : 0;
+                $lock = $request->has('chbLock') ? 1 : 0;
+                
+                /*if($request->has('chbOthers')){
                     $othersCanVote = 1;
                 }
                 if($request->has('chbLock')){
                     $lock = 1;
-                }
+                }*/
 
                 // insert game jam
                 $gameJam = new GameJams();
