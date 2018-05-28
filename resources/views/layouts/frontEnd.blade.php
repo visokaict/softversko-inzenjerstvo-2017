@@ -120,7 +120,6 @@
                     <h3> Slam Jam </h3>
                     <p>Slam Jam is a place for hosting and participating in game jams online. Anyone can start hosting a
                         game jam immediately.</p>
-
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                     <h3> Contact info </h3>

@@ -16,102 +16,116 @@ class ProfileController extends Controller
         $users = new Users();
         $updateData = [];
 
-        // update password if field is not empty
-        if(!empty($request->get('tbPassword')) && !empty($request->get('tbPassword_confirmation'))){
-            $validacija = Validator::make($request->all(), [
-                'tbPassword' => 'required|confirmed|min:6',
-            ]);
-            $validacija->setAttributeNames([
-                'tbPassword' => 'password',
-            ]);
-    
-            if ($validacija->fails()) {
-                // redirekcija na pocetnu i ispis gresaka
-                return back()->withInput()->withErrors($validacija);
-            }
-
-            $updateData['password'] = md5($request->get('tbPassword'));
-        }
-
-        // update roles
-        $userRoles = $request->get('userRoles');
-        $selectedRoles = [];
-
-        if(!empty($userRoles)){
-            foreach($userRoles as $val){
-                $selectedRoles[] = (int)$val;
-            }
-        }
-
-        $userHasRolesDb = $users->getAllRoles($idUser);
-        $deleteRoles = [];
-        $newRoles = [];
-        $userHasRoles = [];
-
-        foreach($userHasRolesDb as $e){
-            if($e->name != 'admin'){
-                $userHasRoles[] = $e->idRole;
-            }
-        }
-
-        // delete roles
-        foreach($userHasRoles as $idRole){
-            if(!in_array($idRole, $selectedRoles)){
-                $deleteRoles[] = $idRole;
-            }
-        }
-
-        foreach($deleteRoles as $idRole){
-            $users->deleteRole($idUser, $idRole);
-        }
+        $currentUser = $users->getById($idUser);
         
-        // add roles
-        foreach($selectedRoles as $idRole){
-            if(!in_array($idRole, $userHasRoles)){
-                $newRoles[] = $idRole;
-            }
-        }
-
-        foreach ($newRoles as $idRole)
+        if(md5($request->get('tbCurrentPassword')) === $currentUser->password)
         {
-            $users->addRole($idRole, $idUser);
-        }
-        //
+            // update password if field is not empty
+            if(!empty($request->get('tbPassword')) && !empty($request->get('tbPassword_confirmation'))){
+                $validacija = Validator::make($request->all(), [
+                    'tbPassword' => 'required|confirmed|min:6',
+                ]);
+                $validacija->setAttributeNames([
+                    'tbPassword' => 'password',
+                ]);
+        
+                if ($validacija->fails()) {
+                    // redirekcija na pocetnu i ispis gresaka
+                    return back()->withInput()->withErrors($validacija);
+                }
 
-        // update avatar
-        if(!empty($request->file('fAvatarImage'))){
-            $photo = $request->file('fAvatarImage');
-            $extension = $photo->getClientOriginalExtension();
-            $tmp_path = $photo->getPathName();
+                $updateData['password'] = md5($request->get('tbPassword'));
+            }
+
+            // update roles
+            $userRoles = $request->get('userRoles');
+            $selectedRoles = [];
+
+            if(!empty($userRoles)){
+                foreach($userRoles as $val){
+                    $selectedRoles[] = (int)$val;
+                }
+            }
+
+            $userHasRolesDb = $users->getAllRoles($idUser);
+            $deleteRoles = [];
+            $newRoles = [];
+            $userHasRoles = [];
+
+            foreach($userHasRolesDb as $e){
+                if($e->name != 'admin'){
+                    $userHasRoles[] = $e->idRole;
+                }
+            }
+
+            // delete roles
+            foreach($userHasRoles as $idRole){
+                if(!in_array($idRole, $selectedRoles)){
+                    $deleteRoles[] = $idRole;
+                }
+            }
+
+            foreach($deleteRoles as $idRole){
+                $users->deleteRole($idUser, $idRole);
+            }
             
-            $folder = 'images/avatars/';
-            $file_name = $request->session()->get('user')[0]->username . "_" . time() . "." . $extension;
-            $new_path = public_path($folder) . $file_name;
+            // add roles
+            foreach($selectedRoles as $idRole){
+                if(!in_array($idRole, $userHasRoles)){
+                    $newRoles[] = $idRole;
+                }
+            }
 
-            try {
-                // insert avatar image
-                File::move($tmp_path, $new_path);
+            foreach ($newRoles as $idRole)
+            {
+                $users->addRole($idRole, $idUser);
+            }
 
-                $updateData['avatarImagePath'] = 'images/avatars/'.$file_name;
+            
+            $userHasRolesDb = $users->getAllRoles($idUser);
+
+            $request->session()->forget('roles');
+            $request->session()->push("roles", $userHasRolesDb);
+            //
+
+            // update avatar
+            if(!empty($request->file('fAvatarImage'))){
+                $photo = $request->file('fAvatarImage');
+                $extension = $photo->getClientOriginalExtension();
+                $tmp_path = $photo->getPathName();
+                
+                $folder = 'images/avatars/';
+                $file_name = $request->session()->get('user')[0]->username . "_" . time() . "." . $extension;
+                $new_path = public_path($folder) . $file_name;
+
+                try {
+                    // insert avatar image
+                    File::move($tmp_path, $new_path);
+
+                    $updateData['avatarImagePath'] = 'images/avatars/'.$file_name;
+                }
+                catch(\Symfony\Component\HttpFoundation\File\Exception\FileException $ex) {
+                    \Log::error('File error!'.$ex->getMessage());
+                    return redirect()->back()->with('error','Error with image file!');
+                }
+                catch(\ErrorException $ex) { 
+                    \Log::error('File error!'.$ex->getMessage());
+                    return redirect()->back()->with('error','Error');
+                }
             }
-            catch(\Symfony\Component\HttpFoundation\File\Exception\FileException $ex) {
-                \Log::error('File error!'.$ex->getMessage());
-                return redirect()->back()->with('error','Error with image file!');
+
+            // update user
+            $userId = $users->updateUser($idUser, $updateData);
+
+            if(empty($userId))
+            {
+                return back()->withInput()->with('error', 'Update failed!');
             }
-            catch(\ErrorException $ex) { 
-                \Log::error('File error!'.$ex->getMessage());
-                return redirect()->back()->with('error','Error');
-            }
+
+            return back()->withInput()->with('messages', 'Successfully updated!');
         }
-
-        // update user
-        $userId = $users->updateUser($idUser, $updateData);
-
-        if(empty($userId))
-        {
-            return back()->withInput()->with('error', 'Update failed!');
+        else{
+            return back()->withInput()->with('error', 'Wrong password!');
         }
-
-        return back()->withInput()->with('messages', 'Successfully updated!');
     }
 }

@@ -22,13 +22,23 @@
         </div>
     @endif
 
+    @if(session()->has('error'))
+        <div class="alert alert-danger">
+            <div>{{ session('error') }}</div>
+        </div>
+    @endif
+
     <form action="{{ asset('/profile/edit') }}" method="post" enctype="multipart/form-data">
         <div class="form-group user-edit-control">
-            <input type="password" name="tbPassword" class="form-control" placeholder="Password">
+            <input type="password" name="tbCurrentPassword" class="form-control" placeholder="Current password">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group user-edit-control">
-            <input type="password" name="tbPassword_confirmation" class="form-control" placeholder="Retype password">
+            <input type="password" name="tbPassword" class="form-control" placeholder="New password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group user-edit-control">
+            <input type="password" name="tbPassword_confirmation" class="form-control" placeholder="Retype new password">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <p>Upload avatar image:</p>
