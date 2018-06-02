@@ -19,28 +19,31 @@ class ProfileController extends Controller
         $currentUser = $users->getById($idUser);
         
         // change password
-        if(!empty($request->get('tbCurrentPassword')) && md5($request->get('tbCurrentPassword')) === $currentUser->password)
+        if(!empty($request->get('tbCurrentPassword')))
         {
-            // update password if field is not empty
-            if(!empty($request->get('tbPassword')) && !empty($request->get('tbPassword_confirmation'))){
-                $validacija = Validator::make($request->all(), [
-                    'tbPassword' => 'required|confirmed|min:6',
-                ]);
-                $validacija->setAttributeNames([
-                    'tbPassword' => 'password',
-                ]);
-        
-                if ($validacija->fails()) {
-                    // redirekcija na pocetnu i ispis gresaka
-                    return back()->withInput()->withErrors($validacija);
-                }
+            if(md5($request->get('tbCurrentPassword')) === $currentUser->password){
+                // update password if field is not empty
+                if(!empty($request->get('tbPassword')) && !empty($request->get('tbPassword_confirmation'))){
+                    $validacija = Validator::make($request->all(), [
+                        'tbPassword' => 'required|confirmed|min:6',
+                    ]);
+                    $validacija->setAttributeNames([
+                        'tbPassword' => 'password',
+                    ]);
+            
+                    if ($validacija->fails()) {
+                        // redirekcija na pocetnu i ispis gresaka
+                        return back()->withInput()->withErrors($validacija);
+                    }
 
-                $updateData['password'] = md5($request->get('tbPassword'));
+                    $updateData['password'] = md5($request->get('tbPassword'));
+                }
+            }
+            else{
+                return back()->withInput()->with('error', 'Wrong password!');
             }
         }
-        else{
-            return back()->withInput()->with('error', 'Wrong password!');
-        }
+        
 
         // update roles
         $userRoles = $request->get('userRoles');
