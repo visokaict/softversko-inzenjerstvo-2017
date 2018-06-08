@@ -2,7 +2,8 @@
 
 //
 // game submissions
-Route::get('/games', 'FrontEndController@games');
+//Route::get('/games', 'FrontEndController@games');// this is moved to another controller
+Route::get('/games', 'GameSubmissionController@getFilteredGames');
 Route::get('/games/create', 'FrontEndController@createGameSubmission')->middleware('isLoggedIn', 'isJamDeveloper');
 Route::get('/games/{id}', 'FrontEndController@oneGameSubmission');
 Route::get('/games/{id}/edit', 'FrontEndController@editGameSubmission')->middleware('isLoggedIn', 'isJamDeveloper');
