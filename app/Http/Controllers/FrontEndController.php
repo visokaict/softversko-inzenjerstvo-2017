@@ -90,11 +90,13 @@ class FrontEndController extends Controller
         //move to own controller
         return view('gameSubmissions.createGameSubmission', $this->viewData);
     }
+
     public function oneGameSubmission($id){
         //todo
         //move to own controller
         return view('gameSubmissions.oneGameSubmission', $this->viewData);
     }
+
     public function editGameSubmission($id){
         //todo
         //move to own controller
@@ -139,6 +141,8 @@ class FrontEndController extends Controller
         return view('other.contactUs', $this->viewData);
     }
 
+    //
+    // profile
     public function profile() {
         $this->viewData['isEditButtonDisplayed'] = true;
 
