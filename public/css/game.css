@@ -40,3 +40,58 @@
     border: 1px solid #000;
     height: 200px;
 }
+
+/* Games page */
+
+.games-container {
+    transition: .1s opacity;
+}
+
+.games-content {
+    padding: 25px 0 0;
+}
+
+.games-title {
+    margin: 40px 0;
+}
+
+span.game-category {
+    border: 1px solid #555;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 12px;
+    color: #555;
+}
+
+.games-content-item {
+    min-height: 270px;
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+
+.pagination > li > a {
+    border-color: #999;
+}
+
+@media only screen and (max-width: 768px) {
+    .games-content-item {
+        margin-bottom: 30px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .games-content-item {
+        min-height: 250px;
+    }
+}
+
+.loading-overlay {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 150px;
+    transform: translateX(-50%);
+    z-index: 100000;
+    opacity: 1;
+}
