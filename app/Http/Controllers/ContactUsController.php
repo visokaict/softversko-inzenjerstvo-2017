@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class ContactUsController extends Controller
+class ContactUsController extends Controller implements IContactUs
 {
     
     public function index(Request $request)

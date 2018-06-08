@@ -45,7 +45,7 @@ Games
                 var url = $(this).attr('href');
 
                 getGames(url);
-                window.history.pushState("", "", url);
+                //window.history.pushState("", "", url);
             });
 
             $("#gamesSorter").on('change', function(){
@@ -71,7 +71,7 @@ Games
                 }
 
                 getGames(newUrl);
-                window.history.pushState("", "", newUrl);
+                //window.history.pushState({state:'new'}, "", newUrl);
             });
 
             function getGames(url, sortBy) {

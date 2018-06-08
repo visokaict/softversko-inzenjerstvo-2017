@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Interfaces\IProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Http\Models\Roles;
@@ -9,7 +10,7 @@ use App\Http\Models\Users;
 use App\Http\Models\Images;
 use Illuminate\Support\Facades\Validator;
 
-class ProfileController extends Controller
+class ProfileController extends Controller implements IProfile
 {
     public function edit(Request $request){
         $idUser = session()->get('user')[0]->idUser;

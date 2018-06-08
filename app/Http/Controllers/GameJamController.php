@@ -119,4 +119,12 @@ class GameJamController extends Controller
             }
         }
     }
+
+    public function edit(Request $request){
+        //todo
+    }
+
+    public function delete(Request $request){
+        //todo
+    }
 }
