@@ -8,6 +8,8 @@ use App\Http\Models\Roles;
 use Illuminate\Http\Request;
 use App\Http\Models\Users;
 use App\Http\Models\GameCriteria;
+use App\Http\Models\GameSubmissions;
+use Illuminate\Support\Facades\Input;
 
 class FrontEndController extends Controller
 {
@@ -40,11 +42,46 @@ class FrontEndController extends Controller
     public function editGameJam($id){
         return view('gameJams.editGameJam', $this->viewData);
     }
+
     //
     // games submissions views
-    public function games(){
+    public function games(Request $request) {
         //todo
         //move to own controller
+
+        $page = empty(Input::get("page")) ? 1 : Input::get("page");
+        $sortBy = empty(Input::get("sort")) ? "new" : Input::get("sort");
+        $sort["name"] = "createdAt";
+        $sort["direction"] = "desc";
+
+        switch($sortBy){
+            case "old":
+                $sort["direction"] = "asc";
+                break;
+            case "top":
+                $sort["name"] = "rating";
+                break;
+            case "views":
+                $sort["name"] = "numOfViews";
+                break;
+            case "download":
+                $sort["name"] = "numOfDownloads";
+                break;
+        }
+
+        $games = new GameSubmissions();
+        // todo: add combobox games per page 6 9 12 all?
+        $getGames = $games->get(($page - 1) * 9, 9, $sort);
+
+        $this->viewData["games"] = $getGames;
+        $this->viewData["gamesCount"] = $games->count();
+        $this->viewData["currentPage"] = $page;
+        $this->viewData["currentSort"] = $sortBy;
+
+        if ($request->ajax()) {
+            return view('ajax.loadGames', $this->viewData)->render();
+        }
+
         return view('gameSubmissions.games', $this->viewData);
     }
 

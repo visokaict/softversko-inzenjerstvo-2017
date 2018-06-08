@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 class Generic
 {
-    private $tableName;
+    protected $tableName;
     private $idName;
 
     public function __construct($tableName, $idName)
@@ -48,5 +48,11 @@ class Generic
         return DB::table($this->tableName)
             ->where($this->idName, '=', $id)
             ->delete();
+    }
+
+    public function count()
+    {
+        return DB::table($this->tableName)
+            ->count();
     }
 }
