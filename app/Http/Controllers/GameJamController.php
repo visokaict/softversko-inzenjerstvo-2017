@@ -8,9 +8,24 @@ use App\Http\Models\GameJams;
 use App\Http\Models\GameCriteria;
 use App\Http\Models\Images;
 use Illuminate\Support\Facades\Validator;
+use Psy\Util\Json;
 
 class GameJamController extends Controller
 {
+
+    public function getChartGameJams(Request $request)
+    {
+        $gameJamDB = new GameJams();
+        $gameJamsResult = $gameJamDB->getAllWhereVotingEndDateNotFinished();
+
+        return Json::encode($gameJamsResult);
+    }
+
+    public function getFilteredGameJams(Request $request)
+    {
+        // TODO
+    }
+
     public function insert(Request $request){
         $startDate = strtotime($request->get("dStartDate"));
         $endDate = strtotime($request->get("dEndDate"));

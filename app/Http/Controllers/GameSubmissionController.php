@@ -13,11 +13,6 @@ class GameSubmissionController extends Controller implements IGameSubmission
 
     private $viewData;
 
-    public function getChartGames(Request $request)
-    {
-        // TODO
-    }
-
     //
     // this function is used as AJAX and normal REQUEST handler
     public function getFilteredGames(Request $request)

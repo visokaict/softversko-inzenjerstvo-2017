@@ -41,4 +41,11 @@ class GameJams extends Generic
                 'idCriteria' => $idCriteria,
             ]);
     }
+
+    public function getAllWhereVotingEndDateNotFinished(){
+        return \DB::table($this->tableName)
+            ->select(["idGameJam","title", "startDate", "endDate"])
+            ->where('votingEndDate', '>', time())
+            ->get();
+    }
 }
