@@ -1,9 +1,9 @@
 /*
 *   All about game jams
 **/
-slamjam.common = (function(){
+slamjam.common = (function () {
 
-    function _createURL (url){
+    function _createURL(url) {
         return base_url + url;
     }
 
@@ -22,25 +22,25 @@ slamjam.common = (function(){
             //
             // default function that can handle things before or after
             //
-            beforeSend: function() {
+            beforeSend: function () {
                 //
                 // start loader
                 _startLoader();
             },
-            success: function(data, textStatus, jqXHR) {
-                if(typeof options.success === 'function'){
+            success: function (data, textStatus, jqXHR) {
+                if (typeof options.success === 'function') {
                     options.success(data, textStatus, jqXHR);
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                if(typeof options.error === 'function'){
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (typeof options.error === 'function') {
                     options.error(jqXHR, textStatus, errorThrown);
                 }
             },
-            complete: function() {
+            complete: function () {
                 _stopLoader();
 
-                if(typeof options.complete === 'function'){
+                if (typeof options.complete === 'function') {
                     options.complete();
                 }
             }
@@ -54,30 +54,29 @@ slamjam.common = (function(){
 
     var loaderPosition = 0;
     var $loader = null;
-    function _startLoader(){
-        if($loader === null){
+
+    function _startLoader() {
+        if ($loader === null) {
             //init loader selector
             $loader = $("#loading-overlay");
         }
 
-        loaderPosition ++;
-        if($loader){
+        loaderPosition++;
+        if ($loader) {
             $loader.css('display', 'block');
         }
     }
 
-    function _stopLoader(){
+    function _stopLoader() {
         --loaderPosition;
 
-        if(loaderPosition <= 0){
+        if (loaderPosition <= 0) {
             loaderPosition = 0;
-            if($loader !== null)
-            {
+            if ($loader !== null) {
                 $loader.css('display', 'none');
             }
         }
     }
-
 
 
     return {
@@ -97,7 +96,9 @@ slamjam.error = (function () {
 
     var $selector = null;
     var _enumList = {};
-    ["ERROR", "SUCCESS", "INFO", "WARNING"].map(function(item){ _enumList[item] = item; });
+    ["ERROR", "SUCCESS", "INFO", "WARNING"].map(function (item) {
+        _enumList[item] = item;
+    });
 
     var _errorTypes = {
         "ERROR": "danger",
@@ -107,14 +108,14 @@ slamjam.error = (function () {
     };
 
     function _initSelector(type) {
-        if($selector === null) {
+        if ($selector === null) {
             // add first,
             $selector = $("#alert-messages");
         }
     }
 
-    function _print(message, type){
-        if(_enumList[type] === undefined) return;
+    function _print(message, type) {
+        if (_enumList[type] === undefined) return;
         _initSelector(type);
 
         var removeButton = `<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>`;
@@ -122,7 +123,7 @@ slamjam.error = (function () {
         $selector.prepend(`<div class="alert alert-${_errorTypes[type]}">${removeButton} ${msg}</div>`);
     }
 
-    return{
+    return {
         print: _print,
         enumList: _enumList,
     }
@@ -131,11 +132,11 @@ slamjam.error = (function () {
 /*
 *   All about games page and games handling
 **/
-slamjam.games = (function(){
+slamjam.games = (function () {
     //todo
 
-    function _initGamesPage (){
-        $('body').on('click', '.pagination li a', function(e) {
+    function _initGamesPage() {
+        $('body').on('click', '.pagination li a', function (e) {
             e.preventDefault();
 
             $('.games-container').css('opacity', '0.5');
@@ -148,7 +149,7 @@ slamjam.games = (function(){
             //window.history.pushState("", "", url);
         });
 
-        $("#gamesSorter").on('change', function(){
+        $("#gamesSorter").on('change', function () {
             var value = $(this).val();
 
             $('.games-container').css('opacity', '0.5');
@@ -161,11 +162,11 @@ slamjam.games = (function(){
 
             var regSort = /([?&]sort)=([^#&]*)/g;
 
-            if(!/[?&]page=/.test(window.location.search)) {
+            if (!/[?&]page=/.test(window.location.search)) {
                 newUrl = url + "?page=1";
             }
 
-            if(/[?&]sort=/.test(window.location.search)) {
+            if (/[?&]sort=/.test(window.location.search)) {
                 newUrl = url.replace(regSort, "$1=" + value);
             }
             else {
@@ -178,7 +179,7 @@ slamjam.games = (function(){
 
         function getGames(url) {
             $.ajax({
-                url : url
+                url: url
             }).done(function (data) {
                 //$('.loading-overlay').css('display', 'none');
                 slamjam.common.stopLoader();
@@ -199,57 +200,71 @@ slamjam.games = (function(){
 /*
 *   All about game jams
 **/
-slamjam.gameJam = (function(){
+slamjam.gameJam = (function () {
     //todo
 
     function _initChart() {
-
-        slamjam.common.ajax({
-            url: slamjam.common.createURL('/game-jams/chart'),
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (error) {
-                //todo
-            }
-        });
-
-
         // create a dataset with items
         // note that months are zero-based in the JavaScript Date object, so month 3 is April
-        var items = new vis.DataSet([
-            {id: 0, content: 'item 0', start: new Date(2018, 5, 1), end: new Date(2018, 5, 12), link: "as"},
-            {id: 1, content: 'item 1', start: new Date(2018, 5, 6), end: new Date(2018, 5, 16), link: "as"},
-            {id: 2, content: 'item 2', start: new Date(2018, 5, 18), end: new Date(2018, 5, 22), link: "as"},
-            {id: 3, content: 'item 2', start: new Date(2018, 5, 16), end: new Date(2018, 5, 24), link: "as"},
-        ]);
 
-        // create visualization
-        var container = document.getElementById('visualization');
-        var options = {
-            maxHeight: 400,
-            editable: false,
-            clickToUse: false,
-            zoomable: false,
-            selectable: false,
-            start: new Date(2018, 5, 14),
-            template: function (data, x, y) {
-                return `<a href='${data.link}'>${data.content}</a>`;
-            }
-        };
+        function _mapChartData(data) {
 
-        var timeline = new vis.Timeline(container);
-        timeline.setOptions(options);
-        //timeline.setGroups(groups);
-        timeline.setItems(items);
+            var parsedData = data.map(function (item) {
+                return {
+                    id: item.idGameJam,
+                    group: item.idGameJam,// so items are in one line
+                    content: item.title,
+                    start: new Date(Number(item.startDate) * 1000),
+                    end: new Date(Number(item.endDate) * 1000),
+                    link: "game-jams/" + item.idGameJam,
+                    //className: "", // call some type of generator that will return same css class for some value
+                };
+            });
 
+            return new vis.DataSet(parsedData);
+        }
 
         //
         // DOCS: http://visjs.org/docs/timeline/
         //
-        //dodati Start , End
-        //dodaj boje neke
+        function _createChart(data) {
+            var timelineDuration = 7; // this is presented in days
+            var date = new Date();
 
+            var container = document.getElementById('visualization');
+            var options = {
+                maxHeight: 400,
+                editable: false,
+                clickToUse: false,
+                zoomable: false,
+                selectable: false,
+                orientation: 'both', // add both up and down labels
+                start: date,
+                end: (new Date()).setDate(date.getDate() + timelineDuration),
+                template: function (data, x, y) {
+                    return `<a href='${data.link}'>${data.content}</a>`;
+                }
+            };
+
+            var items = _mapChartData(data);
+
+            var timeline = new vis.Timeline(container);
+            timeline.setOptions(options);
+            timeline.setItems(items);
+            timeline.moveTo(date);
+            //timeline.setGroups(groups);
+        }
+
+
+        slamjam.common.ajax({
+            url: slamjam.common.createURL('/game-jams/chart'),
+            success: function (data) {
+                _createChart(data);
+            },
+            error: function (error) {
+                slamjam.error.print("Fetching game jams for chart has faild.", slamjam.error.enumList.ERROR)
+            }
+        });
     }
 
     function _initGameJamItems() {
@@ -265,6 +280,6 @@ slamjam.gameJam = (function(){
 /*
 *   Comments
 **/
-slamjam.comments = (function(){
+slamjam.comments = (function () {
     //todo
 })();
