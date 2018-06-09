@@ -26,6 +26,11 @@
 </head>
 
 <body>
+
+<!-- LOADER -->
+<div class="loading-overlay" id="loading-overlay"><img src="{{ asset('/images/loading.svg') }}" /></div>
+<!-- /LOADER -->
+
 <nav class="navbar navbar-inverse" style="border-radius:0">
     <div class="container-fluid">
         <div class="navbar-header">
