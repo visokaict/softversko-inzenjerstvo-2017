@@ -405,3 +405,13 @@ footer.custom-footer {
     padding-top: 1px;
     margin-left: 10px;
 }
+
+.loading-overlay {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 150px;
+    transform: translateX(-50%);
+    z-index: 100000;
+    opacity: 1;
+}
