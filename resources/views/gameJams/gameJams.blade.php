@@ -117,7 +117,6 @@
 
 @section('jsfiles')
     <script src="https://rawgit.com/almende/vis/master/dist/vis.min.js"></script>
-    <script type="text/javascript" src="{{ asset('/js/main.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             slamjam.gameJam.initChart();

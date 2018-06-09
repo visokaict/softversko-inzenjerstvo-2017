@@ -31,7 +31,7 @@
 <div class="loading-overlay" id="loading-overlay"><img src="{{ asset('/images/loading.svg') }}" /></div>
 <!-- /LOADER -->
 
-<nav class="navbar navbar-inverse" style="border-radius:0">
+<nav class="navbar navbar-inverse @yield('addClassesToBodyCover')" style="border-radius:0">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -110,8 +110,8 @@
 </nav>
 
 <!-- Page Content -->
-<div class="container main-container">
-    <div class="row" id="alert-messages">
+<div class="container main-container @yield('addClassesToBodyCover')">
+    <div class="row alert-parent" id="alert-messages">
         @if(session()->has('message'))
             <div class="col-md-offset-1 col-md-10 alert alert-info">{{session()->get('message')}}</div>
         @endif
@@ -189,6 +189,7 @@
         $(this).removeClass("expand-width");
     });
 </script>
+<script type="text/javascript" src="{{ asset('/js/main.js') }}"></script>
 
 @yield('jsfiles')
 

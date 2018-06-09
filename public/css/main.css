@@ -26,17 +26,17 @@
 
 /*  ---------------------  */
 
-.nav-title { 
-    margin-right:6px; 
-} 
- 
-.slam-jam-logo { 
-    width: 40px; 
-    height: 40px; 
-    float: right; 
-    margin-top: -8px; 
-    margin-left: 10px; 
-} 
+.nav-title {
+    margin-right:6px;
+}
+
+.slam-jam-logo {
+    width: 40px;
+    height: 40px;
+    float: right;
+    margin-top: -8px;
+    margin-left: 10px;
+}
 
 .float-left {
     float: left;
@@ -109,6 +109,7 @@ p.p-joind-submissions {
 
 .main-container {
     min-height: 600px;
+    position: relative;
 }
 
 .show {
@@ -415,4 +416,108 @@ footer.custom-footer {
     transform: translateY(-50%);
     z-index: 100000;
     opacity: 1;
+}
+
+
+
+.game-cover-image {
+    background-image: url('http://profilerehab.com/facebook_covers/funny/recycle_congress_cover_1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 280px;
+}
+.game-header {
+    background-color: #111;
+    padding: 20px 0;
+    color: #fff;
+}
+.game-header-inner {
+    /*width: 820px;*/
+}
+.game-header span {
+    display: inline-block;
+}
+.game-content {
+
+    margin: 15px auto;
+}
+.game-content-left {
+    border: 1px solid #000;
+    height: 200px;
+}
+.game-content-right {
+    border: 1px solid #000;
+    height: 200px;
+}
+.game-comments {
+    border: 1px solid #000;
+    height: 200px;
+}
+
+/* Games page */
+
+.games-container {
+    transition: .1s opacity;
+}
+
+.games-content {
+    padding: 25px 0 0;
+}
+
+.games-title {
+    margin: 40px 0;
+}
+
+span.game-category {
+    border: 1px solid #555;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 12px;
+    color: #555;
+}
+
+.games-content-item {
+    min-height: 270px;
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+
+.pagination > li > a {
+    border-color: #999;
+}
+
+@media only screen and (max-width: 768px) {
+    .games-content-item {
+        margin-bottom: 30px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .games-content-item {
+        min-height: 250px;
+    }
+}
+
+.main-container.one-game-submission-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar.one-game-submission-container {
+    margin-bottom: 0;
+}
+
+
+.alert-parent{
+    position: absolute;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 1000000;
+}
+.alert-parent > .alert {
+    margin: 0 auto;
+    width: 80%;
 }
