@@ -34,57 +34,10 @@ Games
 @endsection
 
 @section('jsfiles')
+    <script type="text/javascript" src="{{ asset('/js/main.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
-             $('body').on('click', '.pagination li a', function(e) {
-                e.preventDefault();
-
-                $('.games-container').css('opacity', '0.5');
-                $('.loading-overlay').css('display', 'block');
-
-                var url = $(this).attr('href');
-
-                getGames(url);
-                //window.history.pushState("", "", url);
-            });
-
-            $("#gamesSorter").on('change', function(){
-                var value = $(this).val();
-
-                $('.games-container').css('opacity', '0.5');
-                $('.loading-overlay').css('display', 'block');
-
-                var url = window.location.href;
-                var newUrl;
-
-                var regSort = /([?&]sort)=([^#&]*)/g;
-
-                if(!/[?&]page=/.test(window.location.search)) {
-                    newUrl = url + "?page=1";
-                }
-
-                if(/[?&]sort=/.test(window.location.search)) {
-                    newUrl = url.replace(regSort, "$1=" + value);
-                }
-                else {
-                    newUrl += "&sort=" + value;
-                }
-
-                getGames(newUrl);
-                //window.history.pushState({state:'new'}, "", newUrl);
-            });
-
-            function getGames(url, sortBy) {
-                $.ajax({
-                    url : url
-                }).done(function (data) {
-                    $('.loading-overlay').css('display', 'none');
-                    $('.games-container').css('opacity', '1');
-                    $('.games-container').html(data);
-                }).fail(function () {
-                    alert('Failed to load games.');
-                });
-            }
+        $(document).ready(function () {
+            slamjam.games.initGamesPage();
         });
     </script>
 @endsection
