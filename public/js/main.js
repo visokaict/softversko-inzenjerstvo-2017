@@ -61,7 +61,7 @@ slamjam.games = (function(){
             //window.history.pushState({state:'new'}, "", newUrl);
         });
 
-        function getGames(url, sortBy) {
+        function getGames(url) {
             $.ajax({
                 url : url
             }).done(function (data) {

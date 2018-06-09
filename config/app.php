@@ -160,7 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         // Our providers
-        App\Providers\UserDataProvider::class
+        App\Providers\FrontEndDataProvider::class
 
     ],
 

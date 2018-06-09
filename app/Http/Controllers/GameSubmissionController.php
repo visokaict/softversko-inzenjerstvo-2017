@@ -53,7 +53,7 @@ class GameSubmissionController extends Controller implements IGameSubmission
 
         //
         // add navigagtion for page only if not ajax
-        $this->setupNavigation();
+        //$this->setupNavigation();
 
         return view('gameSubmissions.games', $this->viewData);
     }
@@ -73,8 +73,8 @@ class GameSubmissionController extends Controller implements IGameSubmission
         // TODO: Implement delete() method.
     }
 
-    private function setupNavigation(){
+    /*private function setupNavigation(){
         $navs = new Navigations();
         $this->viewData['navigation'] = $navs->getAllSortedByPosition();
-    }
+    }*/
 }

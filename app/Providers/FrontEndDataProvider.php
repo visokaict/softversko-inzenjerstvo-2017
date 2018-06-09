@@ -4,8 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Http\Models\Users;
+use App\Http\Models\Navigations;
 
-class UserDataProvider extends ServiceProvider
+class FrontEndDataProvider extends ServiceProvider
 {
     public function boot()
     {
@@ -20,6 +21,9 @@ class UserDataProvider extends ServiceProvider
             }
             $view->userDataProvider = $user;
             $view->rolesDataProvider = $roles;
+
+            $navs = new Navigations();
+            $view->navigation = $navs->getAllSortedByPosition();
         });
     }
 
