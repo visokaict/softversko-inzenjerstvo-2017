@@ -3,15 +3,90 @@
 **/
 slamjam.common = (function(){
 
-    //add one ajax handler
+    function _createURL (url){
+        return base_url + url;
+    }
 
-    //add utilitie stuff here
+    function _ajax(options) {
+        //
+        // add default options for ajax
+        var defaultOptions = {
+            data: null,
+            dataType: 'json',
+            url: base_url,
+        };
 
-    //etc
+        //
+        // ajax call
+        $.ajax(Object.assign({}, defaultOptions, options, {
+            //
+            // default function that can handle things before or after
+            //
+            beforeSend: function() {
+                //
+                // start loader
+                _startLoader();
+            },
+            success: function(data, textStatus, jqXHR) {
+                if(typeof options.success === 'function'){
+                    options.success(data, textStatus, jqXHR);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                if(typeof options.error === 'function'){
+                    options.error(jqXHR, textStatus, errorThrown);
+                }
+            },
+            complete: function() {
+                _stopLoader();
+
+                if(typeof options.complete === 'function'){
+                    options.complete();
+                }
+            }
+        }));
+    }
+
+
+    /*
+    *   This is Loading handler
+    * */
+
+    var loaderPosition = 0;
+    var $loader = null;
+    function _startLoader(){
+        if($loader === null){
+            //init loader selector
+            $loader = $("#loading-overlay");
+        }
+
+        loaderPosition ++;
+        if($loader){
+            $loader.css('display', 'block');
+        }
+    }
+
+    function _stopLoader(){
+        --loaderPosition;
+
+        if(loaderPosition <= 0){
+            loaderPosition = 0;
+            if($loader !== null)
+            {
+                $loader.css('display', 'none');
+            }
+        }
+    }
+
 
 
     return{
         //return what others need to use from common
+        ajax: _ajax,
+        createURL: _createURL,
+
+        startLoader: _startLoader,
+        stopLoader: _stopLoader
     };
 })();
 
@@ -87,6 +162,18 @@ slamjam.gameJam = (function(){
     //todo
 
     function _initChart() {
+    /*
+        slamjam.common.ajax({
+            url: slamjam.common.createURL('/game-jams/chart'),
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (error) {
+                //todo
+            }
+        });
+    */
+
         // create a dataset with items
         // note that months are zero-based in the JavaScript Date object, so month 3 is April
         var items = new vis.DataSet([
