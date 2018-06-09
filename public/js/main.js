@@ -102,7 +102,8 @@ slamjam.games = (function(){
             e.preventDefault();
 
             $('.games-container').css('opacity', '0.5');
-            $('.loading-overlay').css('display', 'block');
+            //$('.loading-overlay').css('display', 'block');
+            slamjam.common.startLoader();
 
             var url = $(this).attr('href');
 
@@ -114,7 +115,9 @@ slamjam.games = (function(){
             var value = $(this).val();
 
             $('.games-container').css('opacity', '0.5');
-            $('.loading-overlay').css('display', 'block');
+
+            //$('.loading-overlay').css('display', 'block');
+            slamjam.common.startLoader();
 
             var url = window.location.href;
             var newUrl;
@@ -140,7 +143,8 @@ slamjam.games = (function(){
             $.ajax({
                 url : url
             }).done(function (data) {
-                $('.loading-overlay').css('display', 'none');
+                //$('.loading-overlay').css('display', 'none');
+                slamjam.common.stopLoader();
                 $('.games-container').css('opacity', '1');
                 $('.games-container').html(data);
             }).fail(function () {
