@@ -22,7 +22,7 @@
     <div class="clearfix"></div>
 </div>
 <div class="row">
-    <ul class="pagination" id="pagination">
+    <ul class="pagination" id="pagination-games">
         @for($i = 0; $i < ceil($gamesCount / 9); $i++)
             <li class="page-item @if($currentPage == $i + 1) {{ 'active' }} @endif"><a href="{{ url()->current() . '?page=' . ($i + 1) . '&sort=' . $currentSort}}" class='page-link'>{{ $i + 1 }}</a></li>
         @endfor

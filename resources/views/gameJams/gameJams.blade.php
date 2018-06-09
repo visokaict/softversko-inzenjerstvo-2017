@@ -42,7 +42,6 @@
         </section>
     </header>
 
-
     <!-- chart section -->
     <div class="container-fluid no-padding">
         <div id="visualization"></div>
@@ -55,62 +54,17 @@
     </div>
     <!-- /chart section -->
 
-
     <!-- Page Content -->
     <div class="container">
         <h2 class="margin-bottom-40">Game Jams in progress</h2>
-        <div class="row">
-
-            <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/300x150" alt=""></a>
-                    <div class="card-body">
-
-                        <h4 class="card-title">
-                            <a href="#">Jam title</a>
-                        </h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Hosted by: <span>Some Guy</span></h6>
-                        <p class="margin-bottom-5">Submitions closes in: <span>12h</span></p>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                 aria-valuemax="100" style="width: 60%;">
-                            </div>
-                        </div>
-                        <p class="card-subtitle mb-2 text-muted p-joind-submissions">10<span> joined</span> 3 <span>submissions</span>
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-
+        <div class="game-jams-in-progress-container" id="game-jams-in-progress-container">
+            @include('ajax.loadGameJamsInProgress') 
         </div>
-        <!-- /.row -->
-
 
         <h2 class="margin-bottom-40">Upcoming Game Jams</h2>
-        <div class="row">
-
-            <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/300x150" alt=""></a>
-                    <div class="card-body">
-
-                        <h4 class="card-title">
-                            <a href="#">Jam title</a>
-                        </h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Hosted by: <span>Some Guy</span></h6>
-
-                        <p class="card-text margin-bottom-5">Starts in <span>5days</span></p>
-                        <p class="card-subtitle mb-2 text-muted p-joind-submissions">10<span> joined</span></p>
-
-                    </div>
-                </div>
-            </div>
-
+        <div class="game-jams-upcoming-container" id="game-jams-upcoming-container">
+            @include('ajax.loadGameJamsUpcoming')
         </div>
-        <!-- /.row -->
-        
-
     </div>
     <!-- /.container -->
 @endsection

@@ -34,7 +34,7 @@ class GameJams extends Generic
         return parent::insertGetId($insertData);
     }
 
-    public function insertCriteria($idGameJam, $idCriteria){
+    public function insertCriteria($idGameJam, $idCriteria) {
         return \DB::table('gamejams_criterias')
             ->insert([
                 'idGameJam' => $idGameJam,
@@ -42,10 +42,43 @@ class GameJams extends Generic
             ]);
     }
 
-    public function getAllWhereVotingEndDateNotFinished(){
+    public function getAllWhereVotingEndDateNotFinished() {
         return \DB::table($this->tableName)
-            ->select(["idGameJam","title", "startDate", "endDate"])
+            ->select(["idGameJam", "title", "startDate", "endDate"])
             ->where('votingEndDate', '>', time())
             ->get();
+    }
+
+    public function getFilteredGameJams($filter, $offset = 0, $limit = 6) {
+        $return = [];
+
+        $result = \DB::table($this->tableName)
+           ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
+           ->join('images', 'gamejams.idCoverImage', '=' ,'images.idImage')
+           ->select("*");
+
+        // in progress
+        if($filter === "progress") {
+            $count = $result->where("startDate", "<", time())
+            ->where("endDate", ">", time())->count();
+
+            $result->offset($offset)
+                ->limit($limit)
+                ->where("startDate", "<", time())
+                ->where("endDate", ">", time());
+        }
+        // upcoming
+        else if($filter === "upcoming") {
+            $count = $result->where("startDate", ">", time())->count();
+
+            $result->offset($offset)
+                ->limit($limit)
+                ->where("startDate", ">", time());
+        }
+
+        $return["count"] = $count;
+        $return["result"] = $result->get();
+
+        return $return;
     }
 }
