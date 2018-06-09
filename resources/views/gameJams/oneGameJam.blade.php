@@ -8,6 +8,9 @@
    <link href="{{asset('css/game.css')}}" rel="stylesheet" type="text/css">
 @endsection
 
+@section('addClassesToBodyCover')
+  one-game-submission-container @endsection
+
 @section('content')
   
 <div class="game-cover-image">
