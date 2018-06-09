@@ -80,7 +80,7 @@ slamjam.common = (function(){
 
 
 
-    return{
+    return {
         //return what others need to use from common
         ajax: _ajax,
         createURL: _createURL,
@@ -90,6 +90,43 @@ slamjam.common = (function(){
     };
 })();
 
+/*
+*
+* */
+slamjam.error = (function () {
+
+    var $selector = null;
+    var _enumList = {};
+    ["ERROR", "SUCCESS", "INFO", "WARNING"].map(function(item){ _enumList[item] = item; });
+
+    var _errorTypes = {
+        "ERROR": "danger",
+        "SUCCESS": "success",
+        "INFO": "info",
+        "WARNING": "warning",
+    };
+
+    function _initSelector(type) {
+        if($selector === null) {
+            // add first,
+            $selector = $("#alert-messages");
+        }
+    }
+
+    function _print(message, type){
+        if(_enumList[type] === undefined) return;
+        _initSelector(type);
+
+        var removeButton = `<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>`;
+        var msg = `<div>${ message.replace(/\</g, '&lt;').replace(/\>/g, '&gt;') }</div>`
+        $selector.prepend(`<div class="alert alert-${_errorTypes[type]}">${removeButton} ${msg}</div>`);
+    }
+
+    return{
+        print: _print,
+        enumList: _enumList,
+    }
+})();
 
 /*
 *   All about games page and games handling
@@ -166,7 +203,7 @@ slamjam.gameJam = (function(){
     //todo
 
     function _initChart() {
-    /*
+
         slamjam.common.ajax({
             url: slamjam.common.createURL('/game-jams/chart'),
             success: function (data) {
@@ -176,7 +213,7 @@ slamjam.gameJam = (function(){
                 //todo
             }
         });
-    */
+
 
         // create a dataset with items
         // note that months are zero-based in the JavaScript Date object, so month 3 is April
