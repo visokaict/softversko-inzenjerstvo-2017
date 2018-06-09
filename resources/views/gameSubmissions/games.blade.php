@@ -28,7 +28,7 @@ Games
             @include('ajax.loadGames')
         @endif
     </div>
-    <div class="loading-overlay"><img src="{{ asset('/images/loading.svg') }}" /></div>
+    <div class="loading-overlay" id="loading-overlay"><img src="{{ asset('/images/loading.svg') }}" /></div>
 </div>
 <!-- /.container -->
 @endsection
