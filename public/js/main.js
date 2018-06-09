@@ -98,7 +98,7 @@ slamjam.games = (function(){
     //todo
 
     function _initGamesPage (){
-        $('body').on('click', '.pagination li a', function(e) {
+        $('body').on('click', '#pagination-games li a', function(e) {
             e.preventDefault();
 
             $('.games-container').css('opacity', '0.5');
@@ -216,7 +216,48 @@ slamjam.gameJam = (function(){
     }
 
     function _initGameJamItems() {
+        $('body').on('click', '.pagination-game-jams li a', function(e) {
+            e.preventDefault();
 
+            var page = $(this).attr("data-page");
+            var gameJamsType = $(this).attr("data-type");
+
+            if(gameJamsType === "inProgress"){
+                $('.game-jams-in-progress-container').css('opacity', '0.5');
+            }
+            else{
+                $('.game-jams-upcoming-container').css('opacity', '0.5');
+            }
+           
+            //$('.loading-overlay').css('display', 'block');
+            slamjam.common.startLoader();
+
+            getGameJams(page, gameJamsType);
+            //window.history.pushState("", "", url);
+        });
+
+        function getGameJams(page, gameJamsType) {
+            $.ajax({
+                data : {
+                    page: page,
+                    gameJamsType: gameJamsType
+                }
+            }).done(function (data) {
+                //$('.loading-overlay').css('display', 'none');
+                slamjam.common.stopLoader();
+                if(gameJamsType === "inProgress"){
+                    $('.game-jams-in-progress-container').css('opacity', '1');
+                    $('.game-jams-in-progress-container').html(data);
+                }
+                else{
+                    $('.game-jams-upcoming-container').css('opacity', '1');
+                    $('.game-jams-upcoming-container').html(data);
+                }
+                
+            }).fail(function () {
+                alert('Failed to load game jams.');
+            });
+        }
     }
 
     return {

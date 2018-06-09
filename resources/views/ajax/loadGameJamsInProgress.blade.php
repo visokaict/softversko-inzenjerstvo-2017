@@ -31,9 +31,9 @@
     <div class="clearfix"></div>
 </div>
 <div class="row">
-    <ul class="pagination" id="pagination-game-jams-in-progress">
+    <ul class="pagination pagination-game-jams" id="pagination-game-jams-in-progress">
         @for($i = 0; $i < ceil($gamesJamsInProgressCount / 6); $i++)
-            <li class="page-item @if($currentPageGameJamsInProgress == $i + 1) {{ 'active' }} @endif"><a href="#" data-page="{{ $i + 1 }}" class='page-link-game-jams-in-progress'>{{ $i + 1 }}</a></li>
+            <li class="page-item @if($currentPageGameJamsInProgress == $i + 1) {{ 'active' }} @endif"><a href="#" data-page="{{ $i + 1 }}" data-type="inProgress" class='page-link-game-jams-in-progress'>{{ $i + 1 }}</a></li>
         @endfor
     </ul>
 </div>

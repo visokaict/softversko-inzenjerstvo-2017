@@ -21,21 +21,28 @@ class FrontEndController extends Controller
         //todo
         //move to own controller
 
+        $page = empty($request->get("page")) ? 1 : $request->get("page");
+
         $gameJams = new GameJams();
 
-        $gameJamsInProgress = $gameJams->getFilteredGameJams("progress");
+        $gameJamsInProgress = $gameJams->getFilteredGameJams("progress", ($page - 1) * 6, 6);
         $this->viewData["inProgressGameJams"] = $gameJamsInProgress["result"];
         $this->viewData["gamesJamsInProgressCount"] = $gameJamsInProgress["count"];
-        $this->viewData["currentPageGameJamsInProgress"] = 1;
+        $this->viewData["currentPageGameJamsInProgress"] = $page;
 
-        $gameJamsUpcoming = $gameJams->getFilteredGameJams("upcoming");
+        $gameJamsUpcoming = $gameJams->getFilteredGameJams("upcoming", ($page - 1) * 6, 6);
         $this->viewData["upcomingGameJams"] = $gameJamsUpcoming["result"];
         $this->viewData["gamesJamsUpcomingCount"] = $gameJamsUpcoming["count"];
-        $this->viewData["currentPageGameJamsUpcoming"] = 1;
+        $this->viewData["currentPageGameJamsUpcoming"] = $page;
 
-        //if ($request->ajax()) {
-        //    return view('ajax.loadGames', $this->viewData)->render();
-        //}
+        if ($request->ajax()) {
+            if($request->get("gameJamsType") === "inProgress"){
+                return view('ajax.loadGameJamsInProgress', $this->viewData)->render();
+            }
+            else{
+                return view('ajax.loadGameJamsUpcoming', $this->viewData)->render();
+            }
+        }
 
         return view('gameJams.gameJams', $this->viewData);
     }
