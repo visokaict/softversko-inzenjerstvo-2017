@@ -22,33 +22,31 @@ class AuthController extends Controller implements IAuthorization
             'tbPassword' => 'password'
         ]);
 
-        if($validation->fails()){
+        if ($validation->fails()) {
             return back()->withInput()->withErrors($validation);
-        } else {
-            $user = new Users();
-
-            $dbUser = $user->getByUsernameOrEmailAndPassword($request->get('tbUsernameEmail'), $request->get('tbPassword'));
-
-            if(!empty($dbUser)){
-                $userRoles = $user->getAllRoles($dbUser->idUser);
-
-                $request->session()->push("user", $dbUser);
-                $request->session()->push("roles", $userRoles);
-
-                $isAdmin = Roles::arrayOfRolesHasRoleByName($userRoles, 'admin');
-
-                if($isAdmin)
-                {
-                    return redirect('/admin');
-                }
-
-                //default redirect
-                return redirect('/');
-            } else {
-                return redirect()->back();
-            }
-            
         }
+
+        $user = new Users();
+
+        $dbUser = $user->getByUsernameOrEmailAndPassword($request->get('tbUsernameEmail'), $request->get('tbPassword'));
+
+        if (!empty($dbUser)) {
+            $userRoles = $user->getAllRoles($dbUser->idUser);
+
+            $request->session()->push("user", $dbUser);
+            $request->session()->push("roles", $userRoles);
+
+            $isAdmin = Roles::arrayOfRolesHasRoleByName($userRoles, 'admin');
+
+            if ($isAdmin) {
+                return redirect('/admin');
+            }
+
+            //default redirect
+            return redirect('/');
+        }
+
+        return back()->withInput()->withErrors(['message'=>"Username/Email or password is incorrect"]);
     }
 
     public function logout(Request $request)
@@ -85,16 +83,14 @@ class AuthController extends Controller implements IAuthorization
         );
 
         //something went wrong and user isn't inserted
-        if(empty($userId))
-        {
+        if (empty($userId)) {
             return back()->withInput()->with('messages', 'Registration failed!');
         }
 
 
         //add roles
-        if(!empty($userRoles)) {
-            foreach ($userRoles as $role)
-            {
+        if (!empty($userRoles)) {
+            foreach ($userRoles as $role) {
                 $user->addRole($role, $userId);
             }
         }
