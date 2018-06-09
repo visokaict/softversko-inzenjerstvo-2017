@@ -6,6 +6,7 @@ use App\Http\Models\Roles;
 use Illuminate\Http\Request;
 use App\Http\Models\Users;
 use App\Http\Models\GameCriteria;
+use App\Http\Models\GameJams;
 class FrontEndController extends Controller
 {
     private $viewData = [];
@@ -16,9 +17,26 @@ class FrontEndController extends Controller
     }
     //
     // game jams
-    public function gameJams(){
+    public function gameJams(Request $request){
         //todo
         //move to own controller
+
+        $gameJams = new GameJams();
+
+        $gameJamsInProgress = $gameJams->getFilteredGameJams("progress");
+        $this->viewData["inProgressGameJams"] = $gameJamsInProgress["result"];
+        $this->viewData["gamesJamsInProgressCount"] = $gameJamsInProgress["count"];
+        $this->viewData["currentPageGameJamsInProgress"] = 1;
+
+        $gameJamsUpcoming = $gameJams->getFilteredGameJams("upcoming");
+        $this->viewData["upcomingGameJams"] = $gameJamsUpcoming["result"];
+        $this->viewData["gamesJamsUpcomingCount"] = $gameJamsUpcoming["count"];
+        $this->viewData["currentPageGameJamsUpcoming"] = 1;
+
+        //if ($request->ajax()) {
+        //    return view('ajax.loadGames', $this->viewData)->render();
+        //}
+
         return view('gameJams.gameJams', $this->viewData);
     }
     public function oneGameJam($id){
