@@ -24,8 +24,10 @@ Games
         </div>
     </div>
     <div class="games-container">
-        @if (count($games) > 0)
+        @if (count($games))
             @include('ajax.loadGames')
+        @else
+            <i>There is currently no games</i>
         @endif
     </div>
 </div>

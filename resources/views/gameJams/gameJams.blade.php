@@ -44,13 +44,11 @@
 
     <!-- chart section -->
     <div class="container-fluid no-padding">
-        <div id="visualization"></div>
-
-        <!-- prikazati jedan od ova dva , javascript-om -->
-
-        <h3 class="text-center no-game-jam">
-            There is currently no active Game Jam.
-        </h3>
+        <div id="visualization">
+            <h3 class="text-center no-game-jam hide" id="no-chart-game-jam">
+                There is currently no active Game Jam.
+            </h3>
+        </div>
     </div>
     <!-- /chart section -->
 
@@ -60,6 +58,10 @@
         <div class="game-jams-in-progress-container" id="game-jams-in-progress-container">
             @include('ajax.loadGameJamsInProgress') 
         </div>
+
+        <br>
+        <hr>
+        <br>
 
         <h2 class="margin-bottom-40">Upcoming Game Jams</h2>
         <div class="game-jams-upcoming-container" id="game-jams-upcoming-container">

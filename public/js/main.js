@@ -260,7 +260,11 @@ slamjam.gameJam = (function () {
         slamjam.common.ajax({
             url: slamjam.common.createURL('/game-jams/chart'),
             success: function (data) {
-                _createChart(data);
+                if(data) {
+                    _createChart(data);
+                } else {
+                    $("#no-chart-game-jam").removeClass("hide");
+                }
             },
             error: function (error) {
                 slamjam.error.print("Fetching game jams for chart has faild.", slamjam.error.enumList.ERROR)
