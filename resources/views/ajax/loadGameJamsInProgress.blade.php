@@ -8,7 +8,7 @@
                         <h4 class="card-title">
                             <a href="{{asset('game-jams/'. $gameJam->idGameJam)}}">{{ $gameJam->title }}</a>
                         </h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Hosted by: <a href="{{asset('users/'. $gameJam->username)}}">{{ $gameJam->username }}</a></h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Hosted by: <a href="{{asset('user/'. $gameJam->username)}}">{{ $gameJam->username }}</a></h6>
                         <p class="margin-bottom-5">Submissions closes in: <span>
                             @if(($gameJam->endDate - time()) / 3600 > 24)
                                 {{ floor(($gameJam->endDate - time()) / 3600 / 24) . " days" }}
