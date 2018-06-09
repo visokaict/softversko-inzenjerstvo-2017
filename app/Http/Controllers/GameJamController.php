@@ -46,7 +46,7 @@ class GameJamController extends Controller
         }
 
         $validation = Validator::make($request->all(), [
-            'tbTitle' => 'required|alpha_num',
+            'tbTitle' => 'required|regex:/^[a-zA-Z0-9]+$/|min:3',
             'taDescription' => 'required'
         ]);
 
