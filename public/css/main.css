@@ -412,13 +412,10 @@ footer.custom-footer {
     position: fixed;
     left: 50%;
     top: 50%;
-    transform: translateX(-50%);
-    transform: translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
     z-index: 100000;
     opacity: 1;
 }
-
-
 
 .game-cover-image {
     background-image: url('http://profilerehab.com/facebook_covers/funny/recycle_congress_cover_1.jpg');

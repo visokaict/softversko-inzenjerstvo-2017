@@ -141,7 +141,6 @@ slamjam.games = (function () {
             e.preventDefault();
 
             $('.games-container').css('opacity', '0.5');
-            //$('.loading-overlay').css('display', 'block');
             slamjam.common.startLoader();
 
             var url = $(this).attr('href');
@@ -155,7 +154,6 @@ slamjam.games = (function () {
 
             $('.games-container').css('opacity', '0.5');
 
-            //$('.loading-overlay').css('display', 'block');
             slamjam.common.startLoader();
 
             var url = window.location.href;
@@ -182,7 +180,6 @@ slamjam.games = (function () {
             $.ajax({
                 url: url
             }).done(function (data) {
-                //$('.loading-overlay').css('display', 'none');
                 slamjam.common.stopLoader();
                 $('.games-container').css('opacity', '1');
                 $('.games-container').html(data);
@@ -267,7 +264,7 @@ slamjam.gameJam = (function () {
                 }
             },
             error: function (error) {
-                slamjam.error.print("Fetching game jams for chart has faild.", slamjam.error.enumList.ERROR)
+                slamjam.error.print("Fetching game jams for chart has failed.", slamjam.error.enumList.ERROR)
             }
         });
     }
@@ -278,39 +275,34 @@ slamjam.gameJam = (function () {
 
             var page = $(this).attr("data-page");
             var gameJamsType = $(this).attr("data-type");
+            var gameJamsClass = "";
 
             if(gameJamsType === "inProgress"){
+                gameJamsClass = ".game-jams-in-progress-container";
                 $('.game-jams-in-progress-container').css('opacity', '0.5');
             }
             else{
+                gameJamsClass = ".game-jams-upcoming-container";
                 $('.game-jams-upcoming-container').css('opacity', '0.5');
             }
            
-            //$('.loading-overlay').css('display', 'block');
             slamjam.common.startLoader();
 
-            getGameJams(page, gameJamsType);
+            getGameJams(page, gameJamsType, gameJamsClass);
             //window.history.pushState("", "", url);
         });
 
-        function getGameJams(page, gameJamsType) {
+
+        function getGameJams(page, gameJamsType, gameJamsClass) {
             $.ajax({
                 data : {
                     page: page,
                     gameJamsType: gameJamsType
                 }
             }).done(function (data) {
-                //$('.loading-overlay').css('display', 'none');
                 slamjam.common.stopLoader();
-                if(gameJamsType === "inProgress"){
-                    $('.game-jams-in-progress-container').css('opacity', '1');
-                    $('.game-jams-in-progress-container').html(data);
-                }
-                else{
-                    $('.game-jams-upcoming-container').css('opacity', '1');
-                    $('.game-jams-upcoming-container').html(data);
-                }
-                
+                $(gameJamsClass).css('opacity', '1');
+                $(gameJamsClass).html(data);
             }).fail(function () {
                 alert('Failed to load game jams.');
             });
