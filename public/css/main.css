@@ -290,7 +290,7 @@ footer.custom-footer {
     display: inline-block;
     font-weight: 100;
     text-align: center;
-    font-size: 30px;
+    font-size: 32px;
 }
 
 #clockdiv>div {
@@ -412,7 +412,7 @@ footer.custom-footer {
     position: fixed;
     left: 50%;
     top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translate(-50%, -50%);
     z-index: 100000;
     opacity: 1;
 }
@@ -497,16 +497,43 @@ span.game-category {
     }
 }
 
-.main-container.one-game-submission-container {
+.main-container.one-game-container {
     width: 100%;
     padding: 0;
     margin: 0;
 }
 
-.navbar.one-game-submission-container {
+.navbar.one-game-container {
     margin-bottom: 0;
 }
 
+.game-jam-header-title {
+    margin-top: 0;
+}
+
+.game-jam-join-button-holder {
+    
+    text-align: center;
+    padding-top: 30px;
+    height: 100px;
+}
+
+.game-jam-join-button {
+	padding: 10px 40px;
+    margin-top: 0;
+	border-radius: 6px;
+	font-size: 20px;
+	color: #FFF;
+    text-decoration: none;
+    background-color: #3498DB;
+    border: none;
+    border-bottom: 4px solid #2980B9;
+    transition: 40ms all;
+}
+.game-jam-join-button:hover {
+    border-bottom-width: 0;
+    margin-top: 4px;
+}
 
 .alert-parent{
     position: absolute;

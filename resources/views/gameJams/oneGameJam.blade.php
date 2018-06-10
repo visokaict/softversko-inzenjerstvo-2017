@@ -9,106 +9,111 @@
 @endsection
 
 @section('addClassesToBodyCover')
-  one-game-submission-container @endsection
+    one-game-container
+@endsection
 
 @section('content')
-  
+
 <div class="game-cover-image">
-   <p class="text-center">SLIDER</p>
+    <p class="text-center">SLIDER</p>
 </div>
-
-<!-- header-->
 <div class="game-header">
-  <div class="row">
-    <div class="col-md-9">
-      <h2>Optical Jam #5</h2>
-      <div>
-        Hosted by <a href="#">Some guy</a>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="row text-center">
-        <div class="col-md-4">
-          <div>123</div>
-          <div>joined</div>
+    <div class="game-header-inner container">
+        <div class="game-header-left float-left">
+            <h2 class="game-jam-header-title">Optical Jam #5</h2>
+            <div>
+                Hosted by <a href="#">Some guy</a>
+            </div>
         </div>
-        <div class="col-md-4">
-            <div>10</div>
-            <div>submissions</div>
+        <div class="game-header-right float-right">
+            <div class="row text-center">
+                <div class="col-md-4">
+                <div>123</div>
+                <div>joined</div>
+                </div>
+                <div class="col-md-4">
+                    <div>10</div>
+                    <div>submissions</div>
+                </div>
+                <div class="col-md-4">
+                    <div>1000</div>
+                    <div>views</div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <div>1000</div>
-            <div>views</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+        <div class="clearfix"></div>
+   </div>
 </div>
+<div class="game-content container">
+        <!-- game jam content -->
+    <div class="one-game-jam-content">
+    <div class="row">
 
-
-<!-- game jam content -->
-<div class="game-content one-game-jam-content">
-  <div class="row">
-
-    <div class="countdown-timer text-center">
-        <h1>Starts in</h1>
-        <div id="clockdiv">
-          <div>
-            <span class="days"></span>
-            <div class="smalltext">Days</div>
-          </div>
-          <div>
-            <span class="hours"></span>
-            <div class="smalltext">Hours</div>
-          </div>
-          <div>
-            <span class="minutes"></span>
-            <div class="smalltext">Minutes</div>
-          </div>
-          <div>
-            <span class="seconds"></span>
-            <div class="smalltext">Seconds</div>
-          </div>
+        <div class="countdown-timer text-center">
+            <h1>Starts in</h1>
+            <div id="clockdiv">
+                <div>
+                    <span class="days"></span>
+                    <div class="smalltext">Days</div>
+                </div>
+                <div>
+                    <span class="hours"></span>
+                    <div class="smalltext">Hours</div>
+                </div>
+                <div>
+                    <span class="minutes"></span>
+                    <div class="smalltext">Minutes</div>
+                </div>
+                <div>
+                    <span class="seconds"></span>
+                    <div class="smalltext">Seconds</div>
+                </div>
+            </div>
+            <div class="game-jam-join-button-holder">
+                <button class="game-jam-join-button">Join game jam</button>
+            </div>
+            
         </div>
-      <button>Join game jam</button>
+        </div>
+
+        <div class="game-jam-description">Description</div>
+
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_1" data-toggle="tab">Overview</a></li>
+            <li><a href="#tab_2" data-toggle="tab">Participants</a></li>
+            </ul>
+            <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+                
+                
+                <div id="contentText" data-val="#hello, markdown!"></div>
+
+                <h4>Criterias: </h4>
+                <ul>
+                <li>Gameplay</li>
+                <li>Design</li>
+                </ul>
+
+
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2">
+                load them with ajax, only once
+                only like image and maybe username 
+                with href to ther pprofile
+            </div>
+            
+            </div>
+        </div>
+
         
     </div>
-
-    <div class="game-jam-description">Description</div>
-
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab_1" data-toggle="tab">Overview</a></li>
-          <li><a href="#tab_2" data-toggle="tab">Participants</a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="tab_1">
-              
-            
-            <div id="contentText" data-val="#hello, markdown!"></div>
-
-            <h4>Criterias: </h4>
-            <ul>
-              <li>Gameplay</li>
-              <li>Design</li>
-            </ul>
-
-
-          </div>
-          <!-- /.tab-pane -->
-          <div class="tab-pane" id="tab_2">
-            load them with ajax, only once
-            only like image and maybe username 
-            with href to ther pprofile
-          </div>
-          
-        </div>
-      </div>
-
-    
-  </div>
+    </div>
 </div>
+
+  
+
 
 @endsection
 

@@ -9,7 +9,8 @@
 @endsection
 
 @section('addClassesToBodyCover')
-one-game-submission-container @endsection
+    one-game-container
+@endsection
 
 @section('content')
 <!-- TODO -->
