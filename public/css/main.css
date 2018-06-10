@@ -32,6 +32,7 @@
 
 .navbar {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    background-color: rgb(28, 28, 28);
 }
 
 .slam-jam-logo {
@@ -51,7 +52,8 @@
 }
 
 .custom-footer {
-    background-color: #222;
+    padding: 15px 0 25px;
+    background-color: rgb(25, 25, 25);
     color: #eee;
 }
 
@@ -311,6 +313,12 @@ footer.custom-footer {
     display: inline-block;
 }
 
+.countdown-timer-title {
+    padding: 10px 0 15px;
+}
+
+/*******************************/
+
 .smalltext {
     padding-top: 5px;
     font-size: 16px;
@@ -318,6 +326,7 @@ footer.custom-footer {
 
 .one-game-jam-content {
     min-height: 500px;
+    padding: 0;
 }
 
 .reg-role-description {
@@ -421,12 +430,19 @@ footer.custom-footer {
     opacity: 1;
 }
 
+.game-cover-image-wrap {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
 .game-cover-image {
-    background-image: url('http://profilerehab.com/facebook_covers/funny/recycle_congress_cover_1.jpg');
+    /*background-image: url('http://profilerehab.com/facebook_covers/funny/recycle_congress_cover_1.jpg');*/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    height: 280px;
+    height: 550px;
+    position: absolute;
+    width: 100%;
 }
 .game-header {
     background-color: #111;
@@ -550,4 +566,52 @@ span.game-category {
 
 .pagination-game-jams {
     margin-left: 25px;
+}
+
+.game-jam-participant {
+    padding-top: 20px;
+}
+
+.game-jam-participant a {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.game-jam-participant img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.nav-tabs {
+    font-size: 18px;
+}
+
+.nav-tabs li a {
+    outline: none;
+}
+
+.tab-content {
+    padding: 20px;
+}
+
+.game-jam-description {
+    padding: 15px;
+}
+
+.game-jam-description p {
+    padding-bottom: 15px;
+}
+
+.game-criteria {
+    padding-top: 35px;
+}
+
+.game-criteria ul {
+    list-style-type: none;
+}
+
+.game-criteria ul li {
+    padding: 5px 0;
 }

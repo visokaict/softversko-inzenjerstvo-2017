@@ -81,4 +81,38 @@ class GameJams extends Generic
 
         return $return;
     }
+
+    public function getOne($id) {
+        $gameJam = \DB::table($this->tableName)
+            ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
+            ->join('images', 'gamejams.idCoverImage', '=' ,'images.idImage')
+            ->select('*')
+            ->where('gamejams.idGameJam', '=', $id)
+            ->first();
+
+        $gameJam->{"participants"} = $this->getParticipants($id);
+        $gameJam->{"criteria"} = $this->getCriteria($id);
+
+        return $gameJam;
+    }
+
+    public function getParticipants($id) {
+        return \DB::table('gamejams_participants')
+            ->join('users', 'gamejams_participants.idUser', '=', 'users.idUser')
+            ->select('*')
+            ->where('gamejams_participants.idGameJam', '=', $id)
+            ->get();
+    }
+
+    public function getCriteria($id) {
+        return \DB::table('gamejams_criterias')
+            ->join('gamecriteries', 'gamejams_criterias.idCriteria', '=', 'gamecriteries.idGameCriteria')
+            ->select('*')
+            ->where('gamejams_criterias.idGameJam', '=', $id)
+            ->get();
+    }
+
+    public function increaseViews($id) {
+        \DB::statement("UPDATE gamejams SET numOfViews = numOfViews + 1 WHERE idGameJam = " . $id);
+    }
 }

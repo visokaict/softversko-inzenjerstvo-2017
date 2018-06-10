@@ -47,6 +47,12 @@ class FrontEndController extends Controller
         return view('gameJams.gameJams', $this->viewData);
     }
     public function oneGameJam($id){
+        $gameJams = new GameJams();
+
+        $gameJams->increaseViews($id);
+
+        $this->viewData["gameJam"] = $gameJams->getOne($id);
+
         return view('gameJams.oneGameJam', $this->viewData);
     }
     public function createGameJam(){
