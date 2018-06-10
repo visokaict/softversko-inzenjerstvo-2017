@@ -103,7 +103,7 @@
                     @foreach($gameJam->participants as $participant)
                         <div class="game-jam-participant">
                             <img src="{{ asset($participant->avatarImagePath) }}"/>
-                            <a href="{{ asset('/users' . $participant->username) }}">{{ $participant->username }}</a>
+                            <a href="{{ asset('/user/' . $participant->username) }}">{{ $participant->username }}</a>
                         </div>
                     @endforeach
                 </div>
