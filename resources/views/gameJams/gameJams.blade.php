@@ -53,14 +53,14 @@
     <!-- /chart section -->
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container-fluid no-padding">
         <h2 class="margin-bottom-40">Game Jams in progress</h2>
         <div class="game-jams-in-progress-container" id="game-jams-in-progress-container">
             @include('ajax.loadGameJamsInProgress') 
         </div>
 
         <br>
-        <hr>
+        <hr style="border: 1px solid #eee;">
         <br>
 
         <h2 class="margin-bottom-40">Upcoming Game Jams</h2>

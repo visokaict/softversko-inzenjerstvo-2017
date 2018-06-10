@@ -30,6 +30,10 @@
     margin-right:6px;
 }
 
+.navbar {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
 .slam-jam-logo {
     width: 40px;
     height: 40px;
@@ -429,9 +433,7 @@ footer.custom-footer {
     padding: 20px 0;
     color: #fff;
 }
-.game-header-inner {
-    /*width: 820px;*/
-}
+
 .game-header span {
     display: inline-block;
 }
@@ -497,6 +499,8 @@ span.game-category {
     }
 }
 
+/*   */
+
 .main-container.one-game-container {
     width: 100%;
     padding: 0;
@@ -512,7 +516,6 @@ span.game-category {
 }
 
 .game-jam-join-button-holder {
-    
     text-align: center;
     padding-top: 30px;
     height: 100px;
@@ -527,12 +530,11 @@ span.game-category {
     text-decoration: none;
     background-color: #52A0FD;
     border: none;
-    border-bottom: 4px solid #2980B9;
-    transition: 40ms all;
+    border-bottom: 3px solid #2980B9;
 }
 .game-jam-join-button:hover {
     border-bottom-width: 0;
-    margin-top: 4px;
+    margin-top: 3px;
 }
 
 .alert-parent{
@@ -544,4 +546,8 @@ span.game-category {
 .alert-parent > .alert {
     margin: 0 auto;
     width: 80%;
+}
+
+.pagination-game-jams {
+    margin-left: 25px;
 }
