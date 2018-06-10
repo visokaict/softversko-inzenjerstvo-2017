@@ -519,13 +519,13 @@ span.game-category {
 }
 
 .game-jam-join-button {
-	padding: 10px 40px;
+	padding: 10px 50px;
     margin-top: 0;
 	border-radius: 6px;
 	font-size: 20px;
 	color: #FFF;
     text-decoration: none;
-    background-color: #3498DB;
+    background-color: #52A0FD;
     border: none;
     border-bottom: 4px solid #2980B9;
     transition: 40ms all;

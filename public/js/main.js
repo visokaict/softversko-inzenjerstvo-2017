@@ -279,11 +279,11 @@ slamjam.gameJam = (function () {
 
             if(gameJamsType === "inProgress"){
                 gameJamsClass = ".game-jams-in-progress-container";
-                $('.game-jams-in-progress-container').css('opacity', '0.5');
+                $(gameJamsClass).css('opacity', '0.5');
             }
             else{
                 gameJamsClass = ".game-jams-upcoming-container";
-                $('.game-jams-upcoming-container').css('opacity', '0.5');
+                $(gameJamsClass).css('opacity', '0.5');
             }
            
             slamjam.common.startLoader();
