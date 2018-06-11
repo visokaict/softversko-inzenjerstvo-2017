@@ -126,12 +126,12 @@
         $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
 
         $('.nav-tabs-custom ul.nav-tabs li a').click(function (e) {
-            $('ul.nav-tabs li.active').removeClass('active')
-            $(this).parent('li').addClass('active')
+            $('ul.nav-tabs li.active').removeClass('active');
+            $(this).parent('li').addClass('active');
         })
 
         $(window).scroll(function(){
-            var scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
+            scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
             $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
         });
     });
