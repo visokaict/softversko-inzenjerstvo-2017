@@ -77,8 +77,17 @@
         </div>
 
         <div class="game-jam-description">
-            <p>Description:</p>
+            <h4>Description:</h4>
             <p>{{ $gameJam->description }}</p>
+        </div>
+
+        <div class="game-criteria">
+            <h4>Criteria:</h4>
+            <ul>
+                @foreach($gameJam->criteria as $criteria)
+                    <li>{{ $criteria->name }}</li>
+                @endforeach
+            </ul>
         </div>
 
         <div class="nav-tabs-custom">
@@ -89,14 +98,6 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                     <div id="contentText" data-val="{{ $gameJam->content }}"></div>
-                    <div class="game-criteria">
-                        <h4>Criteria:</h4>
-                        <ul>
-                            @foreach($gameJam->criteria as $criteria)
-                                <li>{{ $criteria->name }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="tab_2">

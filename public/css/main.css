@@ -596,16 +596,8 @@ span.game-category {
     padding: 20px;
 }
 
-.game-jam-description {
-    padding: 15px;
-}
-
-.game-jam-description p {
-    padding-bottom: 15px;
-}
-
-.game-criteria {
-    padding-top: 35px;
+.game-jam-description, .game-criteria {
+    padding: 15px 0 15px;
 }
 
 .game-criteria ul {
@@ -613,5 +605,16 @@ span.game-category {
 }
 
 .game-criteria ul li {
-    padding: 5px 0;
+    background-color: #337ab7;
+    display: inline;
+    padding: 5px 16px;
+    font-size: 12px;
+    margin-right: 2px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 3px;
 }
