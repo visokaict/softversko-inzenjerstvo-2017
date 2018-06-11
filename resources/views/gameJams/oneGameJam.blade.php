@@ -23,7 +23,7 @@
         <div class="game-header-left float-left">
             <div>
                 <h2 class="game-jam-header-title">{{ $gameJam->title }}</h2>
-                <span>Hosted by <a href="{{ asset('/users/' . $gameJam->username) }}">{{ $gameJam->username }}</a></span>
+                <span>Hosted by <a href="{{ asset('/user/' . $gameJam->username) }}">{{ $gameJam->username }}</a></span>
             </div>
         </div>
         <div class="game-header-right float-right">
