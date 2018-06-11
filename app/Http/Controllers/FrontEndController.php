@@ -47,11 +47,13 @@ class FrontEndController extends Controller
         return view('gameJams.gameJams', $this->viewData);
     }
     public function oneGameJam($id){
+        $idUser = session()->get('user')[0]->idUser;
         $gameJams = new GameJams();
 
         $gameJams->increaseViews($id);
 
         $this->viewData["gameJam"] = $gameJams->getOne($id);
+        $this->viewData["userJoinedGameJam"] = $gameJams->userAlreadyJoined($idUser, $id);
 
         return view('gameJams.oneGameJam', $this->viewData);
     }

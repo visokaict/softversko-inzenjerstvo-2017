@@ -116,4 +116,31 @@ class GameJams extends Generic
     public function increaseViews($id) {
         \DB::statement("UPDATE gamejams SET numOfViews = numOfViews + 1 WHERE idGameJam = " . $id);
     }
+
+    public function joinUserToGameJam($idUser, $idGameJam) {
+        return \DB::table('gamejams_participants')
+            ->insertGetId(["idUser" => $idUser, "idGameJam" => $idGameJam]);
+    }
+
+    public function removeUserFromGameJam($idUser, $idGameJam) {
+        return \DB::table('gamejams_participants')
+            ->where('idUser', '=', $idUser)
+            ->where('idGameJam', '=', $idGameJam)
+            ->delete();
+    }
+
+    public function userAlreadyJoined($idUser, $idGameJam) {
+        return \DB::table('gamejams_participants')
+            ->select('*')
+            ->where('idUser', '=', $idUser)
+            ->where('idGameJam', '=', $idGameJam)
+            ->exists();
+    }
+
+    public function gameJamExists($id) {
+        return \DB::table('gamejams')
+            ->select('*')
+            ->where('idGameJam', '=', $id)
+            ->exists();
+    }
 }

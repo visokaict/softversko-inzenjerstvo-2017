@@ -71,7 +71,11 @@
                 </div>
             </div>
             <div class="game-jam-join-button-holder">
-                <button class="game-jam-join-button">Join game jam</button>
+                <form action="{{ asset('/game-jams/join') }}" method="post">
+                    <input type="submit" class="game-jam-join-button" value="{{ $userJoinedGameJam ? 'Leave' : 'Join' }} game jam"/>
+                    <input type="hidden" name="idGameJam" value="{{ $gameJam->idGameJam }}"/>
+                    {{ csrf_field() }}
+                </form>
             </div>  
         </div>
         </div>
@@ -110,9 +114,6 @@
                 </div>
             </div>
         </div>
-
-        
-    </div>
     </div>
 </div>
 
