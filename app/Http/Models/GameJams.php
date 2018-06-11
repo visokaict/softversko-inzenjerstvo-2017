@@ -92,6 +92,7 @@ class GameJams extends Generic
 
         $gameJam->{"participants"} = $this->getParticipants($id);
         $gameJam->{"criteria"} = $this->getCriteria($id);
+        $gameJam->{"countSubmissions"} = $this->countByJoinedId("gamesubmissions", $id);
 
         return $gameJam;
     }

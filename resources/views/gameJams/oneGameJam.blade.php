@@ -33,7 +33,7 @@
                 <div>joined</div>
                 </div>
                 <div class="col-md-4">
-                    <div>X</div>
+                    <div>{{ $gameJam->countSubmissions }}</div>
                     <div>submissions</div>
                 </div>
                 <div class="col-md-4">

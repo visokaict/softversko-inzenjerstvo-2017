@@ -55,4 +55,12 @@ class Generic
         return DB::table($this->tableName)
             ->count();
     }
+
+    public function countByJoinedId($tableName, $id)
+    {
+        return \DB::table($tableName)
+            ->where($this->idName, '=', $id)
+            ->count();
+    }
+
 }
