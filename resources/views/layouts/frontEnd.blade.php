@@ -69,7 +69,7 @@
 
             </ul>
 
-            <form class="navbar-form navbar-left">
+            <form action="{{asset('/search')}}" method="GET" class="navbar-form navbar-left">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search" name="q" id="tbSearch">
                     <div class="input-group-btn">

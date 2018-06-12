@@ -52,6 +52,14 @@ Route::post('/contact-us', 'ContactUsController@postContact');
 
 
 //
+// Search
+//
+
+//present
+Route::get('/search', 'SearchController@search');
+
+
+//
 // auth
 //
 
