@@ -45,4 +45,12 @@ class GameSubmissions extends Generic
             ->where('gamesubmissions_categories.idGameSubmission', '=', $id)
             ->get();
     }
+
+    public function getByUserAndGameJam($idUser, $idGameJam) {
+        return \DB::table($this->tableName)
+            ->select('*')
+            ->where('idUserCreator', '=', $idUser)
+            ->where('idGameJam', '=', $idGameJam)
+            ->first();
+    }
 }

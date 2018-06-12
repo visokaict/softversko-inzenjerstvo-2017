@@ -152,7 +152,7 @@ class GameJamController extends Controller
                     return Redirect::back()->withInput()->with('message', 'Failed to join game jam!');
                 }
                 else {
-                    return Redirect::back()->with('message', 'Congratulations, you have joined this game jam!');
+                    return Redirect::back()->withInput()->with('message', 'Congratulations, you have joined this game jam!');
                 }
             }
         }

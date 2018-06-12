@@ -92,9 +92,19 @@ class GameJams extends Generic
 
         $gameJam->{"participants"} = $this->getParticipants($id);
         $gameJam->{"criteria"} = $this->getCriteria($id);
+        $gameJam->{"submissions"} = $this->getSubmissions($id);
         $gameJam->{"countSubmissions"} = $this->countByJoinedId("gamesubmissions", $id);
 
         return $gameJam;
+    }
+
+    public function getSubmissions($id) {
+        return \DB::table('gamesubmissions')
+            ->join('images', 'gamesubmissions.idTeaserImage', '=', 'images.idImage')
+            ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
+            ->select('*')
+            ->where('idGameJam', '=', $id)
+            ->get();
     }
 
     public function getParticipants($id) {
@@ -138,9 +148,17 @@ class GameJams extends Generic
     }
 
     public function gameJamExists($id) {
-        return \DB::table('gamejams')
+        return \DB::table($this->tableName)
             ->select('*')
             ->where('idGameJam', '=', $id)
+            ->exists();
+    }
+
+    public function userOwnsGameJam($idUser, $idGameJam) {
+        return \DB::table('gamejams')
+            ->select('*')
+            ->where('idUserCreator', '=', $idUser)
+            ->where('idGameJam', '=', $idGameJam)
             ->exists();
     }
 }
