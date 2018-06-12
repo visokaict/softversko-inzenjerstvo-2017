@@ -17,7 +17,7 @@ class CheckIfLoggedIn
     {
         if(!$request->session()->has('user'))
         {
-            return back()->with('messages', 'You are not logged in.');
+            return back()->with('message', 'You are not logged in.');
         }
         return $next($request);
     }
