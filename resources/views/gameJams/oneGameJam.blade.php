@@ -79,6 +79,8 @@
                 </div>
             </div>
             @endif
+
+            @if($gameJam->startDate < time() && $gameJam->endDate > time())
             <div class="game-jam-join-button-holder">
                 <form action="{{ asset('/game-jams/join') }}" class="game-jam-button-block" method="post">
                     <input type="submit" class="game-jam-join-button" value="{{ $userJoinedGameJam ? 'Leave' : 'Join' }} game jam"/>
@@ -91,6 +93,7 @@
                     </form>
                 @endif
             </div>  
+            @endif
         </div>
         </div>
 
@@ -217,8 +220,14 @@
         var timeinterval = setInterval(updateClock, 1000);
     }
 
-    var deadline = new Date(Date.parse(new Date()) + {{ $gameJam->endDate - time() }} * 1000);
-    
+    var deadline = new Date(Date.parse(new Date()) + @if($gameJam->startDate > time())
+            {{ $gameJam->startDate - time() }} 
+        @elseif($gameJame->startDate < time() && $gameJam->endDate > time())
+            {{ $gameJam->endDate - time() }}
+        @else
+            {{ $gameJam->votingEndDate - time() }}
+        @endif 
+    * 1000);
     initializeClock('clockdiv', deadline);
 
     var converter = new showdown.Converter(),
