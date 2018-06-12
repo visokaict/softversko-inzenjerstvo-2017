@@ -116,4 +116,15 @@ class GameJams extends Generic
     public function increaseViews($id) {
         \DB::statement("UPDATE gamejams SET numOfViews = numOfViews + 1 WHERE idGameJam = " . $id);
     }
+
+    public function getAllSearched($queryString, $offset = 0, $limit = 6){
+        return \DB::table($this->tableName)
+            ->join('images', 'gamejams.idCoverImage', '=' ,'images.idImage')
+            ->select(["images.alt", "images.path", "gamejams.title", "gamejams.description", "gamejams.idGameJam"])
+            ->where('gamejams.title', 'like', '%'.$queryString.'%')
+            ->orWhere('gamejams.description', 'like', '%'.$queryString.'%')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+    }
 }
