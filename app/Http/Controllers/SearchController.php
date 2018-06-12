@@ -55,7 +55,7 @@ class SearchController extends Controller implements ISearch
             // game jams stuff
 
             $this->viewData["gameJams"] = $gjManager->getAllSearched($query, ($pagePosition - 1) * $pageSizeConfig, $pageSizeConfig);
-            $this->viewData["gamesJamsCount"] = $gjManager->count();
+            $this->viewData["gamesJamsCount"] = $gjManager->countAllSearched($query);
             $this->viewData["currentPageGameJams"] = $pagePosition;
         }
 
@@ -64,7 +64,7 @@ class SearchController extends Controller implements ISearch
             // game submission stuff
 
             $this->viewData["gameSubmissions"] = $gsManager->getAllSearched($query, ($pagePosition - 1) * $pageSizeConfig, $pageSizeConfig);;
-            $this->viewData["gameSubmissionsCount"] = $gsManager->count();
+            $this->viewData["gameSubmissionsCount"] = $gsManager->countAllSearched($query);
             $this->viewData["currentPageGameSubmissions"] = $pagePosition;
         }
 
