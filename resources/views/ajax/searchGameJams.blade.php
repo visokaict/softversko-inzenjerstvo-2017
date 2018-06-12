@@ -30,7 +30,7 @@
 
         <div class="clearfix"></div>
         <div class="row">
-            <ul class="pagination pagination-game-jams" id="pagination-game-jams-upcoming">
+            <ul class="pagination pagination-game-jams-search" id="pagination-game-jams-upcoming">
                 @for($i = 0; $i < ceil($gamesJamsCount / 6); $i++)
                     <li class="page-item @if($currentPageGameJams == $i + 1) {{ 'active' }} @endif"><a
                                 href="#" data-page="{{ $i + 1 }}" data-type="gameJams"
