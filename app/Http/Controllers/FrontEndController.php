@@ -113,6 +113,15 @@ class FrontEndController extends Controller
     public function oneGameSubmission($id){
         //todo
         //move to own controller
+        if (!preg_match("/^\d+$/", $id)) {
+            return back()->with('message', 'Invalid game submission id.');
+        }
+
+        $gameSubmissions = new GameSubmissions();
+        $gameSubmissions->increaseViews($id);
+        $this->viewData["gameSubmission"] = $gameSubmissions->getOne($id);
+        $this->viewData["gameSubmissionScreenShots"] = $gameSubmissions->getScreenShots($id);
+
         return view('gameSubmissions.oneGameSubmission', $this->viewData);
     }
     public function editGameSubmission($id){
