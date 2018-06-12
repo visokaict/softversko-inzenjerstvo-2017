@@ -58,7 +58,15 @@
     <div class="row">
 
         <div class="countdown-timer text-center">
-            <h1 class="countdown-timer-title">Starts in</h1>
+            <h1 class="countdown-timer-title">
+                @if($gameJam->startDate > time())
+                    Starts in 
+                @elseif($gameJam->startDate < time() && $gameJam->endDate > time())
+                    Submissions due in
+                @else
+                    Voting ends in
+                @endif 
+            </h1>
             @if($gameJam->endDate > time())
             <div id="clockdiv">
                 <div>
@@ -80,20 +88,18 @@
             </div>
             @endif
 
-            @if($gameJam->startDate < time() && $gameJam->endDate > time())
             <div class="game-jam-join-button-holder">
                 <form action="{{ asset('/game-jams/join') }}" class="game-jam-button-block" method="post">
                     <input type="submit" class="game-jam-join-button" value="{{ $userJoinedGameJam ? 'Leave' : 'Join' }} game jam"/>
                     <input type="hidden" name="idGameJam" value="{{ $gameJam->idGameJam }}"/>
                     {{ csrf_field() }}
                 </form>
-                @if($userJoinedGameJam)
+                @if($gameJam->startDate < time() && $gameJam->endDate > time() && $userJoinedGameJam)
                     <div class="game-jam-button-block">
                         <a href="{{ asset('/games/create/' . $gameJam->idGameJam) }}" class="game-jam-add-button">Add game submission</a>
                     </form>
                 @endif
-            </div>  
-            @endif
+            </div>
         </div>
         </div>
 
@@ -120,8 +126,8 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                     <div class="game-jam-dates">
-                        <p>Start date: {{ date('d-M-Y H:i:s', $gameJam->startDate) }}</p>
-                        <p>End date: {{ date('d-M-Y H:i:s', $gameJam->endDate) }}</p>
+                        <p>Start date: {{\App\Http\Models\Utilities::PrintDateTime($gameJam->startDate)}}</p>
+                        <p>End date: {{\App\Http\Models\Utilities::PrintDateTime($gameJam->endDate)}}</p>
                     </div>
                     <div id="contentText" data-val="{{ $gameJam->content }}"></div>
                 </div>
@@ -222,7 +228,7 @@
 
     var deadline = new Date(Date.parse(new Date()) + @if($gameJam->startDate > time())
             {{ $gameJam->startDate - time() }} 
-        @elseif($gameJame->startDate < time() && $gameJam->endDate > time())
+        @elseif($gameJam->startDate < time() && $gameJam->endDate > time())
             {{ $gameJam->endDate - time() }}
         @else
             {{ $gameJam->votingEndDate - time() }}

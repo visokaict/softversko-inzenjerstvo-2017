@@ -141,7 +141,10 @@ class GameJamController extends Controller
         $gameJams = new GameJams();
 
         if($gameJams->gameJamExists($idGameJam)) {
-            if($gameJams->userAlreadyJoined($idUser, $idGameJam)) {
+            if($gameJams->getById($idGameJam)->endDate < time()){
+                return Redirect::back()->withInput()->with('message', 'You can no longer join this game jam.');
+            }
+            else if($gameJams->userAlreadyJoined($idUser, $idGameJam)) {
                 $result = $gameJams->removeUserFromGameJam($idUser, $idGameJam);
                 return Redirect::back()->withInput()->with('message', 'You have left this game jam. Good bye!');
             }
@@ -157,7 +160,7 @@ class GameJamController extends Controller
             }
         }
         else {
-            return Redirect::back()->withInput()->with('message', 'Selected game jam doesn\'t exist! :(');
+            return Redirect::back()->withInput()->with('message', 'Selected game jam doesn\'t exist :(');
         }
     }
 
