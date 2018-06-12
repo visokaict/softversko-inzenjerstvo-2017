@@ -458,16 +458,13 @@ footer.custom-footer {
     margin: 15px auto;
 }
 .game-content-left {
-    border: 1px solid #000;
-    height: 200px;
+    min-height: 200px;
 }
 .game-content-right {
-    border: 1px solid #000;
-    height: 200px;
+    min-height: 200px;
 }
 .game-comments {
-    border: 1px solid #000;
-    height: 200px;
+    min-height: 100px;
 }
 
 /* Games page */

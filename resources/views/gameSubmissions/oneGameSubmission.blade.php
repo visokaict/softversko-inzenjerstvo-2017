@@ -53,7 +53,8 @@
                 <div class="carousel-wrap">
                     <div class="owl-carousel">
                         @foreach($gameSubmissionScreenShots as $screenShot)
-                            <div class="item"><img src="{{asset($screenShot->path)}}" alt="game submission screenshot"></div>
+                            <div class="item"><img src="{{asset($screenShot->path)}}" alt="game submission screenshot">
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -64,17 +65,24 @@
             <div class="clearfix"></div>
         </div>
     </div>
-    
+
     <div class="game-content container">
         <div class="game-content-left col-lg-8 col-md-8 col-sm-8 col-xs-12 float-left">
-            Title
+            <h4>Description:</h4>
+            <p>{{$gameSubmission->description}}</p>
         </div>
         <div class="game-content-right col-lg-4 col-md-4 col-sm-4 col-xs-12 float-right">
-            Badges
+            <h4>Badges:</h4>
+            <div>
+                Load bages with javascript
+            </div>
         </div>
         <div class="clearfix"></div>
-        <div class="game-comments">
-            Comments
+        <div class="game-comments col-md-12">
+            <h4>Comments:</h4>
+            <div>
+                Load bages with javascript
+            </div>
         </div>
     </div>
     <!-- -->
