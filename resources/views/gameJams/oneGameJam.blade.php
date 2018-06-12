@@ -1,11 +1,11 @@
 @extends('layouts.frontEnd')
 
 @section('pageTitle')
-  Game jam
+    Game jam
 @endsection
 
 @section('cssfiles')
-   <link href="{{asset('css/game.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/game.css')}}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('addClassesToBodyCover')
@@ -13,39 +13,40 @@
 @endsection
 
 @section('content')
-<div class="game-cover-image-wrap">
-    <div class="game-cover-image" style="background-image: url('{{ asset($gameJam->path) }}')">
-</div>
-    
-</div>
-<div class="game-header">
-    <div class="game-header-inner container">
-        <div class="game-header-left float-left">
-            <div>
-                <h2 class="game-jam-header-title">{{ $gameJam->title }}</h2>
-                <span>Hosted by <a href="{{ asset('/user/' . $gameJam->username) }}">{{ $gameJam->username }}</a></span>
-            </div>
+    <div class="game-cover-image-wrap">
+        <div class="game-cover-image" style="background-image: url('{{ asset($gameJam->path) }}')">
         </div>
-        <div class="game-header-right float-right">
-            <div class="row text-center">
-                <div class="col-md-4">
-                <div>{{ count($gameJam->participants) }}</div>
-                <div>joined</div>
-                </div>
-                <div class="col-md-4">
-                    <div>{{ $gameJam->countSubmissions }}</div>
-                    <div>submissions</div>
-                </div>
-                <div class="col-md-4">
-                    <div>{{ $gameJam->numOfViews }}</div>
-                    <div>views</div>
+    </div>
+
+    <div class="game-header">
+        <div class="game-header-inner container">
+            <div class="game-header-left float-left">
+                <div>
+                    <h2 class="game-jam-header-title">{{ $gameJam->title }}</h2>
+                    <span>Hosted by <a
+                                href="{{ asset('/user/' . $gameJam->username) }}">{{ $gameJam->username }}</a></span>
                 </div>
             </div>
+            <div class="game-header-right float-right">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div>{{ count($gameJam->participants) }}</div>
+                        <div>joined</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>{{ $gameJam->countSubmissions }}</div>
+                        <div>submissions</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>{{ $gameJam->numOfViews }}</div>
+                        <div>views</div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
-   </div>
-</div>
-<div class="game-content container">
+    </div>
+    <div class="game-content container">
         <!-- game jam content -->
     <div class="one-game-jam-content">
     @if($userCanDeleteGameJam)
@@ -73,18 +74,6 @@
                     <span class="days"></span>
                     <div class="smalltext">Days</div>
                 </div>
-                <div>
-                    <span class="hours"></span>
-                    <div class="smalltext">Hours</div>
-                </div>
-                <div>
-                    <span class="minutes"></span>
-                    <div class="smalltext">Minutes</div>
-                </div>
-                <div>
-                    <span class="seconds"></span>
-                    <div class="smalltext">Seconds</div>
-                </div>
             </div>
             @endif
 
@@ -101,19 +90,19 @@
         </div>
         </div>
 
-        <div class="game-jam-description">
-            <h4>Description:</h4>
-            <p>{{ $gameJam->description }}</p>
-        </div>
+            <div class="game-jam-description">
+                <h4>Description:</h4>
+                <p>{{ $gameJam->description }}</p>
+            </div>
 
-        <div class="game-criteria">
-            <h4>Criteria:</h4>
-            <ul>
-                @foreach($gameJam->criteria as $criteria)
-                    <li>{{ $criteria->name }}</li>
-                @endforeach
-            </ul>
-        </div>
+            <div class="game-criteria">
+                <h4>Criteria:</h4>
+                <ul>
+                    @foreach($gameJam->criteria as $criteria)
+                        <li>{{ $criteria->name }}</li>
+                    @endforeach
+                </ul>
+            </div>
 
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
@@ -160,6 +149,8 @@
                     @endif
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>
@@ -167,62 +158,64 @@
 @endsection
 
 @section('jsfiles')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
-<script>
-    window.addEventListener("load", function(){
-        var scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            var scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
 
-        $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
-
-        $('.nav-tabs-custom ul.nav-tabs li a').click(function (e) {
-            $('ul.nav-tabs li.active').removeClass('active');
-            $(this).parent('li').addClass('active');
-        })
-
-        $(window).scroll(function(){
-            scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
             $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
+
+            $('.nav-tabs-custom ul.nav-tabs li a').click(function (e) {
+                $('ul.nav-tabs li.active').removeClass('active');
+                $(this).parent('li').addClass('active');
+            })
+
+            $(window).scroll(function () {
+                scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
+                $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
+            });
         });
-    });
-   
-    function getTimeRemaining(endtime) {
-        var t = Date.parse(endtime) - Date.parse(new Date());
-        var seconds = Math.floor((t / 1000) % 60);
-        var minutes = Math.floor((t / 1000 / 60) % 60);
-        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-        var days = Math.floor(t / (1000 * 60 * 60 * 24));
-        return {
-            'total': t,
-            'days': days,
-            'hours': hours,
-            'minutes': minutes,
-            'seconds': seconds
-        };
-    }
 
-    function initializeClock(id, endtime) {
-        var clock = document.getElementById(id);
-        var daysSpan = clock.querySelector('.days');
-        var hoursSpan = clock.querySelector('.hours');
-        var minutesSpan = clock.querySelector('.minutes');
-        var secondsSpan = clock.querySelector('.seconds');
-
-        function updateClock() {
-            var t = getTimeRemaining(endtime);
-
-            daysSpan.innerHTML = t.days;
-            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-            if (t.total <= 0) {
-                clearInterval(timeinterval);
-            }
+        function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60) % 60);
+            var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };
         }
 
-        updateClock();
-        var timeinterval = setInterval(updateClock, 1000);
-    }
+        function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var daysSpan = clock.querySelector('.days');
+            var hoursSpan = clock.querySelector('.hours');
+            var minutesSpan = clock.querySelector('.minutes');
+            var secondsSpan = clock.querySelector('.seconds');
+
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                daysSpan.innerHTML = t.days;
+                hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+                if (t.total <= 0) {
+                    clearInterval(timeinterval);
+                }
+            }
+
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
+        }
+
+        var deadline = new Date(Date.parse(new Date()) + {{ $gameJam->endDate - time() }} * 1000);
 
     var deadline = new Date(Date.parse(new Date()) + @if($gameJam->startDate > time())
             {{ $gameJam->startDate - time() }} 
@@ -234,11 +227,11 @@
     * 1000);
     initializeClock('clockdiv', deadline);
 
-    var converter = new showdown.Converter(),
-    $contentText = $("#contentText"),
-    text = $contentText.attr('data-val'),
-    html = converter.makeHtml(text);
-    
-    $contentText.html(html);
-</script>
+        var converter = new showdown.Converter(),
+            $contentText = $("#contentText"),
+            text = $contentText.attr('data-val'),
+            html = converter.makeHtml(text);
+
+        $contentText.html(html);
+    </script>
 @endsection

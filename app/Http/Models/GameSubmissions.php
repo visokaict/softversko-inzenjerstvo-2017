@@ -56,6 +56,21 @@ class GameSubmissions extends Generic
             ->first();
     }
     
+    public function increaseViews($id)
+    {
+        return \DB::table($this->tableName)
+            ->where('idGameSubmission', '=', $id)
+            ->increment('numOfViews', 1);
+    }
+
+    public function getOne($id){
+        return \DB::table($this->tableName)
+            ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
+            ->join('images', 'gamesubmissions.idCoverImage', '=', 'images.idImage')
+            ->where('idGameSubmission', '=', $id)
+            ->first();
+    }
+
     public function getAllSearched($queryString, $offset = 0, $limit = 6)
     {
         return \DB::table($this->tableName)
@@ -74,5 +89,13 @@ class GameSubmissions extends Generic
             ->where('gamesubmissions.title', 'like', '%' . $queryString . '%')
             ->orWhere('gamesubmissions.description', 'like', '%' . $queryString . '%')
             ->count();
+    }
+
+    public function getScreenShots($id)
+    {
+        return \DB::table('gamesubmissions_screenshots')
+            ->join('images', 'gamesubmissions_screenshots.idImage', '=', 'images.idImage')
+            ->where('gamesubmissions_screenshots.idGameSubmission', '=', $id)
+            ->get();
     }
 }
