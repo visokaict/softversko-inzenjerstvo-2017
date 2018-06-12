@@ -294,17 +294,18 @@ slamjam.gameJam = (function () {
 
 
         function getGameJams(page, gameJamsType, gameJamsClass) {
-            $.ajax({
-                data : {
-                    page: page,
-                    gameJamsType: gameJamsType
+            slamjam.common.ajax({
+                url: slamjam.common.createURL('/game-jams/chart'),
+                success: function (data) {
+                    if(data) {
+                        _createChart(data);
+                    } else {
+                        $("#no-chart-game-jam").removeClass("hide");
+                    }
+                },
+                error: function (error) {
+                    slamjam.error.print("Fetching game jams for chart has failed.", slamjam.error.enumList.ERROR)
                 }
-            }).done(function (data) {
-                slamjam.common.stopLoader();
-                $(gameJamsClass).css('opacity', '1');
-                $(gameJamsClass).html(data);
-            }).fail(function () {
-                alert('Failed to load game jams.');
             });
         }
     }
@@ -312,6 +313,54 @@ slamjam.gameJam = (function () {
     return {
         initChart: _initChart,
         initGameJamItems: _initGameJamItems,
+    }
+})();
+
+/*
+*   All about game jams
+**/
+slamjam.search = (function () {
+
+    function _initPage() {
+        $('body').on('click', '.pagination-game-jams li a', function(e) {
+            e.preventDefault();
+
+            var page = $(this).attr("data-page");
+            var gameJamsType = $(this).attr("data-type");
+
+            var gameClass = {
+                gameJams: "#load-search-game-jams",
+                gameSubmissions: "#load-search-game-submission",
+            }
+            $(gameClass[gameJamsType]).css('opacity', '0.5');
+
+
+            slamjam.common.startLoader();
+
+            getGameJams(page, gameJamsType, gameClass[gameJamsType]);
+        });
+
+        function getGameJams(page, gameJamsType, gameClass) {
+            console.log(gameClass);
+            $.ajax({
+                data : {
+                    page: page,
+                    type: gameJamsType
+                }
+            }).done(function (data) {
+                slamjam.common.stopLoader();
+
+                $(gameClass).css('opacity', '1');
+                $(gameClass).parent().replaceWith(data);
+
+            }).fail(function () {
+                alert('Failed to load game jams.');
+            });
+        }
+    }
+
+    return {
+        initPage: _initPage,
     }
 })();
 

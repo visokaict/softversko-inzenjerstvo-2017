@@ -45,4 +45,15 @@ class GameSubmissions extends Generic
             ->where('gamesubmissions_categories.idGameSubmission', '=', $id)
             ->get();
     }
+
+    public function getAllSearched($queryString, $offset = 0, $limit = 6){
+        return \DB::table($this->tableName)
+            ->join('images', 'gamesubmissions.idCoverImage', '=' ,'images.idImage')
+            ->select(["images.alt", "images.path", "gamesubmissions.title", "gamesubmissions.description", "gamesubmissions.idGameSubmission"])
+            ->where('gamesubmissions.title', 'like', '%'.$queryString.'%')
+            ->orWhere('gamesubmissions.description', 'like', '%'.$queryString.'%')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+    }
 }
