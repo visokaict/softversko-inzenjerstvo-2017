@@ -95,9 +95,7 @@
                     {{ csrf_field() }}
                 </form>
                 @if($gameJam->startDate < time() && $gameJam->endDate > time() && $userJoinedGameJam)
-                    <div class="game-jam-button-block">
-                        <a href="{{ asset('/games/create/' . $gameJam->idGameJam) }}" class="game-jam-add-button">Add game submission</a>
-                    </form>
+                    <a href="{{ asset('/games/create/' . $gameJam->idGameJam) }}" class="game-jam-add-button">Add game submission</a>
                 @endif
             </div>
         </div>
