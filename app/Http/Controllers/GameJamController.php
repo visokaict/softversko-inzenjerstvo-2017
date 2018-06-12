@@ -9,24 +9,23 @@ use App\Http\Models\GameCriteria;
 use App\Http\Models\Images;
 use Illuminate\Support\Facades\Validator;
 use Psy\Util\Json;
+use Illuminate\Support\Facades\Redirect;
 
 class GameJamController extends Controller
 {
 
-    public function getChartGameJams(Request $request)
-    {
+    public function getChartGameJams(Request $request) {
         $gameJamDB = new GameJams();
         $gameJamsResult = $gameJamDB->getAllWhereVotingEndDateNotFinished();
 
         return Json::encode($gameJamsResult);
     }
 
-    public function getFilteredGameJams(Request $request)
-    {
+    public function getFilteredGameJams(Request $request) {
         // TODO
     }
 
-    public function insert(Request $request){
+    public function insert(Request $request) {
         $startDate = strtotime($request->get("dStartDate"));
         $endDate = strtotime($request->get("dEndDate"));
         $votingEndDate = strtotime($request->get("dVotingEndDate"));
@@ -55,7 +54,7 @@ class GameJamController extends Controller
             'taDescription' => 'description'
         ]);
 
-        if($validation->fails()){
+        if($validation->fails()) {
             return back()->withInput()->withErrors($validation);
         } else {
             $photo = $request->file('fCoverImage');
@@ -125,21 +124,54 @@ class GameJamController extends Controller
                 return redirect()->back()->with('error','Greska pri dodavanju posta u bazu!');
             }
             catch(\Symfony\Component\HttpFoundation\File\Exception\FileException $ex) {
-                \Log::error('Problem sa fajlom!! '.$ex->getMessage());
+                \Log::error('Problem sa fajlom!!'.$ex->getMessage());
                 return redirect()->back()->with('error','Greska pri dodavanju slike!');
             }
             catch(\ErrorException $ex) { 
-                \Log::error('Problem sa fajlom!! '.$ex->getMessage());
+                \Log::error('Problem sa fajlom!!'.$ex->getMessage());
                 return redirect()->back()->with('error','Desila se greska..');
             }
         }
     }
 
-    public function edit(Request $request){
+    public function joinUser(Request $request) {
+        $idUser = session()->get('user')[0]->idUser;
+        $idGameJam = $request->get('idGameJam');
+
+        $gameJams = new GameJams();
+
+        if($gameJams->gameJamExists($idGameJam)) {
+            if($gameJams->userOwnsGameJam($idUser, $idGameJam)){
+                return Redirect::back()->withInput()->with('message', 'You can\'t join your own Game Jam you bitch.');
+            }
+            if($gameJams->getById($idGameJam)->endDate < time()){
+                return Redirect::back()->withInput()->with('message', 'You can no longer join this game jam.');
+            }
+            else if($gameJams->userAlreadyJoined($idUser, $idGameJam)) {
+                $result = $gameJams->removeUserFromGameJam($idUser, $idGameJam);
+                return Redirect::back()->withInput()->with('message', 'You have left this game jam. Good bye!');
+            }
+            else {
+                $result = $gameJams->joinUserToGameJam($idUser, $idGameJam);
+
+                if(empty($result)) {
+                    return Redirect::back()->withInput()->with('message', 'Failed to join game jam!');
+                }
+                else {
+                    return Redirect::back()->withInput()->with('message', 'Congratulations, you have joined this game jam!');
+                }
+            }
+        }
+        else {
+            return Redirect::back()->withInput()->with('message', 'Selected game jam doesn\'t exist :(');
+        }
+    }
+
+    public function edit(Request $request) {
         //todo
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request) {
         //todo
     }
 }

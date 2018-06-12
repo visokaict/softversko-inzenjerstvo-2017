@@ -95,13 +95,22 @@ class GameJams extends Generic
 
         $gameJam->{"participants"} = $this->getParticipants($id);
         $gameJam->{"criteria"} = $this->getCriteria($id);
+        $gameJam->{"submissions"} = $this->getSubmissions($id);
         $gameJam->{"countSubmissions"} = $this->countByJoinedId("gamesubmissions", $id);
 
         return $gameJam;
     }
 
-    public function getParticipants($id)
-    {
+    public function getSubmissions($id) {
+        return \DB::table('gamesubmissions')
+            ->join('images', 'gamesubmissions.idTeaserImage', '=', 'images.idImage')
+            ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
+            ->select('*')
+            ->where('idGameJam', '=', $id)
+            ->get();
+    }
+
+    public function getParticipants($id) {
         return \DB::table('gamejams_participants')
             ->join('users', 'gamejams_participants.idUser', '=', 'users.idUser')
             ->select('*')
@@ -123,8 +132,42 @@ class GameJams extends Generic
         \DB::statement("UPDATE gamejams SET numOfViews = numOfViews + 1 WHERE idGameJam = " . $id);
     }
 
-    public function getAllSearched($queryString, $offset = 0, $limit = 6)
-    {
+    public function joinUserToGameJam($idUser, $idGameJam) {
+        return \DB::table('gamejams_participants')
+            ->insertGetId(["idUser" => $idUser, "idGameJam" => $idGameJam]);
+    }
+
+    public function removeUserFromGameJam($idUser, $idGameJam) {
+        return \DB::table('gamejams_participants')
+            ->where('idUser', '=', $idUser)
+            ->where('idGameJam', '=', $idGameJam)
+            ->delete();
+    }
+
+    public function userAlreadyJoined($idUser, $idGameJam) {
+        return \DB::table('gamejams_participants')
+            ->select('*')
+            ->where('idUser', '=', $idUser)
+            ->where('idGameJam', '=', $idGameJam)
+            ->exists();
+    }
+
+    public function gameJamExists($id) {
+        return \DB::table($this->tableName)
+            ->select('*')
+            ->where('idGameJam', '=', $id)
+            ->exists();
+    }
+
+    public function userOwnsGameJam($idUser, $idGameJam) {
+        return \DB::table('gamejams')
+            ->select('*')
+            ->where('idUserCreator', '=', $idUser)
+            ->where('idGameJam', '=', $idGameJam)
+            ->exists();
+    }
+    
+    public function getAllSearched($queryString, $offset = 0, $limit = 6) {
         return \DB::table($this->tableName)
             ->join('images', 'gamejams.idCoverImage', '=', 'images.idImage')
             ->select(["images.alt", "images.path", "gamejams.title", "gamejams.description", "gamejams.idGameJam"])

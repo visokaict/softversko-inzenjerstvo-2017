@@ -536,28 +536,44 @@ span.game-category {
     padding-top: 30px;
     height: 100px;
 }
-
-.game-jam-join-button {
+.game-jam-button-block {
+    display: inline-block;
+    vertical-align: top;
+}
+.game-jam-join-button, .game-jam-add-button {
 	padding: 10px 50px;
     margin-top: 0;
 	border-radius: 6px;
 	font-size: 20px;
 	color: #FFF;
     text-decoration: none;
-    background-color: #52A0FD;
     border: none;
-    border-bottom: 3px solid #2980B9;
+    margin-left: 5px;
+    display: inline-block;
 }
-.game-jam-join-button:hover {
+.game-jam-join-button:hover, .game-jam-add-button:hover {
     border-bottom-width: 0;
     margin-top: 3px;
+    color: #fff;
+    text-decoration: none;
+}
+.game-jam-join-button {
+    background-color: #52A0FD;
+    border-bottom: 3px solid #2980B9;
+}
+.game-jam-add-button {
+    background-color: tomato;
+    border-bottom: 3px solid red;
+}
+.game-jam-remove-block {
+    position: absolute;
 }
 
 .alert-parent{
     position: absolute;
     width: 100%;
     margin: 0 auto;
-    z-index: 1000000;
+    z-index: 10000;
 }
 .alert-parent > .alert {
     margin: 0 auto;
@@ -568,20 +584,42 @@ span.game-category {
     margin-left: 25px;
 }
 
-.game-jam-participant {
+.game-jam-participant-tab-row {
     padding-top: 20px;
 }
 
-.game-jam-participant a {
+.game-jam-submission-tab-row {
+    padding-bottom: 15px;
+}
+
+.game-jam-participant-tab-row a, .game-jam-submission-tab-row a {
     display: inline-block;
     padding: 5px 10px;
     font-size: 16px;
 }
 
-.game-jam-participant img {
+.game-jam-participant-tab-row img {
     width: 40px;
     height: 40px;
     object-fit: cover;
+}
+
+.game-jam-submission-tab-row img {
+    width: 160px;
+    height: 70px;
+    object-fit: cover;
+    vertical-align: bottom;
+}
+
+.game-jam-submission-tab-row-info {
+    display: inline-block;
+}
+.game-jam-submission-tab-row-info p {
+    font-size: 14px;
+    padding-left: 10px;
+}
+.game-jam-dates {
+    padding-bottom: 15px;
 }
 
 .nav-tabs {
@@ -618,3 +656,62 @@ span.game-category {
     vertical-align: baseline;
     border-radius: 3px;
 }
+
+/* Modal */
+
+.modal-info {
+    display: none;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 10001;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+}
+
+.modal-info-inner {
+    width: 360px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.modal-info-header {
+    background-color: #222;
+    height: 30px;
+}
+
+.modal-info-content {
+    padding: 45px 15px;
+    text-align: center;
+}
+
+.modal-close {
+    width: 40px;
+    height: 30px;
+    float: right;
+    text-align: center;
+    cursor: pointer;
+    transition: .1s background-color;
+}
+
+.modal-close:hover {
+    background-color: #e81123;
+}
+
+.modal-close i {
+    color: #fff;
+    font-size: 22px;
+    padding-top: 4px;
+}
+
+
+/*********/

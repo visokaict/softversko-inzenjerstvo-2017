@@ -48,10 +48,26 @@
 <div class="game-content container">
         <!-- game jam content -->
     <div class="one-game-jam-content">
+    @if($userCanDeleteGameJam)
+        <form action="{{ asset('/game-jams/delete') }}" class="game-jam-remove-block" method="post">
+            <input type="submit" class="btn btn-danger" value="Remove game jam"/>
+            <input type="hidden" name="idGameJam" value="{{ $gameJam->idGameJam }}"/>
+            {{ csrf_field() }}
+        </form>
+    @endif
     <div class="row">
 
         <div class="countdown-timer text-center">
-            <h1 class="countdown-timer-title">Starts in</h1>
+            <h1 class="countdown-timer-title">
+                @if($gameJam->startDate > time())
+                    Starts in 
+                @elseif($gameJam->startDate < time() && $gameJam->endDate > time())
+                    Submissions due in
+                @else
+                    Voting ends in
+                @endif 
+            </h1>
+            @if($gameJam->endDate > time())
             <div id="clockdiv">
                 <div>
                     <span class="days"></span>
@@ -70,9 +86,20 @@
                     <div class="smalltext">Seconds</div>
                 </div>
             </div>
+            @endif
+
             <div class="game-jam-join-button-holder">
-                <button class="game-jam-join-button">Join game jam</button>
-            </div>  
+                <form action="{{ asset('/game-jams/join') }}" class="game-jam-button-block" method="post">
+                    <input type="submit" class="game-jam-join-button" value="{{ $userJoinedGameJam ? 'Leave' : 'Join' }} game jam"/>
+                    <input type="hidden" name="idGameJam" value="{{ $gameJam->idGameJam }}"/>
+                    {{ csrf_field() }}
+                </form>
+                @if($gameJam->startDate < time() && $gameJam->endDate > time() && $userJoinedGameJam)
+                    <div class="game-jam-button-block">
+                        <a href="{{ asset('/games/create/' . $gameJam->idGameJam) }}" class="game-jam-add-button">Add game submission</a>
+                    </form>
+                @endif
+            </div>
         </div>
         </div>
 
@@ -94,25 +121,48 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab_1" data-toggle="tab">Overview</a></li>
                 <li><a href="#tab_2" data-toggle="tab">Participants</a></li>
+                <li><a href="#tab_3" data-toggle="tab">Game submissions</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
+                    <div class="game-jam-dates">
+                        <p>Start date: {{\App\Http\Models\Utilities::PrintDateTime($gameJam->startDate)}}</p>
+                        <p>End date: {{\App\Http\Models\Utilities::PrintDateTime($gameJam->endDate)}}</p>
+                    </div>
                     <div id="contentText" data-val="{{ $gameJam->content }}"></div>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="tab_2">
-                    @foreach($gameJam->participants as $participant)
-                        <div class="game-jam-participant">
-                            <img src="{{ asset($participant->avatarImagePath) }}"/>
-                            <a href="{{ asset('/user/' . $participant->username) }}">{{ $participant->username }}</a>
-                        </div>
-                    @endforeach
+                    @if(count($gameJam->participants) > 0)
+                        @foreach($gameJam->participants as $participant)
+                            <div class="game-jam-participant-tab-row">
+                                <img src="{{ asset($participant->avatarImagePath) }}"/>
+                                <a href="{{ asset('/user/' . $participant->username) }}">{{ $participant->username }}</a>
+                            </div>
+                        @endforeach
+                    @else
+                        <i>There are no participants in this game jam.</i>
+                    @endif
+                </div>
+                <div class="tab-pane" id="tab_3">
+                    @if(count($gameJam->submissions) > 0)
+                        @foreach($gameJam->submissions as $submission)
+                            <div class="game-jam-submission-tab-row">
+                                <div class="game-jam-submission-tab-row-info">
+                                    <img src="{{ asset($submission->path) }}"/>
+                                </div>
+                                <div class="game-jam-submission-tab-row-info">
+                                    <a href="{{ asset('/games/' . $submission->idGameSubmission) }}">{{ $submission->title }}</a>
+                                    <p>by<a href="{{ asset('/user/' . $submission->username) }}">{{$submission->username}}</a></p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <i>There are no game submissions in this game jam.</i>
+                    @endif
                 </div>
             </div>
         </div>
-
-        
-    </div>
     </div>
 </div>
 
@@ -176,8 +226,14 @@
         var timeinterval = setInterval(updateClock, 1000);
     }
 
-    var deadline = new Date(Date.parse(new Date()) + {{ $gameJam->endDate - time() }} * 1000);
-    
+    var deadline = new Date(Date.parse(new Date()) + @if($gameJam->startDate > time())
+            {{ $gameJam->startDate - time() }} 
+        @elseif($gameJam->startDate < time() && $gameJam->endDate > time())
+            {{ $gameJam->endDate - time() }}
+        @else
+            {{ $gameJam->votingEndDate - time() }}
+        @endif 
+    * 1000);
     initializeClock('clockdiv', deadline);
 
     var converter = new showdown.Converter(),

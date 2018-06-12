@@ -48,6 +48,14 @@ class GameSubmissions extends Generic
             ->get();
     }
 
+    public function getByUserAndGameJam($idUser, $idGameJam) {
+        return \DB::table($this->tableName)
+            ->select('*')
+            ->where('idUserCreator', '=', $idUser)
+            ->where('idGameJam', '=', $idGameJam)
+            ->first();
+    }
+    
     public function getAllSearched($queryString, $offset = 0, $limit = 6)
     {
         return \DB::table($this->tableName)

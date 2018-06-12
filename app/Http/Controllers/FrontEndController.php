@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 use App\Http\Models\Navigations;
 use App\Http\Models\Polls;
@@ -6,7 +7,10 @@ use App\Http\Models\Roles;
 use Illuminate\Http\Request;
 use App\Http\Models\Users;
 use App\Http\Models\GameCriteria;
+use App\Http\Models\GameSubmissions;
 use App\Http\Models\GameJams;
+use Illuminate\Support\Facades\Redirect;
+
 class FrontEndController extends Controller
 {
     private $viewData = [];
@@ -17,7 +21,7 @@ class FrontEndController extends Controller
     }
     //
     // game jams
-    public function gameJams(Request $request){
+    public function gameJams(Request $request) {
         //todo
         //move to own controller
 
@@ -49,10 +53,23 @@ class FrontEndController extends Controller
     public function oneGameJam($id){
         $gameJams = new GameJams();
 
+        $gameJam = $gameJams->getById($id);
+
+        $this->viewData["userCanDeleteGameJam"] = $this->viewData["userJoinedGameJam"]  = false;
+
+        if(session()->has('user')){
+            $idUser = session()->get('user')[0]->idUser;
+            $this->viewData["userJoinedGameJam"] = $gameJams->userAlreadyJoined($idUser, $id);
+
+            if($gameJam->endDate > time()){
+                $this->viewData["userCanDeleteGameJam"] = $gameJams->userOwnsGameJam($idUser, $id);
+            }
+        }
+
         $gameJams->increaseViews($id);
 
         $this->viewData["gameJam"] = $gameJams->getOne($id);
-
+        
         return view('gameJams.oneGameJam', $this->viewData);
     }
     public function createGameJam(){
@@ -69,9 +86,28 @@ class FrontEndController extends Controller
         //todo
         //move to own controller
     } //this needs to move in GameSubmission controller
-    public function createGameSubmission(){
+    public function createGameSubmission($idGameJam){
         //todo
         //move to own controller
+
+        $gameJams = new GameJams();
+        $gameSubmissions = new GameSubmissions();
+
+        $gameJam = $gameJams->getById($idGameJam);
+
+        if(session()->has('user')){
+            $idUser = session()->get('user')[0]->idUser;
+
+            if(!$gameJams->userAlreadyJoined($idUser, $idGameJam)){
+                return Redirect::back()->withInput()->with('message', 'You have not joined this game jam!');
+            }
+
+            if(!empty($gameSubmissions->getByUserAndGameJam($idUser, $idGameJam))) {
+                return Redirect::back()->withInput()->with('message', 'You have already submitted your game!');
+            }
+
+        }
+
         return view('gameSubmissions.createGameSubmission', $this->viewData);
     }
     public function oneGameSubmission($id){

@@ -111,11 +111,27 @@
 
 <!-- Page Content -->
 <div class="container main-container @yield('addClassesToBodyCover')">
-    <div class="row alert-parent" id="alert-messages">
+    <div class="modal-info">
+        <div class="modal-info-inner">
+            <div class="modal-info-header">
+                <div class="modal-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-info-content">
+                <p class="modal-info-text">
+                    @if(session()->has('message'))
+                        {{ session('message') }}
+                    @endif
+                </p>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row alert-parent" id="alert-messages">
         @if(session()->has('message'))
             <div class="col-md-offset-1 col-md-10 alert alert-info">{{session()->get('message')}}</div>
         @endif
-    </div>
+    </div>-->
 
     @yield('content')
 </div>
@@ -180,13 +196,25 @@
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script type="text/javascript">
-    $("#tbSearch").focus(function () {
-        $(this).addClass("expand-width");
-        $(this).removeClass("shrink-width");
-    });
-    $("#tbSearch").blur(function () {
-        $(this).addClass("shrink-width");
-        $(this).removeClass("expand-width");
+    $(document).ready(function() {
+        @if(session()->has('message'))
+            $(".modal-info").css({"display": "block", "opacity": 1});
+        @endif
+        $(".modal-close").on("click", function() {
+            $(".modal-info").animate({
+                opacity: 0
+            }, 150, function() {
+                $(".modal-info").css("display", "none");
+            });
+        });
+        $("#tbSearch").focus(function () {
+            $(this).addClass("expand-width");
+            $(this).removeClass("shrink-width");
+        });
+        $("#tbSearch").blur(function () {
+            $(this).addClass("shrink-width");
+            $(this).removeClass("expand-width");
+        });
     });
 </script>
 <script type="text/javascript" src="{{ asset('/js/main.js') }}"></script>
