@@ -34,7 +34,8 @@ class GameJams extends Generic
         return parent::insertGetId($insertData);
     }
 
-    public function insertCriteria($idGameJam, $idCriteria) {
+    public function insertCriteria($idGameJam, $idCriteria)
+    {
         return \DB::table('gamejams_criterias')
             ->insert([
                 'idGameJam' => $idGameJam,
@@ -42,33 +43,34 @@ class GameJams extends Generic
             ]);
     }
 
-    public function getAllWhereVotingEndDateNotFinished() {
+    public function getAllWhereVotingEndDateNotFinished()
+    {
         return \DB::table($this->tableName)
             ->select(["idGameJam", "title", "startDate", "endDate"])
             ->where('votingEndDate', '>', time())
             ->get();
     }
 
-    public function getFilteredGameJams($filter, $offset = 0, $limit = 6) {
+    public function getFilteredGameJams($filter, $offset = 0, $limit = 6)
+    {
         $return = [];
 
         $result = \DB::table($this->tableName)
-           ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
-           ->join('images', 'gamejams.idCoverImage', '=' ,'images.idImage')
-           ->select("*");
+            ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
+            ->join('images', 'gamejams.idCoverImage', '=', 'images.idImage')
+            ->select("*");
 
         // in progress
-        if($filter === "progress") {
+        if ($filter === "progress") {
             $count = $result->where("startDate", "<", time())
-            ->where("endDate", ">", time())->count();
+                ->where("endDate", ">", time())->count();
 
             $result->offset($offset)
                 ->limit($limit)
                 ->where("startDate", "<", time())
                 ->where("endDate", ">", time());
-        }
-        // upcoming
-        else if($filter === "upcoming") {
+        } // upcoming
+        else if ($filter === "upcoming") {
             $count = $result->where("startDate", ">", time())->count();
 
             $result->offset($offset)
@@ -82,10 +84,11 @@ class GameJams extends Generic
         return $return;
     }
 
-    public function getOne($id) {
+    public function getOne($id)
+    {
         $gameJam = \DB::table($this->tableName)
             ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
-            ->join('images', 'gamejams.idCoverImage', '=' ,'images.idImage')
+            ->join('images', 'gamejams.idCoverImage', '=', 'images.idImage')
             ->select('*')
             ->where('gamejams.idGameJam', '=', $id)
             ->first();
@@ -115,7 +118,8 @@ class GameJams extends Generic
             ->get();
     }
 
-    public function getCriteria($id) {
+    public function getCriteria($id)
+    {
         return \DB::table('gamejams_criterias')
             ->join('gamecriteries', 'gamejams_criterias.idCriteria', '=', 'gamecriteries.idGameCriteria')
             ->select('*')
@@ -123,7 +127,8 @@ class GameJams extends Generic
             ->get();
     }
 
-    public function increaseViews($id) {
+    public function increaseViews($id)
+    {
         \DB::statement("UPDATE gamejams SET numOfViews = numOfViews + 1 WHERE idGameJam = " . $id);
     }
 
@@ -160,5 +165,24 @@ class GameJams extends Generic
             ->where('idUserCreator', '=', $idUser)
             ->where('idGameJam', '=', $idGameJam)
             ->exists();
+    }
+    
+    public function getAllSearched($queryString, $offset = 0, $limit = 6) {
+        return \DB::table($this->tableName)
+            ->join('images', 'gamejams.idCoverImage', '=', 'images.idImage')
+            ->select(["images.alt", "images.path", "gamejams.title", "gamejams.description", "gamejams.idGameJam"])
+            ->where('gamejams.title', 'like', '%' . $queryString . '%')
+            ->orWhere('gamejams.description', 'like', '%' . $queryString . '%')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+    }
+
+    public function countAllSearched($queryString)
+    {
+        return \DB::table($this->tableName)
+            ->where('gamejams.title', 'like', '%' . $queryString . '%')
+            ->orWhere('gamejams.description', 'like', '%' . $queryString . '%')
+            ->count();
     }
 }

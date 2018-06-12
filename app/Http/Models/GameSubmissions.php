@@ -16,29 +16,31 @@ class GameSubmissions extends Generic
 
     public function insert()
     {
-        
+
     }
 
-    public function get($offset = 0, $limit = 9, $sort){
+    public function get($offset = 0, $limit = 9, $sort)
+    {
         $sort["name"] = "gamesubmissions." . $sort["name"];
 
         $games = \DB::table($this->tableName)
             ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
-            ->join('images', 'gamesubmissions.idTeaserImage', '=' ,'images.idImage')
+            ->join('images', 'gamesubmissions.idTeaserImage', '=', 'images.idImage')
             ->select(\DB::raw('*, (gamesubmissions.sumOfVotes / gamesubmissions.numberOfVotes) as rating'))
             ->offset($offset)
             ->limit(9)
             ->orderBy($sort["name"] === "gamesubmissions.rating" ? "rating" : $sort["name"], $sort["direction"])
             ->get();
 
-        foreach($games as $game) {
+        foreach ($games as $game) {
             $game->{"categories"} = $this->getCategories($game->idGameSubmission);
         }
 
         return $games;
     }
 
-    public function getCategories($id){
+    public function getCategories($id)
+    {
         return \DB::table('gamesubmissions_categories')
             ->join('gamecategories', 'gamesubmissions_categories.idCategory', '=', 'gamecategories.idGameCategory')
             ->select('*')
@@ -52,5 +54,25 @@ class GameSubmissions extends Generic
             ->where('idUserCreator', '=', $idUser)
             ->where('idGameJam', '=', $idGameJam)
             ->first();
+    }
+    
+    public function getAllSearched($queryString, $offset = 0, $limit = 6)
+    {
+        return \DB::table($this->tableName)
+            ->join('images', 'gamesubmissions.idCoverImage', '=', 'images.idImage')
+            ->select(["images.alt", "images.path", "gamesubmissions.title", "gamesubmissions.description", "gamesubmissions.idGameSubmission"])
+            ->where('gamesubmissions.title', 'like', '%' . $queryString . '%')
+            ->orWhere('gamesubmissions.description', 'like', '%' . $queryString . '%')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+    }
+
+    public function countAllSearched($queryString)
+    {
+        return \DB::table($this->tableName)
+            ->where('gamesubmissions.title', 'like', '%' . $queryString . '%')
+            ->orWhere('gamesubmissions.description', 'like', '%' . $queryString . '%')
+            ->count();
     }
 }
