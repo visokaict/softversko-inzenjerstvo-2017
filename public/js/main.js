@@ -110,17 +110,18 @@ slamjam.error = (function () {
     function _initSelector(type) {
         if ($selector === null) {
             // add first,
-            $selector = $("#alert-messages");
+            $selector = $(".modal-info-text");
         }
     }
 
     function _print(message, type) {
-        if (_enumList[type] === undefined) return;
+        //if (_enumList[type] === undefined) return;
         _initSelector(type);
 
-        var removeButton = `<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>`;
-        var msg = `<div>${ message.replace(/\</g, '&lt;').replace(/\>/g, '&gt;') }</div>`
-        $selector.prepend(`<div class="alert alert-${_errorTypes[type]}">${removeButton} ${msg}</div>`);
+        var msg = `<div>${ message.replace(/\</g, '&lt;').replace(/\>/g, '&gt;') }</div>`;
+        $selector.prepend(msg);
+
+        $('.modal-info').css({"display": "block", "opacity": 1});
     }
 
     return {
