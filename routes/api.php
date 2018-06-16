@@ -18,4 +18,8 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
+// game jams
 Route::get('/game-jams/chart', 'GameJamController@getChartGameJams');
+
+// Bages
+Route::get('/games/{gameId}/badges', 'BadgesController@get');
