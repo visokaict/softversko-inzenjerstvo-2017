@@ -152,7 +152,7 @@
 
       <div class="row">
         <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Submit game</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Create game jam</button>
         </div>
       </div>
     {{ csrf_field() }}
