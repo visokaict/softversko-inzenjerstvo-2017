@@ -66,6 +66,9 @@ class Kernel extends HttpKernel
         'isNotLoggedIn' => \App\Http\Middleware\CheckIfNotLoggedIn::class,
         'isAdmin' => \App\Http\Middleware\CheckRoleIfAdmin::class,
         'isJamDeveloper' => \App\Http\Middleware\CheckRoleIfJamDeveloper::class,
-        'isJamMaker' => \App\Http\Middleware\CheckRoleIfJamMaker::class
+        'isJamMaker' => \App\Http\Middleware\CheckRoleIfJamMaker::class,
+
+        //this is for api
+        'canAccessApi' => \App\Http\Middleware\CheckIfAPILoggedIn::class,
     ];
 }

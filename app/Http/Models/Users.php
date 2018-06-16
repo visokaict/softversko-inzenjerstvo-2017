@@ -37,7 +37,7 @@ class Users extends Generic
 
     public function getByUsernameOrEmailAndPassword($usernameEmail, $password)
     {
-        $result = \DB::table("users")
+        $result = \DB::table($this->tableName)
                     ->select('*')
                     ->where('password', '=', md5($password))
                     ->where(function ($query) use ($usernameEmail) {
@@ -50,7 +50,7 @@ class Users extends Generic
 
 	public function getByUsername($username)
     {
-        return \DB::table('users')
+        return \DB::table($this->tableName)
             ->select('*')
             ->where('username', '=', $username)
             ->first();
@@ -79,6 +79,32 @@ class Users extends Generic
             ->select('*')
             ->where('users_roles.idUser', '=', $userId)
             ->get();
+    }
+
+    public function getByAccessToken($token)
+    {
+        return \DB::table($this->tableName)
+            ->select('*')
+            ->where('accessToken', '=', $token)
+            ->first();
+    }
+
+    public function updateAccessToken($idUser, $token)
+    {
+        return \DB::table($this->tableName)
+            ->where('idUser', '=', $idUser)
+            ->update([
+                'accessToken'=> $token
+            ]);
+    }
+
+    public function removeAccessToken($idUser)
+    {
+        return \DB::table($this->tableName)
+            ->where('idUser', '=', $idUser)
+            ->update([
+                'accessToken'=> null
+            ]);
     }
 
 }
