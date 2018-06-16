@@ -48,12 +48,9 @@
 <div class="game-content container">
         <!-- game jam content -->
     <div class="one-game-jam-content">
-    @if($userCanDeleteGameJam)
-        <form action="{{ asset('/game-jams/delete') }}" class="game-jam-remove-block" method="post">
-            <input type="submit" class="btn btn-danger" value="Remove game jam"/>
-            <input type="hidden" name="idGameJam" value="{{ $gameJam->idGameJam }}"/>
-            {{ csrf_field() }}
-        </form>
+    @if($userCanEditAndDeleteGameJam)
+        <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/edit') }}" class="btn btn-primary" style="padding-left: 25px; padding-right: 25px;">Edit</a>
+        <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/delete') }}" class="btn btn-danger">Remove</a>  
     @endif
     <div class="row">
 
@@ -63,11 +60,13 @@
                     Starts in 
                 @elseif($gameJam->startDate < time() && $gameJam->endDate > time())
                     Submissions due in
-                @else
+                @elseif($gameJam->votingEndDate > time())
                     Voting ends in
+                @else
+                    This game jam has ended.
                 @endif 
             </h1>
-            @if($gameJam->endDate > time())
+            @if($gameJam->votingEndDate > time())
             <div id="clockdiv">
                 <div>
                     <span class="days"></span>

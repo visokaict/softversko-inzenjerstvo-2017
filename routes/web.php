@@ -20,6 +20,7 @@ Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam')->middleware
 
 // logic
 Route::post('/game-jams/create', 'GameJamController@insert')->middleware('isLoggedIn', 'isJamMaker');
+Route::post('/game-jams/edit', 'GameJamController@update')->middleware('isLoggedIn', 'isJamMaker');
 Route::post('/game-jams/join', 'GameJamController@joinUser')->middleware('isLoggedIn', 'isJamDeveloper');
 
 

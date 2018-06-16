@@ -165,38 +165,38 @@
 
 
 @section('jsfiles')
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-  <script>
-    var sample = []
-    var simplemde = new SimpleMDE({element: $("#smde")[0], toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "guide"]});
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        var sample = []
+        var simplemde = new SimpleMDE({element: $("#smde")[0], toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "guide"]});
 
-    $(document).ready(function() {
-      writeSample();
-      simplemde.codemirror.on("change", function(){
-        var renderedHTML = simplemde.options.previewRender(simplemde.value());
-        $("#write_here").html(renderedHTML);
-      });
+        $(document).ready(function() {
+            writeSample();
+            simplemde.codemirror.on("change", function(){
+                var renderedHTML = simplemde.options.previewRender(simplemde.value());
+                $("#write_here").html(renderedHTML);
+            });
 
-      $('.datetimepicker').datetimepicker();
-    });
+            $('.datetimepicker').datetimepicker();
+        });
 
-    function writeSample() {
-      var s = "";
-      s = getSample();
-      simplemde.value(s);
-      var renderedHTML = simplemde.options.previewRender(simplemde.value());
-      $("#write_here").html(renderedHTML);
-    }
+        function writeSample() {
+            var s = "";
+            s = getSample();
+            simplemde.value(s);
+            var renderedHTML = simplemde.options.previewRender(simplemde.value());
+            $("#write_here").html(renderedHTML);
+        }
 
-    function getSample() {
-      var s = "";
-        $.each(sample, function( index, value ) {
-        //alert( index + ": " + value );
-          s = s + value + "\n\r";
-      });
-      return s;
-    }
-  </script>
+        function getSample() {
+            var s = "";
+                $.each(sample, function( index, value ) {
+                //alert( index + ": " + value );
+                s = s + value + "\n\r";
+            });
+            return s;
+        }
+    </script>
 @endsection
