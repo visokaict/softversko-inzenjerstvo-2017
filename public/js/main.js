@@ -78,6 +78,18 @@ slamjam.common = (function () {
         }
     }
 
+    function _confirmBox($element) {
+        $element.on("click", function(){
+            $("#modal-confirm-yes").attr("href", $element.attr("data-url"));
+            $(".modal-info").css("display", "block");
+            $(".modal-confirm").css({"display": "block"});
+            $(".modal-info").animate({
+                opacity: 1
+            }, 150);
+            $(".modal-info-text").html($element.attr("data-text"));
+            return false;
+        });
+    }
 
     return {
         //return what others need to use from common
@@ -85,7 +97,9 @@ slamjam.common = (function () {
         createURL: _createURL,
 
         startLoader: _startLoader,
-        stopLoader: _stopLoader
+        stopLoader: _stopLoader,
+
+        confirmBox: _confirmBox
     };
 })();
 

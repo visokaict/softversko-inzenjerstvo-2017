@@ -687,7 +687,7 @@ span.game-category {
 }
 
 .modal-info-content {
-    padding: 45px 15px;
+    padding: 45px 15px 60px;
     text-align: center;
 }
 
@@ -709,15 +709,25 @@ span.game-category {
     font-size: 22px;
     padding-top: 4px;
 }
-
-.gs-min-height-100{
-    min-height: 100px;
+.modal-confirm {
+    display: none;
+    position: absolute;
+    bottom: 5px;
+    right: 9px;
+}
+.modal-confirm a {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 /*********/
 /*
     Game submission
 */
+
+.gs-min-height-100{
+    min-height: 100px;
+}
 .carousel-wrap {
     margin: 20px auto;
     padding: 0 5%;
