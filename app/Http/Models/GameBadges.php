@@ -9,4 +9,20 @@ class GameBadges extends Generic
     {
         parent::__construct('gamebadges', 'idGameBadges');
     }
+
+    public function getByGameSubmissionId($gameId)
+    {
+        return \DB::table('gamesubmissions_badges')
+            ->join('gamebadges', 'gamesubmissions_badges.idBadge', '=', 'gamebadges.idGameBadges')
+            ->join('images', 'images.idImage', '=', 'gamebadges.idImage')
+            ->where('gamesubmissions_badges.idGameSubmission', '=', $gameId)
+            ->get();
+    }
+
+    public function getAllByGameId($idGame)
+    {
+        return \DB::table('gamesubmissions_badges')
+            ->where('idGameSubmission', '=', $idGame)
+            ->get();
+    }
 }

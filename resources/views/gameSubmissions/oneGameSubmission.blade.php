@@ -53,7 +53,10 @@
                 <div class="carousel-wrap">
                     <div class="owl-carousel">
                         @foreach($gameSubmissionScreenShots as $screenShot)
-                            <div class="item"><img src="{{asset($screenShot->path)}}" alt="game submission screenshot">
+                            <div class="item">
+                                <a href="{{asset($screenShot->path)}}">
+                                    <img src="{{asset($screenShot->path)}}" alt="game submission screenshot">
+                                </a>
                             </div>
                         @endforeach
                     </div>
@@ -146,13 +149,15 @@
                 <br>
                 <br>
 
-                <div class="row">
+                <div class="row" id="badgesRenderedList">
 
+                    {{--
                     <!-- foreach -->
                     <div class="col-md-4 col-xs-6 col-sm-4">
                         <img style="width: 100%;" src="{{asset('images/badges/audio.png')}}" alt="badge name" title="badge name">
                     </div>
                     <!-- / foreach -->
+                    --}}
 
                 </div>
             </div>
@@ -289,8 +294,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
     <script src="https://cdn.rawgit.com/hustcc/timeago.js/e8354c59/dist/timeago.min.js"></script>
     <script>
+        var idGameSubmission = "{{$gameSubmission->idGameSubmission}}";
         $(document).ready(function () {
             slamjam.games.initOneGamePage();
+            slamjam.badges.initBadgesOnGamesPage();
         });
     </script>
 @endsection

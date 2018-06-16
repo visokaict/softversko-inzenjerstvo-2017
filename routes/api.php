@@ -22,4 +22,6 @@ use Illuminate\Http\Request;
 Route::get('/game-jams/chart', 'GameJamController@getChartGameJams');
 
 // Bages
-Route::get('/games/{gameId}/badges', 'BadgesController@get');
+Route::get('/games/{gameId}/badges', 'BadgesController@get')->middleware('canAccessApi');
+Route::post('/games/{gameId}/badges/{badgeId}', 'BadgesController@add')->middleware('canAccessApi');
+Route::delete('/games/{gameId}/badges/{badgeId}', 'BadgesController@remove')->middleware('canAccessApi');
