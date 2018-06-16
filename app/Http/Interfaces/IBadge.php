@@ -4,7 +4,7 @@ namespace App\Http\Interfaces;
 
 use Illuminate\Http\Request;
 
-interface ISearch
+interface IBadge
 {
     public function get(Request $request, $gameId);
     public function add(Request $request, $gameId);
