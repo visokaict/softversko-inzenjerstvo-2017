@@ -537,7 +537,7 @@ span.game-category {
     display: inline-block;
     vertical-align: top;
 }
-.game-jam-join-button, .game-jam-add-button {
+.game-jam-join-button, .game-jam-leave-button, .game-jam-add-button {
 	padding: 10px 50px;
     margin-top: 0;
 	border-radius: 6px;
@@ -548,7 +548,7 @@ span.game-category {
     margin-left: 5px;
     display: inline-block;
 }
-.game-jam-join-button:hover, .game-jam-add-button:hover {
+.game-jam-join-button:hover, .game-jam-leave-button:hover, .game-jam-add-button:hover {
     border-bottom-width: 0;
     margin-top: 3px;
     color: #fff;
@@ -558,9 +558,13 @@ span.game-category {
     background-color: #52A0FD;
     border-bottom: 3px solid #2980B9;
 }
+.game-jam-leave-button {
+    background-color: #ea5455;
+    border-bottom: 3px solid #ff1111;
+}
 .game-jam-add-button {
-    background-color: tomato;
-    border-bottom: 3px solid red;
+    background-color: #52A0FD;
+    border-bottom: 3px solid #2980B9;
 }
 .game-jam-remove-block {
     position: absolute;
