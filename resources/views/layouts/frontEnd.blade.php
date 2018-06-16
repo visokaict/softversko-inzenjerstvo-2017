@@ -40,13 +40,15 @@
                 @endif
             </p>
         </div>
+        <div class="modal-confirm" id="modal-confirm">
+            <a id="modal-confirm-yes" href="#" class="btn btn-danger">Yes</a>
+            <a id="modal-confirm-no" class="btn btn-primary">No</a>
+        </div>
     </div>
 </div>
 <!-- LOADER -->
 <div class="loading-overlay" id="loading-overlay"><img src="{{ asset('/images/loading.svg') }}" /></div>
 <!-- /LOADER -->
-
-
 
 <nav class="navbar navbar-inverse @yield('addClassesToBodyCover')" style="border-radius:0">
     <div class="container-fluid">
@@ -207,7 +209,7 @@
         @if(session()->has('message'))
             $(".modal-info").css({"display": "block", "opacity": 1});
         @endif
-        $(".modal-close").on("click", function() {
+        $(".modal-close, #modal-confirm-no").on("click", function() {
             $(".modal-info").animate({
                 opacity: 0
             }, 150, function() {
