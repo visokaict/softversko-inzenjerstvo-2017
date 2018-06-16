@@ -55,6 +55,9 @@
     </div>
 @endif
     <form action="{{ asset('/game-jams/edit') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="hiddenIdGameJam" value="{{$gameJam->idGameJam}}"/>
+        <input type="hidden" id="timeOffset" name="hiddenTimeOffset" value=""/>
+
         <div class="form-group">
             <label>Title:</label>
             <input type="text" name="tbTitle" class="form-control" value="{{$gameJam->title}}">
@@ -94,7 +97,7 @@
             @foreach($gameCriteria as $c)
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" id="game-jam-criteria-{{$c->idGameCriteria}}" @if(in_array($c->idGameCriteria, $gameHasCriteria)) checked @endif name="chbCriteria[]" value='{{ $c->idGameCriteria }}'><label style="padding-left: 0px;" for="game-jam-criteria-{{$c->idGameCriteria}}">{{ $c->name }}</label>
+                        <input type="checkbox" id="game-jam-criteria-{{$c->idGameCriteria}}" @if(!empty($gameHasCriteria) && in_array($c->idGameCriteria, $gameHasCriteria)) checked @endif name="chbCriteria[]" value='{{ $c->idGameCriteria }}'><label style="padding-left: 0px;" for="game-jam-criteria-{{$c->idGameCriteria}}">{{ $c->name }}</label>
                     </label>
                 </div>
             @endforeach
@@ -145,7 +148,7 @@
 
         <div class="row">
             <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Submit your changes</button>
+                <input type="submit" class="btn btn-primary btn-block btn-flat" value="Submit your changes"/>
             </div>
         </div>
     {{ csrf_field() }}
@@ -163,15 +166,10 @@
     <script>
         var sample = []
         var simplemde = new SimpleMDE({element: $("#smde")[0], toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "guide"]});
-
+    
         $(document).ready(function() {
-            var renderedHTML = simplemde.options.previewRender(simplemde.value());
-            $("#write_here").html(renderedHTML);
-
-            simplemde.codemirror.on("change", function(){
-                var renderedHTML = simplemde.options.previewRender(simplemde.value());
-                $("#write_here").html(renderedHTML);
-            });
+            var now = new Date();
+            $("#timeOffset").val(now.getTimezoneOffset() * 60);
 
             $("#datetimepicker1").datetimepicker({
                 date: new Date({{$gameJam->startDate * 1000}})
@@ -181,6 +179,14 @@
             });
             $("#datetimepicker3").datetimepicker({
                 date: new Date({{$gameJam->votingEndDate * 1000}})
+            });
+
+            var renderedHTML = simplemde.options.previewRender(simplemde.value());
+            $("#write_here").html(renderedHTML);
+
+            simplemde.codemirror.on("change", function(){
+                var renderedHTML = simplemde.options.previewRender(simplemde.value());
+                $("#write_here").html(renderedHTML);
             });
         });
 

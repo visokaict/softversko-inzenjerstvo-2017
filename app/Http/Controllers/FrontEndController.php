@@ -61,7 +61,7 @@ class FrontEndController extends Controller
             $idUser = session()->get('user')[0]->idUser;
             $this->viewData["userJoinedGameJam"] = $gameJams->userAlreadyJoined($idUser, $id);
 
-            if($gameJam->endDate > time()){
+            if($gameJam->startDate > time()){
                 $this->viewData["userCanEditAndDeleteGameJam"] = $gameJams->userOwnsGameJam($idUser, $id);
             }
         }
@@ -85,14 +85,15 @@ class FrontEndController extends Controller
 
         $this->viewData["userCanEditGameJam"] = false;
 
-        if(session()->has('user')){
-            $idUser = session()->get('user')[0]->idUser;
-
-            if($gameJam->endDate > time()){
-                $this->viewData["userCanEditGameJam"] = $gameJams->userOwnsGameJam($idUser, $id);
-            }
-            else {
-                return Redirect::back()->withInput()->with("message", "You can't edit this game jam!");
+        if($gameJam->startDate < time()){
+            return Redirect::back()->withInput()->with("message", "You can no longer edit this game jam!");
+        }
+        else {
+            if(session()->has('user')){
+                $idUser = session()->get('user')[0]->idUser;
+                if(!$gameJams->userOwnsGameJam($idUser, $id)){
+                    return Redirect::back()->withInput()->with("message", "You can't edit this game jam!");
+                }
             }
         }
 

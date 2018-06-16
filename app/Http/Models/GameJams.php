@@ -34,15 +34,6 @@ class GameJams extends Generic
         return parent::insertGetId($insertData);
     }
 
-    public function insertCriteria($idGameJam, $idCriteria)
-    {
-        return \DB::table('gamejams_criterias')
-            ->insert([
-                'idGameJam' => $idGameJam,
-                'idCriteria' => $idCriteria,
-            ]);
-    }
-
     public function getAllWhereVotingEndDateNotFinished()
     {
         return \DB::table($this->tableName)
@@ -125,6 +116,22 @@ class GameJams extends Generic
             ->select('*')
             ->where('gamejams_criterias.idGameJam', '=', $id)
             ->get();
+    }
+
+    public function insertCriteria($idGameJam, $idCriteria)
+    {
+        return \DB::table('gamejams_criterias')
+            ->insert([
+                'idGameJam' => $idGameJam,
+                'idCriteria' => $idCriteria,
+            ]);
+    }
+
+    public function deleteCriteria($idGameJam, $idGameCriteria){
+        return \DB::table('gamejams_criterias')
+            ->where("idGameJam", "=", $idGameJam)
+            ->where("idCriteria", "=", $idGameCriteria)
+            ->delete();
     }
 
     public function increaseViews($id)
