@@ -3,8 +3,9 @@
 **/
 slamjam.common = (function () {
 
-    function _createURL(url) {
-        return base_url + url;
+    function _createURL(url, noApi) {
+        if (noApi) return base_url + url;
+        return base_url_api + url;
     }
 
     function _ajax(options) {
@@ -150,8 +151,8 @@ slamjam.error = (function () {
 slamjam.games = (function () {
     //todo
 
-    function _initGamesPage (){
-        $('body').on('click', '#pagination-games li a', function(e) {
+    function _initGamesPage() {
+        $('body').on('click', '#pagination-games li a', function (e) {
 
             e.preventDefault();
 
@@ -204,7 +205,7 @@ slamjam.games = (function () {
         }
     }
 
-    function _initOneGamePage(){
+    function _initOneGamePage() {
         _initSliders();
         _initGameCover();
     }
@@ -246,7 +247,7 @@ slamjam.games = (function () {
         });
 
         $('.item a').magnificPopup({
-            type:'image',
+            type: 'image',
             mainClass: 'mfp-fade'
         });
     }
@@ -256,6 +257,82 @@ slamjam.games = (function () {
         initOneGamePage: _initOneGamePage,
     }
 
+})();
+
+/*
+*   All about badges
+**/
+slamjam.badges = (function () {
+
+    function _renderBadge(badgeData) {
+        var result = `<div class="col-md-4 col-xs-6 col-sm-4">
+                         <img style="width: 100%;" src="${slamjam.common.createURL("/" + badgeData.path, true)}" alt="${badgeData.alt}" title="${badgeData.name}">
+                      </div>`;
+        return result;
+    }
+
+    function _initBadgesOnGamesPage() {
+
+        slamjam.common.ajax({
+            url: slamjam.common.createURL(`/games/${idGameSubmission}/badges`),
+            success: function (data) {
+                if (data && data.length) {
+                    var badgesHtml = data.map(function (item) {
+                        return _renderBadge(item);
+                    });
+
+                    $("#badgesRenderedList").html(badgesHtml.join(''));
+                } else {
+                    $("#badgesRenderedList").html("<i>There is currently no badges for this game.</i>");
+                }
+            },
+            error: function (error) {
+                var message = "Getting game badges has failed.";
+                try {
+                    message = error.responseJSON.error.message;
+                } catch (e) {
+                    //todo
+                }
+
+                slamjam.error.print(message, slamjam.error.enumList.ERROR)
+            }
+        });
+
+        //init button
+        $("#btnAddBadge").on('click', function () {
+
+            var badgeId = $("#gamesBadgesList").val();
+            if (badgeId == null) return;
+
+            slamjam.common.ajax({
+                url: slamjam.common.createURL(`/games/${idGameSubmission}/badges/${badgeId}`),
+                method: "POST",
+                success: function (data) {
+                    var badge = _renderBadge(data[0]);
+                    var $parent = $("#badgesRenderedList");
+                    if ($parent.find("i").length) {
+                        $parent.html(badge);
+                    } else {
+                        $parent.append(badge);
+                    }
+                },
+                error: function (error) {
+                    var message = "Posting game badge has failed.";
+                    try {
+                        message = error.responseJSON.error.message;
+                    } catch (e) {
+                        //todo
+                    }
+
+                    slamjam.error.print(message, slamjam.error.enumList.ERROR)
+                }
+            });
+        });
+    }
+
+    return {
+        initBadgesOnGamesPage: _initBadgesOnGamesPage,
+    };
 })();
 
 /*
@@ -320,7 +397,7 @@ slamjam.gameJam = (function () {
         slamjam.common.ajax({
             url: slamjam.common.createURL('/game-jams/chart'),
             success: function (data) {
-                if(data) {
+                if (data) {
                     _createChart(data);
                 } else {
                     $("#no-chart-game-jam").removeClass("hide");
@@ -333,22 +410,22 @@ slamjam.gameJam = (function () {
     }
 
     function _initGameJamItems() {
-        $('body').on('click', '.pagination-game-jams li a', function(e) {
+        $('body').on('click', '.pagination-game-jams li a', function (e) {
             e.preventDefault();
 
             var page = $(this).attr("data-page");
             var gameJamsType = $(this).attr("data-type");
             var gameJamsClass = "";
 
-            if(gameJamsType === "inProgress"){
+            if (gameJamsType === "inProgress") {
                 gameJamsClass = ".game-jams-in-progress-container";
                 $(gameJamsClass).css('opacity', '0.5');
             }
-            else{
+            else {
                 gameJamsClass = ".game-jams-upcoming-container";
                 $(gameJamsClass).css('opacity', '0.5');
             }
-           
+
             slamjam.common.startLoader();
 
             getGameJams(page, gameJamsType, gameJamsClass);
@@ -358,7 +435,7 @@ slamjam.gameJam = (function () {
 
         function getGameJams(page, gameJamsType, gameJamsClass) {
             $.ajax({
-                data : {
+                data: {
                     page: page,
                     gameJamsType: gameJamsType
                 }
@@ -384,7 +461,7 @@ slamjam.gameJam = (function () {
 slamjam.search = (function () {
 
     function _initPage() {
-        $('body').on('click', '.pagination-game-jams-search li a', function(e) {
+        $('body').on('click', '.pagination-game-jams-search li a', function (e) {
             e.preventDefault();
 
             var page = $(this).attr("data-page");
@@ -404,7 +481,7 @@ slamjam.search = (function () {
         function getGameJams(page, gameJamsType, gameClass) {
             console.log(gameClass);
             $.ajax({
-                data : {
+                data: {
                     page: page,
                     type: gameJamsType
                 }

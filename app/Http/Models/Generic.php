@@ -36,6 +36,12 @@ class Generic
             ->insertGetId($model);
     }
 
+    public function insertGetRow($model)
+    {
+        $id = $this->insertGetId($model);
+        return $this->getById($id);
+    }
+
     public function update($id, $data)
     {
         return DB::table($this->tableName)
@@ -61,6 +67,13 @@ class Generic
         return \DB::table($tableName)
             ->where($this->idName, '=', $id)
             ->count();
+    }
+
+    public function exist($id)
+    {
+        return \DB::table($this->tableName)
+            ->where($this->idName, $id)
+            ->exists();
     }
 
 }

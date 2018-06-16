@@ -19,7 +19,8 @@
           crossorigin="anonymous">
     <script>
         var slamjam = window.slamjam = {};
-        var base_url = window.base_url = "{{URL::to('/api')}}";
+        var base_url = window.base_url = "{{URL::to('/')}}";
+        var base_url_api = window.base_url_api = "{{URL::to('/api')}}";
     </script>
 
     @yield('cssfiles')

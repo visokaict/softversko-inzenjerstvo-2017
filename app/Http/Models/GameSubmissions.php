@@ -48,14 +48,15 @@ class GameSubmissions extends Generic
             ->get();
     }
 
-    public function getByUserAndGameJam($idUser, $idGameJam) {
+    public function getByUserAndGameJam($idUser, $idGameJam)
+    {
         return \DB::table($this->tableName)
             ->select('*')
             ->where('idUserCreator', '=', $idUser)
             ->where('idGameJam', '=', $idGameJam)
             ->first();
     }
-    
+
     public function getAllSearched($queryString, $offset = 0, $limit = 6)
     {
         return \DB::table($this->tableName)
@@ -83,7 +84,8 @@ class GameSubmissions extends Generic
             ->increment('numOfViews', 1);
     }
 
-    public function getOne($id){
+    public function getOne($id)
+    {
         return \DB::table($this->tableName)
             ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
             ->join('images', 'gamesubmissions.idCoverImage', '=', 'images.idImage')
@@ -106,5 +108,29 @@ class GameSubmissions extends Generic
             ->join('platforms', 'downloadfiles.idPlatform', '=', 'platforms.idPlatform')
             ->where('gamesubmissions_downloadfiles.idGameSubmission', '=', $id)
             ->get();
+    }
+
+    public function addBadge($idGame, $idBadge, $idUser)
+    {
+        //insert and return value
+        $id = \DB::table('gamesubmissions_badges')
+            ->insertGetId([
+                "idGameSubmission" => $idGame,
+                "idBadge" => $idBadge,
+                "idUser" => $idUser,
+            ]);
+
+        return \DB::table('gamesubmissions_badges')
+            ->join('gamebadges', 'gamesubmissions_badges.idBadge', '=', 'gamebadges.idGameBadges')
+            ->join('images', 'images.idImage', '=', 'gamebadges.idImage')
+            ->where('gamesubmissions_badges.idGameSubmission', '=', $id)
+            ->get();
+    }
+
+    public function removeBadge($idBadge)
+    {
+        return \DB::table('gamesubmissions_badges')
+            ->where('idGameSubmissionsBadge', '=', $idBadge)
+            ->delete();
     }
 }

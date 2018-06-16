@@ -18,4 +18,10 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
+// game jams
 Route::get('/game-jams/chart', 'GameJamController@getChartGameJams');
+
+// Bages
+Route::get('/games/{gameId}/badges', 'BadgesController@get')->middleware('canAccessApi');
+Route::post('/games/{gameId}/badges/{badgeId}', 'BadgesController@add')->middleware('canAccessApi');
+Route::delete('/games/{gameId}/badges/{badgeId}', 'BadgesController@remove')->middleware('canAccessApi');

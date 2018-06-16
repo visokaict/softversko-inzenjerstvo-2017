@@ -38,20 +38,36 @@ class AuthController extends Controller implements IAuthorization
 
             $isAdmin = Roles::arrayOfRolesHasRoleByName($userRoles, 'admin');
 
+            $redirectPath = "/";
             if ($isAdmin) {
-                return redirect('/admin');
+                $redirectPath = "/admin";
             }
 
+            //add token to user
+            $cookieToken = time() . str_random(60);
+            $user->updateAccessToken($dbUser->idUser, $cookieToken);
+
             //default redirect
-            return redirect('/');
+            return redirect($redirectPath)->withCookie(cookie()->forever('authToken', $cookieToken));
         }
 
-        return back()->withInput()->withErrors(['message'=>"Username/Email or password is incorrect"]);
+        return back()->withInput()->withErrors(['message' => "Username/Email or password is incorrect"]);
     }
 
     public function logout(Request $request)
     {
+
+        // remove access token from users table
+        if (session()->has('user')) {
+            $idUser = session()->get('user')[0]->idUser;
+
+            $user = new Users();
+            $user->removeAccessToken($idUser);
+        }
+
+        // remove session
         $request->session()->flush();
+
         return redirect('/');
     }
 
