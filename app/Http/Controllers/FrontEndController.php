@@ -110,11 +110,8 @@ class FrontEndController extends Controller
 
         return view('gameSubmissions.createGameSubmission', $this->viewData);
     }
-    public function oneGameSubmission($id){
-        //todo
-        //move to own controller
-        return view('gameSubmissions.oneGameSubmission', $this->viewData);
-    }
+    //removed one game submission get route from frontend
+
     public function editGameSubmission($id){
         //todo
         //move to own controller

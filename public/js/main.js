@@ -190,8 +190,56 @@ slamjam.games = (function () {
         }
     }
 
+    function _initOneGamePage(){
+        _initSliders();
+        _initGameCover();
+    }
+
+    function _initGameCover() {
+        var scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
+
+        $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
+
+        $('.nav-tabs-custom ul.nav-tabs li a').click(function (e) {
+            $('ul.nav-tabs li.active').removeClass('active');
+            $(this).parent('li').addClass('active');
+        })
+
+        $(window).scroll(function () {
+            scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
+            $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
+        });
+    }
+
+    function _initSliders() {
+        $('.owl-carousel').owlCarousel({
+            loop: false,
+            margin: 10,
+            autoplay: true,
+            stagePadding: 50,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+
+        $('.item a').magnificPopup({
+            type:'image',
+            mainClass: 'mfp-fade'
+        });
+    }
+
     return {
         initGamesPage: _initGamesPage,
+        initOneGamePage: _initOneGamePage,
     }
 
 })();

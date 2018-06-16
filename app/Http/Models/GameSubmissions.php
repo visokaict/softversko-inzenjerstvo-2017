@@ -75,4 +75,36 @@ class GameSubmissions extends Generic
             ->orWhere('gamesubmissions.description', 'like', '%' . $queryString . '%')
             ->count();
     }
+
+    public function increaseViews($id)
+    {
+        return \DB::table($this->tableName)
+            ->where('idGameSubmission', '=', $id)
+            ->increment('numOfViews', 1);
+    }
+
+    public function getOne($id){
+        return \DB::table($this->tableName)
+            ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
+            ->join('images', 'gamesubmissions.idCoverImage', '=', 'images.idImage')
+            ->where('idGameSubmission', '=', $id)
+            ->first();
+    }
+
+    public function getScreenShots($id)
+    {
+        return \DB::table('gamesubmissions_screenshots')
+            ->join('images', 'gamesubmissions_screenshots.idImage', '=', 'images.idImage')
+            ->where('gamesubmissions_screenshots.idGameSubmission', '=', $id)
+            ->get();
+    }
+
+    public function getDownloadFiles($id)
+    {
+        return \DB::table('gamesubmissions_downloadfiles')
+            ->join('downloadfiles', 'gamesubmissions_downloadfiles.idDownloadFile', '=', 'downloadfiles.idDownloadFile')
+            ->join('platforms', 'downloadfiles.idPlatform', '=', 'platforms.idPlatform')
+            ->where('gamesubmissions_downloadfiles.idGameSubmission', '=', $id)
+            ->get();
+    }
 }

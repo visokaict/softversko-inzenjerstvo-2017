@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\GameBadges;
 use App\Http\Models\Navigations;
 use App\Http\Interfaces\IGameSubmission;
 use Illuminate\Http\Request;
@@ -12,6 +13,22 @@ class GameSubmissionController extends Controller implements IGameSubmission
 {
 
     private $viewData;
+
+    public function oneGameSubmission($id){
+        if (!preg_match("/^\d+$/", $id)) {
+            return back()->with('message', 'Invalid game submission id.');
+        }
+
+        $gameSubmissions = new GameSubmissions();
+        $gameBadges = new GameBadges();
+        $gameSubmissions->increaseViews($id);
+        $this->viewData["gameSubmission"] = $gameSubmissions->getOne($id);
+        $this->viewData["gameSubmissionScreenShots"] = $gameSubmissions->getScreenShots($id);
+        $this->viewData["gameSubmissionDownloadFiles"] = $gameSubmissions->getDownloadFiles($id);
+        $this->viewData["gameBadgesList"] = $gameBadges->getAll();
+
+        return view('gameSubmissions.oneGameSubmission', $this->viewData);
+    }
 
     //
     // this function is used as AJAX and normal REQUEST handler

@@ -458,16 +458,13 @@ footer.custom-footer {
     margin: 15px auto;
 }
 .game-content-left {
-    border: 1px solid #000;
-    height: 200px;
+    min-height: 200px;
 }
 .game-content-right {
-    border: 1px solid #000;
-    height: 200px;
+    min-height: 200px;
 }
 .game-comments {
-    border: 1px solid #000;
-    height: 200px;
+    min-height: 100px;
 }
 
 /* Games page */
@@ -713,5 +710,44 @@ span.game-category {
     padding-top: 4px;
 }
 
+.gs-min-height-100{
+    min-height: 100px;
+}
 
 /*********/
+/*
+    Game submission
+*/
+.carousel-wrap {
+    margin: 20px auto;
+    padding: 0 5%;
+    width: 80%;
+    position: relative;
+}
+
+/* fix blank or flashing items on carousel */
+.owl-carousel .item {
+    position: relative;
+    z-index: 100;
+    -webkit-backface-visibility: hidden;
+}
+
+/* end fix */
+.owl-nav > div {
+    margin-top: -26px;
+    position: absolute;
+    top: 50%;
+    color: #cdcbcd;
+}
+
+.owl-nav i {
+    font-size: 52px;
+}
+
+.owl-nav .owl-prev {
+    left: -30px;
+}
+
+.owl-nav .owl-next {
+    right: -30px;
+}
