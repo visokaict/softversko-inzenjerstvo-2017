@@ -323,9 +323,26 @@ class GameJamController extends Controller
         }
     }
 
-    public function delete(Request $request) {
-        //todo
+    public function delete($id) {
+        $idUser = session()->get('user')[0]->idUser;
+        $idGameJam = $id;
 
+        $gameJams = new GameJams();
 
+        if($gameJams->gameJamExists($idGameJam)) {
+            if(!$gameJams->userOwnsGameJam($idUser, $idGameJam)){
+                return Redirect::back()->withInput()->with('message', "You can't delete this game jam.");
+            }
+            else if($gameJams->getById($idGameJam)->startDate < time()){
+                return Redirect::back()->withInput()->with('message', 'You can delete an active game jam.');
+            }
+            else{
+                $gameJams->update($idGameJam, ["isBlocked" => 1]);
+                return Redirect::to('/')->withInput()->with('message', "Game jam deleted.");
+            }
+        }
+        else {
+            return Redirect::back()->withInput()->with('message', "Selected game jam doesn\'t exist :(");
+        }
     }
 }
