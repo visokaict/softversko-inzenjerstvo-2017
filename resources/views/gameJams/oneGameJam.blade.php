@@ -129,8 +129,21 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                     <div class="game-jam-dates">
-                        <p>Start date: {{\App\Http\Models\Utilities::PrintDateTime($gameJam->startDate)}}</p>
-                        <p>End date: {{\App\Http\Models\Utilities::PrintDateTime($gameJam->endDate)}}</p>
+                        <div class="game-jam-date">
+                            <em>{{date("l", $gameJam->startDate)}}</em>
+                            <strong>{{date("F", $gameJam->startDate)}}</strong>
+                            <span>{{date("j", $gameJam->startDate)}}</span>
+                        </div>
+                        <div class="game-jam-date">
+                            <em>{{date("l", $gameJam->endDate)}}</em>
+                            <strong>{{date("F", $gameJam->endDate)}}</strong>
+                            <span>{{date("j", $gameJam->endDate)}}</span>
+                        </div>
+                        <div class="game-jam-date">
+                            <em>{{date("l", $gameJam->votingEndDate)}}</em>
+                            <strong>{{date("F", $gameJam->votingEndDate)}}</strong>
+                            <span>{{date("j", $gameJam->votingEndDate)}}</span>
+                        </div>
                     </div>
                     <div id="contentText" data-val="{{ $gameJam->content }}"></div>
                 </div>
