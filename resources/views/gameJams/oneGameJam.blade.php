@@ -50,7 +50,7 @@
     <div class="one-game-jam-content">
     @if($userCanEditAndDeleteGameJam)
         <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/edit') }}" class="btn btn-primary" style="padding-left: 25px; padding-right: 25px;">Edit</a>
-        <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/delete') }}" class="btn btn-danger">Remove</a>  
+        <a href="#" id="btn-remove-game-jam" data-url="{{ asset('/game-jams/'.$gameJam->idGameJam.'/delete') }}" data-text="Are you sure you want to remove this game jam?" class="btn btn-danger">Remove</a>  
     @endif
     <div class="row">
 
@@ -182,6 +182,8 @@
             scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
             $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
         });
+
+        slamjam.common.confirmBox($("#btn-remove-game-jam"));
     });
    
     function getTimeRemaining(endtime) {
