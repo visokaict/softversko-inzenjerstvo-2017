@@ -13,6 +13,20 @@ class GameSubmissionController extends Controller implements IGameSubmission
 
     private $viewData;
 
+    public function oneGameSubmission($id){
+        if (!preg_match("/^\d+$/", $id)) {
+            return back()->with('message', 'Invalid game submission id.');
+        }
+
+        $gameSubmissions = new GameSubmissions();
+        $gameSubmissions->increaseViews($id);
+        $this->viewData["gameSubmission"] = $gameSubmissions->getOne($id);
+        $this->viewData["gameSubmissionScreenShots"] = $gameSubmissions->getScreenShots($id);
+        $this->viewData["gameSubmissionDownloadFiles"] = $gameSubmissions->getDownloadFiles($id);;
+
+        return view('gameSubmissions.oneGameSubmission', $this->viewData);
+    }
+
     //
     // this function is used as AJAX and normal REQUEST handler
     public function getFilteredGames(Request $request)

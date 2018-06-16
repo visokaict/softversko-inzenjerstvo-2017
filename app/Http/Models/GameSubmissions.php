@@ -98,4 +98,13 @@ class GameSubmissions extends Generic
             ->where('gamesubmissions_screenshots.idGameSubmission', '=', $id)
             ->get();
     }
+
+    public function getDownloadFiles($id)
+    {
+        return \DB::table('gamesubmissions_downloadfiles')
+            ->join('downloadfiles', 'gamesubmissions_downloadfiles.idDownloadFile', '=', 'downloadfiles.idDownloadFile')
+            ->join('platforms', 'downloadfiles.idPlatform', '=', 'platforms.idPlatform')
+            ->where('gamesubmissions_downloadfiles.idGameSubmission', '=', $id)
+            ->get();
+    }
 }

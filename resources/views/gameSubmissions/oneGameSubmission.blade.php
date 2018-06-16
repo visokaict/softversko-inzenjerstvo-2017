@@ -8,6 +8,7 @@
     <link href="{{asset('css/game.css')}}" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet"
           type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
 @endsection
 
 @section('addClassesToBodyCover')
@@ -48,7 +49,6 @@
 
     <div class="game-header">
         <div class="game-header-inner container text-center">
-
             @if(count($gameSubmissionScreenShots))
                 <div class="carousel-wrap">
                     <div class="owl-carousel">
@@ -66,70 +66,69 @@
         </div>
     </div>
 
-    <div class="game-content container">
-        <div class="game-content-left col-lg-8 col-md-8 col-sm-8 col-xs-12 float-left">
-            <h4>Description:</h4>
-            <p>{{$gameSubmission->description}}</p>
+    <div class="game-content container" style="padding: 0 20px;">
+        <div class="row">
+            <div class="col-md-8 col-xs-12">
+                <div class="col-md-12 gs-min-height-100" style="padding: 0 0 30px 0;">
+                    <h4>Downloads:</h4>
+                    <br>
+
+                    @foreach($gameSubmissionDownloadFiles as $gameFiles)
+                        <div class="row">
+                            <div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-block btn-social btn-bitbucket">
+                                        <i class="fa fa-download"></i>
+                                        Download
+                                    </button>
+                                </div>
+                                <div class="col-md-6" style="padding: 8px 0 0 8px;">Text</div>
+                                <div class="col-md-3" style="padding: 8px 0 0 8px;">
+                                    2MB
+                                    <i class="fab fa-windows"></i>
+                                    <i class="fab fa-linux"></i>
+                                    <i class="fab fa-android"></i>
+                                    <i class="fab fa-apple"></i>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+                <div class="col-md-12 gs-min-height-100" style="padding: 0;">
+                    <h4>Description:</h4>
+                    <br>
+                    <p>{{$gameSubmission->description}}</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-12 gs-min-height-100">
+                <h4>Badges:</h4>
+                <br>
+
+                //todo
+            </div>
+
         </div>
-        <div class="game-content-right col-lg-4 col-md-4 col-sm-4 col-xs-12 float-right">
-            <h4>Badges:</h4>
-            <div>
-                Load bages with javascript
+        <hr>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 gs-min-height-100">
+                <h4>Comments:</h4>
+                <br>
+                //todo
             </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="game-comments col-md-12">
-            <h4>Comments:</h4>
-            <div>
-                Load bages with javascript
-            </div>
-        </div>
+
     </div>
     <!-- -->
 @endsection
 
 @section('jsfiles')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
     <script>
         $(document).ready(function () {
-
-            //sliders
-            $('.owl-carousel').owlCarousel({
-                loop: true,
-                margin: 10,
-                autoplay: true,
-                autoplayHoverPause: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 5
-                    }
-                }
-            });
-
-            // todo
-            // one function
-
-            // scrolling navigation
-
-            var scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
-
-            $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
-
-            $('.nav-tabs-custom ul.nav-tabs li a').click(function (e) {
-                $('ul.nav-tabs li.active').removeClass('active');
-                $(this).parent('li').addClass('active');
-            })
-
-            $(window).scroll(function () {
-                scroll = Math.floor($(window).scrollTop() * 0.2 - 150);
-                $(".game-cover-image").css("transform", "translate3d(0, " + scroll + "px, 0");
-            });
+            slamjam.games.initOneGamePage();
         });
     </script>
 @endsection
