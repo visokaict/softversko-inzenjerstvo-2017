@@ -50,7 +50,7 @@
     <div class="one-game-jam-content">
     @if($userCanEditAndDeleteGameJam)
         <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/edit') }}" class="btn btn-primary" style="padding-left: 25px; padding-right: 25px;">Edit</a>
-        <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/delete') }}" class="btn btn-danger">Remove</a>  
+        <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/delete') }}" class="btn btn-danger">Remove</a>
     @endif
     <div class="row">
 
