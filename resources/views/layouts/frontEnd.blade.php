@@ -26,10 +26,27 @@
 </head>
 
 <body>
-
+<div class="modal-info">
+    <div class="modal-info-inner">
+        <div class="modal-info-header">
+            <div class="modal-close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="modal-info-content">
+            <p class="modal-info-text">
+                @if(session()->has('message'))
+                    {{ session('message') }}
+                @endif
+            </p>
+        </div>
+    </div>
+</div>
 <!-- LOADER -->
 <div class="loading-overlay" id="loading-overlay"><img src="{{ asset('/images/loading.svg') }}" /></div>
 <!-- /LOADER -->
+
+
 
 <nav class="navbar navbar-inverse @yield('addClassesToBodyCover')" style="border-radius:0">
     <div class="container-fluid">
@@ -111,22 +128,6 @@
 
 <!-- Page Content -->
 <div class="container main-container @yield('addClassesToBodyCover')">
-    <div class="modal-info">
-        <div class="modal-info-inner">
-            <div class="modal-info-header">
-                <div class="modal-close">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="modal-info-content">
-                <p class="modal-info-text">
-                    @if(session()->has('message'))
-                        {{ session('message') }}
-                    @endif
-                </p>
-            </div>
-        </div>
-    </div>
     <!--<div class="row alert-parent" id="alert-messages">
         @if(session()->has('message'))
             <div class="col-md-offset-1 col-md-10 alert alert-info">{{session()->get('message')}}</div>
