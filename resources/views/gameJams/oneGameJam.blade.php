@@ -87,15 +87,21 @@
             </div>
             @endif
 
-            <div class="game-jam-join-button-holder">
-                <form action="{{ asset('/game-jams/join') }}" class="game-jam-button-block" method="post">
-                    <input type="submit" class="{{ $userJoinedGameJam ? 'game-jam-leave-button' : 'game-jam-join-button'}}" value="{{ $userJoinedGameJam ? 'Leave' : 'Join' }} game jam"/>
-                    <input type="hidden" name="idGameJam" value="{{ $gameJam->idGameJam }}"/>
-                    {{ csrf_field() }}
-                </form>
+            <div class="game-jam-join-buttons">
+                <div class="game-jam-join-button-holder">
+                @if(!$userJoinedGameJam)
+                    <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/join') }}" class="game-jam-join-button">Join game jam</a>
+                </div>
+                @else
+                <div class="game-jam-join-button-holder">
+                    <a href="#" id="game-jam-leave-button" data-url="{{ asset('/game-jams/'.$gameJam->idGameJam.'/leave') }}" data-text="Are you sure you want to leave this game jam?" class="game-jam-leave-button">Leave game jam</a>
+                @endif
+                </div>
+                <div class="game-jam-join-button-holder">
                 @if($gameJam->startDate < time() && $gameJam->endDate > time() && $userJoinedGameJam)
                     <a href="{{ asset('/games/create/' . $gameJam->idGameJam) }}" class="game-jam-add-button">Add game submission</a>
                 @endif
+                </div>
             </div>
         </div>
         </div>
@@ -184,6 +190,7 @@
         });
 
         slamjam.common.confirmBox($("#btn-remove-game-jam"));
+        slamjam.common.confirmBox($("#game-jam-leave-button"));
     });
    
     function getTimeRemaining(endtime) {

@@ -134,9 +134,8 @@ class GameJamController extends Controller
         }
     }
 
-    public function joinUser(Request $request) {
+    public function joinUserToGameJam($idGameJam) {
         $idUser = session()->get('user')[0]->idUser;
-        $idGameJam = $request->get('idGameJam');
 
         $gameJams = new GameJams();
 
@@ -148,8 +147,7 @@ class GameJamController extends Controller
                 return Redirect::back()->withInput()->with('message', 'You can no longer join this game jam.');
             }
             else if($gameJams->userAlreadyJoined($idUser, $idGameJam)) {
-                $result = $gameJams->removeUserFromGameJam($idUser, $idGameJam);
-                return Redirect::back()->withInput()->with('message', 'You have left this game jam. Good bye!');
+                return Redirect::back()->withInput()->with('message', 'You are already in this game jam!');
             }
             else {
                 $result = $gameJams->joinUserToGameJam($idUser, $idGameJam);
@@ -160,6 +158,25 @@ class GameJamController extends Controller
                 else {
                     return Redirect::back()->withInput()->with('message', 'Congratulations, you have joined this game jam!');
                 }
+            }
+        }
+        else {
+            return Redirect::back()->withInput()->with('message', 'Selected game jam doesn\'t exist :(');
+        }
+    }
+
+    public function removeUserFromGameJam($idGameJam) {
+        $idUser = session()->get('user')[0]->idUser;
+
+        $gameJams = new GameJams();
+
+        if($gameJams->gameJamExists($idGameJam)) {
+            if($gameJams->userAlreadyJoined($idUser, $idGameJam)) {
+                $result = $gameJams->removeUserFromGameJam($idUser, $idGameJam);
+                return Redirect::back()->withInput()->with('message', 'You have left this game jam. Good bye!');
+            }
+            else {
+                return Redirect::back()->withInput()->with('message', 'You can\'t leave because you never joined!');
             }
         }
         else {

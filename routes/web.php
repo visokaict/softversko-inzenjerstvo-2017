@@ -21,7 +21,8 @@ Route::get('/game-jams/{id}/edit', 'FrontEndController@editGameJam')->middleware
 // logic
 Route::post('/game-jams/create', 'GameJamController@insert')->middleware('isLoggedIn', 'isJamMaker');
 Route::post('/game-jams/edit', 'GameJamController@update')->middleware('isLoggedIn', 'isJamMaker');
-Route::post('/game-jams/join', 'GameJamController@joinUser')->middleware('isLoggedIn', 'isJamDeveloper');
+Route::get('/game-jams/{id}/join', 'GameJamController@joinUserToGameJam')->middleware('isLoggedIn', 'isJamDeveloper');
+Route::get('/game-jams/{id}/leave', 'GameJamController@removeUserFromGameJam')->middleware('isLoggedIn', 'isJamDeveloper');
 Route::get('/game-jams/{id}/delete', 'GameJamController@delete')->middleware('isLoggedIn', 'isJamMaker');
 
 //
