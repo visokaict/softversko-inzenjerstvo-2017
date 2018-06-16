@@ -55,14 +55,14 @@ class FrontEndController extends Controller
 
         $gameJam = $gameJams->getById($id);
 
-        $this->viewData["userCanDeleteGameJam"] = $this->viewData["userJoinedGameJam"]  = false;
+        $this->viewData["userCanEditAndDeleteGameJam"] = $this->viewData["userJoinedGameJam"]  = false;
 
         if(session()->has('user')){
             $idUser = session()->get('user')[0]->idUser;
             $this->viewData["userJoinedGameJam"] = $gameJams->userAlreadyJoined($idUser, $id);
 
-            if($gameJam->endDate > time()){
-                $this->viewData["userCanDeleteGameJam"] = $gameJams->userOwnsGameJam($idUser, $id);
+            if($gameJam->startDate > time()){
+                $this->viewData["userCanEditAndDeleteGameJam"] = $gameJams->userOwnsGameJam($idUser, $id);
             }
         }
 
@@ -78,6 +78,32 @@ class FrontEndController extends Controller
         return view('gameJams.createGameJam', $this->viewData);
     }
     public function editGameJam($id){
+        $gameJams = new GameJams();
+        $gameCriteria = new GameCriteria();
+
+        $gameJam = $gameJams->getOne($id);
+
+        $this->viewData["userCanEditGameJam"] = false;
+
+        if($gameJam->startDate < time()){
+            return Redirect::back()->withInput()->with("message", "You can no longer edit this game jam!");
+        }
+        else {
+            if(session()->has('user')){
+                $idUser = session()->get('user')[0]->idUser;
+                if(!$gameJams->userOwnsGameJam($idUser, $id)){
+                    return Redirect::back()->withInput()->with("message", "You can't edit this game jam!");
+                }
+            }
+        }
+
+        foreach($gameJam->criteria as $c) {
+            $this->viewData["gameHasCriteria"][] = $c->idGameCriteria;
+        }
+
+        $this->viewData["gameCriteria"] = $gameCriteria->getAll();
+        $this->viewData["gameJam"] = $gameJams->getOne($id);
+
         return view('gameJams.editGameJam', $this->viewData);
     }
     //

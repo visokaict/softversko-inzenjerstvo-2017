@@ -167,11 +167,165 @@ class GameJamController extends Controller
         }
     }
 
-    public function edit(Request $request) {
-        //todo
+    public function update(Request $request) {
+        $gameJams = new GameJams();
+        $idGameJam = $request->get("hiddenIdGameJam");
+        $gameJam = $gameJams->getById($idGameJam);
+
+        if($gameJam->startDate < time()){
+            return Redirect::back()->withInput()->with("message", "You can no longer edit this game jam!");
+        }
+        else {
+            if(session()->has('user')){
+                $idUser = session()->get('user')[0]->idUser;
+                if(!$gameJams->userOwnsGameJam($idUser, $idGameJam)){
+                    return Redirect::back()->withInput()->with("message", "You can't edit this game jam!");
+                }
+            }
+        }
+
+        $updateData = [];
+
+        $timeOffset = $request->get("hiddenTimeOffset");
+        
+        $startDate = strtotime($request->get("dStartDate")) + $timeOffset;
+        $endDate = strtotime($request->get("dEndDate")) + $timeOffset;
+        $votingEndDate = strtotime($request->get("dVotingEndDate")) + $timeOffset;
+
+        $updateData['startDate'] = intval($startDate);
+        $updateData['endDate'] = intval($endDate);
+        $updateData['votingEndDate'] = intval($votingEndDate);
+
+        if($startDate < time() + 3600){
+            $dateError = "Game jam must start at least 1 hour from now.";
+        }
+        else if($endDate < $startDate + 86400){
+            $dateError = "Game jam duration must be at least 1 day.";
+        }
+        else if($votingEndDate < $endDate + 86400){
+            $dateError = "Voting period must be at least 1 day.";
+        }
+
+        if(isset($dateError)){
+            return back()->withInput()->with('dateError', $dateError);
+        }
+
+        $validation = Validator::make($request->all(), [
+            'tbTitle' => 'required|regex:/^[a-zA-Z0-9\s]+$/|min:3',
+            'taDescription' => 'required'
+        ]);
+
+        $validation->setAttributeNames([
+            'tbTitle' => 'title',
+            'taDescription' => 'description'
+        ]);
+
+        if($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        } else {
+            $updateData['title'] = $request->get('tbTitle');
+            $updateData['description'] = $request->get('taDescription');
+            $updateData['content'] = $request->get('taContent');
+
+            if(!empty($request->file('fCoverImage'))){
+                $photo = $request->file('fCoverImage');
+                $extension = $photo->getClientOriginalExtension();
+                $tmp_path = $photo->getPathName();
+                
+                $folder = 'images/cover/';
+                $file_name = time() . "." . $extension;
+                $new_path = public_path($folder).$file_name;
+
+                try {
+                    // insert cover image
+                    File::move($tmp_path, $new_path);
+
+                    $cover = new Images();
+                    $coverId = $cover->insert(1, 'Cover image', 'images/cover/'.$file_name);
+
+                    $updateData["idCoverImage"] = $coverId;
+                }
+                catch(\Illuminate\Database\QueryException $ex){
+                    \Log::error($ex->getMessage());
+                    return redirect()->back()->with('error','Greska pri dodavanju posta u bazu!');
+                }
+                catch(\Symfony\Component\HttpFoundation\File\Exception\FileException $ex) {
+                    \Log::error('Problem sa fajlom!!'.$ex->getMessage());
+                    return redirect()->back()->with('error','Greska pri dodavanju slike!');
+                }
+                catch(\ErrorException $ex) { 
+                    \Log::error('Problem sa fajlom!!'.$ex->getMessage());
+                    return redirect()->back()->with('error','Desila se greska..');
+                }
+            }
+
+            // others can vote, locked
+            $othersCanVote = $lock = 0;
+
+            $othersCanVote = $request->has('chbOthers') ? 1 : 0;
+            $lock = $request->has('chbLock') ? 1 : 0;
+
+            $updateData["othersCanVote"] = $othersCanVote;
+            $updateData["lockSubmissionAfterSubmitting"] = $lock;
+
+            // update game jam
+            $gameJamUpdate = $gameJams->update($idGameJam, $updateData);
+            
+            if(empty($gameJamUpdate))
+            {
+                return back()->withInput()->with('message', 'Game jam update failed!');
+            }
+
+            // update criteria
+            $gameCriteriaGet = $request->get('chbCriteria');
+            $gameCriteria = new GameCriteria();
+            $selectedCriteria = [];
+
+            if(!empty($gameCriteriaGet)){
+                foreach($gameCriteriaGet as $val){
+                    $selectedCriteria[] = (int)$val;
+                }
+            }
+
+            $gameJamHasCriteriaDb = $gameJams->getCriteria($idGameJam);
+            $deleteCriteria = [];
+            $newCriteria = [];
+            $gameJamHasCriteria = [];
+
+            foreach($gameJamHasCriteriaDb as $e){
+                $gameJamHasCriteria[] = $e->idGameCriteria;
+            }
+
+            // delete criteria
+            foreach($gameJamHasCriteria as $idGameCriteria){
+                if(!in_array($idGameCriteria, $selectedCriteria)){
+                    $deleteCriteria[] = $idGameCriteria;
+                }
+            }
+
+            foreach($deleteCriteria as $idGameCriteria){
+                $gameJams->deleteCriteria($idGameJam, $idGameCriteria);
+            }
+            
+            // add criteria
+            foreach($selectedCriteria as $idGameCriteria){
+                if(!in_array($idGameCriteria, $gameJamHasCriteria)){
+                    $newCriteria[] = $idGameCriteria;
+                }
+            }
+
+            foreach ($newCriteria as $idGameCriteria)
+            {
+                $gameJams->insertCriteria($idGameJam, $idGameCriteria);
+            }
+
+            return redirect("/game-jams/" . $idGameJam)->with('message', 'Updated Game jam!');
+        }
     }
 
     public function delete(Request $request) {
         //todo
+
+
     }
 }
