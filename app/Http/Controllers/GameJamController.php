@@ -46,12 +46,14 @@ class GameJamController extends Controller
 
         $validation = Validator::make($request->all(), [
             'tbTitle' => 'required|regex:/^[a-zA-Z0-9\s]+$/|min:3',
-            'taDescription' => 'required'
+            'taDescription' => 'required',
+            'fCoverImage' => 'required|max:2000|mimes:jpg,jpeg,png'
         ]);
 
         $validation->setAttributeNames([
             'tbTitle' => 'title',
-            'taDescription' => 'description'
+            'taDescription' => 'description',
+            'fCoverImage' => 'image'
         ]);
 
         if($validation->fails()) {
@@ -77,13 +79,6 @@ class GameJamController extends Controller
 
                 $othersCanVote = $request->has('chbOthers') ? 1 : 0;
                 $lock = $request->has('chbLock') ? 1 : 0;
-                
-                /*if($request->has('chbOthers')){
-                    $othersCanVote = 1;
-                }
-                if($request->has('chbLock')){
-                    $lock = 1;
-                }*/
 
                 // insert game jam
                 $gameJam = new GameJams();
@@ -117,19 +112,16 @@ class GameJamController extends Controller
                     }
                 }
 
-                return redirect('/game-jams/create')->with('messages', 'Successfully created Game jam!');
+                return redirect('/game-jams/create')->with('message', 'Successfully created Game jam!');
             }
             catch(\Illuminate\Database\QueryException $ex){
-                \Log::error($ex->getMessage());
-                return redirect()->back()->with('error','Greska pri dodavanju posta u bazu!');
+                return redirect()->back()->withInput()->with('error', 'Database error.');
             }
             catch(\Symfony\Component\HttpFoundation\File\Exception\FileException $ex) {
-                \Log::error('Problem sa fajlom!!'.$ex->getMessage());
-                return redirect()->back()->with('error','Greska pri dodavanju slike!');
+                return redirect()->back()->withInput()->with('error', 'Failed to upload image!');
             }
-            catch(\ErrorException $ex) { 
-                \Log::error('Problem sa fajlom!!'.$ex->getMessage());
-                return redirect()->back()->with('error','Desila se greska..');
+            catch(\ErrorException $ex) {
+                return redirect()->back()->withInput()->with('error', 'An error occured.');
             }
         }
     }

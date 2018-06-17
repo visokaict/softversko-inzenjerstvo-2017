@@ -34,26 +34,34 @@
     <p class="auth-box-msg auth-title">Create game jam</p>
 
 @isset($errors)
-        @if($errors->any())
-            <div class="alert alert-danger">
-                @foreach($errors->all() as $error)
-                    <div>{{ $error }}</div>
-                @endforeach
-            </div>
-        @endif
-    @endisset
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        </div>
+    @endif
+@endisset
 
 @if(session()->has('dateError'))
     <div class="alert alert-danger">
-                    <div>{{ session('dateError') }}</div>
-            </div>
+        <div>{{ session('dateError') }}</div>
+    </div>
 @endif
 
-@if(session()->has('messages'))
-    <div class="alert alert-success">
-                    <div>{{ session('messages') }}</div>
-            </div>
+@if(session()->has('error'))
+    <div class="alert alert-danger">
+        <div>{{ session('error') }}</div>
+    </div>
 @endif
+
+@if(session()->has('message'))
+    <div class="alert alert-success">
+        <div>{{ session('message') }}</div>
+    </div>
+@endif
+
+
 
 
     <form action="{{ asset('/game-jams/create') }}" method="POST" enctype="multipart/form-data">
