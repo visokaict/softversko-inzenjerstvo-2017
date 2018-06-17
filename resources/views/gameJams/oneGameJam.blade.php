@@ -133,16 +133,22 @@
                             <em>{{date("l", $gameJam->startDate)}}</em>
                             <strong>{{date("F", $gameJam->startDate)}}</strong>
                             <span>{{date("j", $gameJam->startDate)}}</span>
+                            <i class="game-jam-date-time">{{date("h:i A", $gameJam->startDate)}}</i>
+                            <i class="game-jam-date-tooltip">Start date</i>
                         </div>
                         <div class="game-jam-date">
                             <em>{{date("l", $gameJam->endDate)}}</em>
                             <strong>{{date("F", $gameJam->endDate)}}</strong>
                             <span>{{date("j", $gameJam->endDate)}}</span>
+                            <i class="game-jam-date-time">{{date("h:i A", $gameJam->startDate)}}</i>
+                            <i class="game-jam-date-tooltip">End date</i>
                         </div>
                         <div class="game-jam-date">
                             <em>{{date("l", $gameJam->votingEndDate)}}</em>
                             <strong>{{date("F", $gameJam->votingEndDate)}}</strong>
                             <span>{{date("j", $gameJam->votingEndDate)}}</span>
+                            <i class="game-jam-date-time">{{date("h:i A", $gameJam->startDate)}}</i>
+                            <i class="game-jam-date-tooltip">Voting end date</i>
                         </div>
                     </div>
                     <div id="contentText" data-val="{{ $gameJam->content }}"></div>
