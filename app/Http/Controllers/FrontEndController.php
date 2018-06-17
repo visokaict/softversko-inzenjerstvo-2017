@@ -55,6 +55,10 @@ class FrontEndController extends Controller
 
         $gameJam = $gameJams->getById($id);
 
+        if(empty($gameJam)){
+            return Redirect::back()->withInput()->with("message", "Game jam doesn't exist!");
+        }
+
         $this->viewData["userCanEditAndDeleteGameJam"] = $this->viewData["userJoinedGameJam"]  = false;
 
         if(session()->has('user')){
