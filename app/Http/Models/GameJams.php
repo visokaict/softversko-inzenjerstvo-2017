@@ -50,7 +50,7 @@ class GameJams extends Generic
             ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
             ->join('images', 'gamejams.idCoverImage', '=', 'images.idImage')
             ->where('gamejams.idUserCreator', '=', $userId)
-            ->select("*");
+            ->select("*", \DB::raw("(SELECT count(*) FROM gamejams_participants WHERE gamejams_participants.idGameJam = gamejams.idGameJam) as countJoined"));
 
         $return["count"] = $result->count();
 
