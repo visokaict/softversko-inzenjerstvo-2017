@@ -159,13 +159,6 @@ class GameJams extends Generic
             ->exists();
     }
 
-    public function gameJamExists($id) {
-        return \DB::table($this->tableName)
-            ->select('*')
-            ->where('idGameJam', '=', $id)
-            ->exists();
-    }
-
     public function userOwnsGameJam($idUser, $idGameJam) {
         return \DB::table('gamejams')
             ->select('*')

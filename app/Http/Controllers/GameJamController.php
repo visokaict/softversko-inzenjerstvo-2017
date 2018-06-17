@@ -139,7 +139,7 @@ class GameJamController extends Controller
 
         $gameJams = new GameJams();
 
-        if($gameJams->gameJamExists($idGameJam)) {
+        if($gameJams->exist($idGameJam)) {
             if($gameJams->userOwnsGameJam($idUser, $idGameJam)){
                 return Redirect::back()->withInput()->with('message', 'You can\'t join your own Game Jam you bitch.');
             }
@@ -170,7 +170,7 @@ class GameJamController extends Controller
 
         $gameJams = new GameJams();
 
-        if($gameJams->gameJamExists($idGameJam)) {
+        if($gameJams->exist($idGameJam)) {
             if($gameJams->userAlreadyJoined($idUser, $idGameJam)) {
                 $result = $gameJams->removeUserFromGameJam($idUser, $idGameJam);
                 return Redirect::back()->withInput()->with('message', 'You have left this game jam. Good bye!');
@@ -346,7 +346,7 @@ class GameJamController extends Controller
 
         $gameJams = new GameJams();
 
-        if($gameJams->gameJamExists($idGameJam)) {
+        if($gameJams->exist($idGameJam)) {
             if(!$gameJams->userOwnsGameJam($idUser, $idGameJam)){
                 return Redirect::back()->withInput()->with('message', "You can't delete this game jam.");
             }
