@@ -140,4 +140,53 @@ class GameSubmissions extends Generic
             ->where('idGameSubmissionsBadge', '=', $idBadge)
             ->delete();
     }
+
+    public function getAllUsersGameSubmissions($userId, $offset = 0, $limit = 6)
+    {
+        $return = [];
+
+        $games = \DB::table($this->tableName)
+            ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
+            ->join('images', 'gamesubmissions.idTeaserImage', '=', 'images.idImage')
+            ->select(\DB::raw('*, (gamesubmissions.sumOfVotes / gamesubmissions.numberOfVotes) as rating'))
+            ->where("gamesubmissions.idUserCreator", "=", $userId);
+
+
+        $return["count"] = $games->count();
+
+        $games->offset($offset)
+            ->limit($limit);
+        $return["result"] = $games->get();
+
+        foreach ($return["result"] as $game) {
+            $game->{"categories"} = $this->getCategories($game->idGameSubmission);
+        }
+
+        return $return;
+    }
+
+    public function getAllUsersGameSubmissionsWins($userId, $offset = 0, $limit = 6)
+    {
+        $return = [];
+
+        $games = \DB::table($this->tableName)
+            ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
+            ->join('images', 'gamesubmissions.idTeaserImage', '=', 'images.idImage')
+            ->select(\DB::raw('*, (gamesubmissions.sumOfVotes / gamesubmissions.numberOfVotes) as rating'))
+            ->where("gamesubmissions.idUserCreator", "=", $userId)
+            ->where("gamesubmissions.isWinner", '=', '1');
+
+
+        $return["count"] = $games->count();
+
+        $games->offset($offset)
+            ->limit($limit);
+        $return["result"] = $games->get();
+
+        foreach ($return["result"] as $game) {
+            $game->{"categories"} = $this->getCategories($game->idGameSubmission);
+        }
+
+        return $return;
+    }
 }

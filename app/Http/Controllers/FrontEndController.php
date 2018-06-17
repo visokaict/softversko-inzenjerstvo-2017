@@ -116,6 +116,7 @@ class FrontEndController extends Controller
         //todo
         //move to own controller
     } //this needs to move in GameSubmission controller
+
     public function createGameSubmission($idGameJam){
         //todo
         //move to own controller

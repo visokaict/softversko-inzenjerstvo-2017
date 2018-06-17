@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Interfaces\IProfile;
+use App\Http\Models\GameJams;
+use App\Http\Models\GameSubmissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Http\Models\Roles;
@@ -12,6 +14,8 @@ use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller implements IProfile
 {
+    private $viewData = [];
+
     public function edit(Request $request){
         $idUser = session()->get('user')[0]->idUser;
         $users = new Users();
@@ -132,5 +136,77 @@ class ProfileController extends Controller implements IProfile
         }
 
         return back()->withInput()->with('messages', 'Successfully updated!');
+    }
+
+    public function getUsersGameJams(Request $request, $username) {
+        $user = new Users();
+        $usersData = $user->getIdByUsername($username);
+        $userId = $usersData->idUser;
+
+        if(empty($userId))
+        {
+            return back()->with('message', 'User with this username doesn\'t exist!');
+        }
+
+        $page = empty($request->get("page")) ? 1 : $request->get("page");
+
+        $gameJams = new GameJams();
+        $gjs = $gameJams->getAllUsersGameJams($userId, ($page - 1) * 6, 6);
+
+        $this->viewData["upcomingGameJams"] = $gjs["result"];
+        $this->viewData["gamesJamsUpcomingCount"] = $gjs["count"];
+        $this->viewData["currentPageGameJamsUpcoming"] = $page;
+
+        return view('user.usersGameJams', $this->viewData);
+    }
+
+    public function getUsersGames(Request $request, $username)
+    {
+        $user = new Users();
+        $usersData = $user->getIdByUsername($username);
+        $userId = $usersData->idUser;
+
+        if(empty($userId))
+        {
+            return back()->with('message', 'User with this username doesn\'t exist!');
+        }
+
+        $page = empty($request->get("page")) ? 1 : $request->get("page");
+
+        $gameSubmissions = new GameSubmissions();
+        $gss = $gameSubmissions->getAllUsersGameSubmissions($userId, ($page - 1) * 6, 6);
+
+
+        $this->viewData["games"] = $gss["result"];
+        $this->viewData["gamesCount"] = $gss["count"];
+        $this->viewData["currentPage"] = $page;
+        $this->viewData["currentSort"] = "none";
+
+        return view('user.usersGames', $this->viewData);
+    }
+
+    public function getUsersWins(Request $request, $username){
+        $user = new Users();
+        $usersData = $user->getIdByUsername($username);
+        $userId = $usersData->idUser;
+
+        if(empty($userId))
+        {
+            return back()->with('message', 'User with this username doesn\'t exist!');
+        }
+
+        $page = empty($request->get("page")) ? 1 : $request->get("page");
+
+        $gameSubmissions = new GameSubmissions();
+        $gss = $gameSubmissions->getAllUsersGameSubmissionsWins($userId, ($page - 1) * 6, 6);
+
+
+        $this->viewData["games"] = $gss["result"];
+        $this->viewData["gamesCount"] = $gss["count"];
+        $this->viewData["currentPage"] = $page;
+        $this->viewData["currentSort"] = "none";
+
+
+        return view('user.usersWins', $this->viewData);
     }
 }

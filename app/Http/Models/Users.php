@@ -56,6 +56,14 @@ class Users extends Generic
             ->first();
     }
 
+    public function getIdByUsername($username)
+    {
+        return \DB::table($this->tableName)
+            ->select('idUser')
+            ->where('username', '=', $username)
+            ->first();
+    }
+
 	public function addRole($idRole, $idUser)
     {
         return \DB::table('users_roles')
