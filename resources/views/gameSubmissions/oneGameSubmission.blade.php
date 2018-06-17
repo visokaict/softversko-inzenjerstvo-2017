@@ -143,7 +143,7 @@
                             </button>
                         </div>
                     </form>
-                @else
+                @elseif(!session()->has('user'))
                     <i>Please <a href="{{asset('/login')}}">login</a> to add badge to this <b>game</b>.</i>
                 @endif
 
