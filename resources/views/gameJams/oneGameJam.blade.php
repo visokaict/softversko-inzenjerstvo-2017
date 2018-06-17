@@ -133,21 +133,21 @@
                             <em>{{date("l", $gameJam->startDate)}}</em>
                             <strong>{{date("F", $gameJam->startDate)}}</strong>
                             <span>{{date("j", $gameJam->startDate)}}</span>
-                            <i class="game-jam-date-time">{{date("h:i A", $gameJam->startDate)}}</i>
+                            <i class="game-jam-date-time" data-date="{{$gameJam->startDate}}"></i>
                             <i class="game-jam-date-tooltip">Start date</i>
                         </div>
                         <div class="game-jam-date">
                             <em>{{date("l", $gameJam->endDate)}}</em>
                             <strong>{{date("F", $gameJam->endDate)}}</strong>
                             <span>{{date("j", $gameJam->endDate)}}</span>
-                            <i class="game-jam-date-time">{{date("h:i A", $gameJam->endDate)}}</i>
+                            <i class="game-jam-date-time" data-date="{{$gameJam->endDate}}"></i>
                             <i class="game-jam-date-tooltip">End date</i>
                         </div>
                         <div class="game-jam-date">
                             <em>{{date("l", $gameJam->votingEndDate)}}</em>
                             <strong>{{date("F", $gameJam->votingEndDate)}}</strong>
                             <span>{{date("j", $gameJam->votingEndDate)}}</span>
-                            <i class="game-jam-date-time">{{date("h:i A", $gameJam->votingEndDate)}}</i>
+                            <i class="game-jam-date-time" data-date="{{$gameJam->votingEndDate}}"></i>
                             <i class="game-jam-date-tooltip">Voting end date</i>
                         </div>
                     </div>
@@ -187,7 +187,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('jsfiles')
@@ -210,6 +209,10 @@
 
         slamjam.common.confirmBox($("#btn-remove-game-jam"));
         slamjam.common.confirmBox($("#game-jam-leave-button"));
+
+        $(".game-jam-date-time").each(function(){
+            $(this).html(slamjam.common.dateToStringAMPM(new Date($(this).attr("data-date") * 1000)));
+        });
     });
    
     function getTimeRemaining(endtime) {

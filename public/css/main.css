@@ -435,7 +435,6 @@ footer.custom-footer {
     overflow: hidden;
 }
 .game-cover-image {
-    /*background-image: url('http://profilerehab.com/facebook_covers/funny/recycle_congress_cover_1.jpg');*/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -714,7 +713,7 @@ span.game-category {
     font-weight: 300;
     text-align: center;
     position: absolute;
-    top: -62px;
+    top: -52px;
     left: 3px;
     padding: 6px 15px;
     width: 105px;
@@ -726,10 +725,7 @@ span.game-category {
     transform: translateZ(0);
     opacity: 0;
     visibility: hidden;
-    -webkit-transition: opacity .2s, top .2s, visibility .2s;
-    -moz-transition: opacity .2s, top .2s, visibility .2s;
-    -o-transition: opacity .2s, top .2s, visibility .2s;
-    transition: opacity .2s, top .2s, visibility .2s;
+    transition: .2s all;
     pointer-events: none;
 }
 .game-jam-date:nth-child(1) .game-jam-date-tooltip, .game-jam-date:nth-child(2) .game-jam-date-tooltip {

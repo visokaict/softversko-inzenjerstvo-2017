@@ -92,6 +92,18 @@ slamjam.common = (function () {
         });
     }
 
+    function _dateToStringAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        hours = hours < 10 ? '0' + hours: hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+    }
+
     return {
         //return what others need to use from common
         ajax: _ajax,
@@ -100,7 +112,8 @@ slamjam.common = (function () {
         startLoader: _startLoader,
         stopLoader: _stopLoader,
 
-        confirmBox: _confirmBox
+        confirmBox: _confirmBox,
+        dateToStringAMPM: _dateToStringAMPM
     };
 })();
 
