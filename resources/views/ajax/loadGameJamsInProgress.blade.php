@@ -23,7 +23,7 @@
                                         aria-valuemax="100" style="width: {{ floor(((time() - $gameJam->startDate) / ($gameJam->endDate - $gameJam->startDate)) * 100) }}%;">
                                 </div>
                             </div>
-                            <p class="card-subtitle mb-2 text-muted p-joind-submissions">X<span> joined</span> Y <span>submissions</span>
+                            <p class="card-subtitle mb-2 text-muted p-joind-submissions">{{$gameJam->countJoined}}<span> joined</span> {{$gameJam->countSubmissions}} <span>submissions</span>
                             </p>
                         </div>
                     </div>

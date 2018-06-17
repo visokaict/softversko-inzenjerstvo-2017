@@ -47,9 +47,9 @@ class GameJams extends Generic
         $return = [];
 
         $result = \DB::table($this->tableName)
-            ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
-            ->join('images', 'gamejams.idCoverImage', '=', 'images.idImage')
-            ->select("*");
+            ->join('users', 'idUserCreator', '=', 'users.idUser')
+            ->join('images', 'idCoverImage', '=', 'images.idImage')
+            ->select("*", \DB::raw("(SELECT count(*) FROM gamejams_participants WHERE gamejams_participants.idGameJam = gamejams.idGameJam) as countJoined, (SELECT count(*) FROM gamesubmissions WHERE gamesubmissions.idGameJam = gamejams.idGameJam) as countSubmissions"));
 
         // in progress
         if ($filter === "progress") {

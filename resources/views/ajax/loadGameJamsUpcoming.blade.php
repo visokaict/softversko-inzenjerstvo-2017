@@ -18,7 +18,7 @@
                                     {{ ceil(($gameJam->startDate - time()) / 3600) . " hr" }}
                                 @endif
                             </span></p>
-                            <p class="card-subtitle mb-2 text-muted p-joind-submissions">X<span> joined</span></p>
+                            <p class="card-subtitle mb-2 text-muted p-joind-submissions">{{$gameJam->countJoined}}<span> joined</span></p>
                         </div>
                     </div>
                 </div>
