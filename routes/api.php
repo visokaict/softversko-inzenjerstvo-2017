@@ -29,4 +29,5 @@ Route::delete('/games/{gameId}/badges/{badgeId}', 'BadgesController@remove')->mi
 //game submission comments
 Route::get('/games/{gameId}/comments', 'GameSubmissionCommentController@get');
 Route::post('/games/{gameId}/comments', 'GameSubmissionCommentController@add')->middleware('canAccessApi');
+Route::patch('/games/{gameId}/comments/{commentId}', 'GameSubmissionCommentController@edit')->middleware('canAccessApi');
 Route::delete('/games/{gameId}/comments/{commentId}', 'GameSubmissionCommentController@remove')->middleware('canAccessApi');

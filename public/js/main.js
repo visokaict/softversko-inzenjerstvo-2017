@@ -665,6 +665,53 @@ slamjam.comments = (function () {
         });
     }
 
+    function _initUpdateCommentBiding() {
+        $("#comments-list").on("click", ".edit-comment-a", function () {
+            var commentid = $(this).data("id");
+            var $text = $(this).parent().next();
+
+            if(commentid && $text.length){
+                var editHtml = `<div class="input-group">
+                    <textarea type="text" class="form-control resize-vertical">${$text.text().trim()}</textarea>
+                    <a href="javascript:void(0)" data-id="${commentid}" class="input-group-addon update-comment-a"><i class="fa fa-check"></i></a>
+                  </div>`;
+
+                // insert update html
+                $text.html(editHtml);
+            }
+        });
+
+        $("#comments-list").on("click", ".update-comment-a", function () {
+
+            var commentId = $(this).data("id");
+            var commentText = $(this).prev().val();
+            var $parent = $(this).parent();
+
+            if(commentId && commentText) {
+
+                slamjam.common.ajax({
+                    url: slamjam.common.createURL(`/games/${idGameSubmission}/comments/${commentId}`),
+                    method: "PATCH",
+                    data: {text: commentText},
+                    success: function (data) {
+                        $parent.html(commentText);
+                    },
+                    error: function (error) {
+                        var message = "Removing game comment has failed.";
+                        try {
+                            message = error.responseJSON.error.message;
+                        } catch (e) {
+                            //todo
+                        }
+
+                        slamjam.error.print(message, slamjam.error.enumList.ERROR)
+                    }
+                });
+
+            }
+        });
+    }
+
     function _initGameSubmissionComments() {
         //init timeago instance
         timeagoInstance = timeago();
@@ -674,6 +721,7 @@ slamjam.comments = (function () {
         _initAddCommentBiding();
         _initRemoveCommentBiding();
 
+        _initUpdateCommentBiding();
     }
 
     return {
