@@ -21,6 +21,12 @@
         var slamjam = window.slamjam = {};
         var base_url = window.base_url = "{{URL::to('/')}}";
         var base_url_api = window.base_url_api = "{{URL::to('/api')}}";
+        @if(session()->has('user'))
+        var __user = window.__user = {
+            idUser: "{{$userDataProvider->idUser}}",
+        };
+        @endif
+
     </script>
 
     @yield('cssfiles')

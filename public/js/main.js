@@ -265,8 +265,13 @@ slamjam.games = (function () {
 slamjam.badges = (function () {
 
     function _renderBadge(badgeData) {
-        var result = `<div class="col-md-4 col-xs-6 col-sm-4">
+        var removeHtml = `<a href="javascript:void(0)" class="remove-badge-a" data-id="${badgeData.idGameSubmissionsBadge}">
+                             <i class="fa fa-times"></i>
+                         </a>`;
+
+        var result = `<div class="col-md-4 col-xs-6 col-sm-4 relative-badge">
                          <img style="width: 100%;" src="${slamjam.common.createURL("/" + badgeData.path, true)}" alt="${badgeData.alt}" title="${badgeData.name}">
+                         ${badgeData.idUser == __user.idUser ? removeHtml : ''}
                       </div>`;
         return result;
     }
@@ -327,6 +332,36 @@ slamjam.badges = (function () {
                     slamjam.error.print(message, slamjam.error.enumList.ERROR)
                 }
             });
+        });
+
+        $("#badgesRenderedList").on("click", ".remove-badge-a", function () {
+            var $this = $(this);
+            var badgeId = $this.data('id');
+            if(badgeId) {
+                slamjam.common.ajax({
+                    url: slamjam.common.createURL(`/games/${idGameSubmission}/badges/${badgeId}`),
+                    method: "DELETE",
+                    success: function (data) {
+                        $this.parent().remove();
+
+                        var $parent = $("#badgesRenderedList");
+                        if($parent && $parent.children().length === 0)
+                        {
+                            $parent.html("<i>There is currently no badges for this game.</i>");
+                        }
+                    },
+                    error: function (error) {
+                        var message = "Removing game badge has failed.";
+                        try {
+                            message = error.responseJSON.error.message;
+                        } catch (e) {
+                            //todo
+                        }
+
+                        slamjam.error.print(message, slamjam.error.enumList.ERROR)
+                    }
+                });
+            }
         });
     }
 

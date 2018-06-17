@@ -127,6 +127,13 @@ class GameSubmissions extends Generic
             ->get();
     }
 
+    public function getOneGameSubmissionBadgeById($id)
+    {
+        return \DB::table('gamesubmissions_badges')
+            ->where('idGameSubmissionsBadge', '=', $id)
+            ->first();
+    }
+
     public function removeBadge($idBadge)
     {
         return \DB::table('gamesubmissions_badges')

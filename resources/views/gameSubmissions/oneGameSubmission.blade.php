@@ -73,15 +73,16 @@
 
     @if(session()->has('user') && session()->get('user')[0]->idUser == $gameSubmission->idUser)
         <!-- edit and remove -->
-        <div class="row">
-            <div class="col-md-offset-8 col-md-4">
-                <button class="btn btn-primary pull-right" style="margin-left: 20px;">Delete game jam</button>
-                <a class="btn btn-primary pull-right" href="{{asset('/games/'. $gameSubmission->idGameSubmission.'/edit')}}">Edit game jam</a>
+            <div class="row">
+                <div class="col-md-offset-8 col-md-4">
+                    <button class="btn btn-primary pull-right" style="margin-left: 20px;">Delete game jam</button>
+                    <a class="btn btn-primary pull-right"
+                       href="{{asset('/games/'. $gameSubmission->idGameSubmission.'/edit')}}">Edit game jam</a>
+                </div>
             </div>
-        </div>
             <br>
             <br>
-    @endif
+        @endif
 
 
         <div class="row">
@@ -125,10 +126,8 @@
 
             <div class="col-md-4 col-xs-12 gs-min-height-100">
                 <h4>Badges:</h4>
-
+                <br>
                 @if(session()->has('user') && session()->get('user')[0]->idUser != $gameSubmission->idUser)
-                    <br>
-
                     <form class="row">
                         <div class="col-md-8 col-xs-8 col-sm-8">
                             <select class="form-control" id="gamesBadgesList">
@@ -144,6 +143,8 @@
                             </button>
                         </div>
                     </form>
+                @else
+                    <i>Please <a href="{{asset('/login')}}">login</a> to add badge to this <b>game</b>.</i>
                 @endif
 
                 <br>
@@ -165,7 +166,8 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-offset-2 col-md-8 col-xs-offset-0 col-xs-12 gs-min-height-100" style="background-color: #dfdfdf">
+            <div class="col-md-offset-2 col-md-8 col-xs-offset-0 col-xs-12 gs-min-height-100"
+                 style="background-color: #dfdfdf">
                 <h4>Comments:</h4>
                 <br>
 
@@ -178,7 +180,8 @@
                         <form class="col-md-12">
                             <div class="form-group">
                                 <label>Post a new Comment</label>
-                                <textarea class="form-control resize-vertical" rows="3" id="comment" name="comment" {{session()->has('user')? '': 'disabled' }} placeholder="{{session()->has('user')? 'Comment text...': 'Please login into your accout to post comments' }}" ></textarea>
+                                <textarea class="form-control resize-vertical" rows="3" id="comment" name="comment"
+                                          {{session()->has('user')? '': 'disabled' }} placeholder="{{session()->has('user')? 'Comment text...': 'Please login into your accout to post comments' }}"></textarea>
                             </div>
                             <div class="form-group">
                                 @if(session()->has('user'))
@@ -186,28 +189,14 @@
                                         Add Comment
                                     </button>
                                 @else
-                                    <a class="btn btn-primary pull-right" href="{{asset('/login')}}">Login to comment</a>
+                                    <a class="btn btn-primary pull-right" href="{{asset('/login')}}">Login to
+                                        comment</a>
                                 @endif
                             </div>
                         </form>
                     </div>
 
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                 <!-- Comments List -->
@@ -219,11 +208,13 @@
                         <li>
                             <div class="comment-main-level">
                                 <!-- Avatar -->
-                                <div class="comment-avatar"><img src="https://api.adorable.io/avatars/285/goran@gmail.com" alt=""></div>
+                                <div class="comment-avatar"><img
+                                            src="https://api.adorable.io/avatars/285/goran@gmail.com" alt=""></div>
                                 <!-- Contenedor del Comentario -->
                                 <div class="comment-box">
                                     <div class="comment-head">
-                                        <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">goran</a></h6>
+                                        <h6 class="comment-name by-author"><a
+                                                    href="http://creaticode.com/blog">goran</a></h6>
                                         <span>2018-05-26 02:06:16</span>
 
                                         {{--
@@ -234,18 +225,19 @@
                                         <i class="fa fa-times"></i>
                                     </div>
                                     <div class="comment-content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et
+                                        iure laudantium vitae, praesentium optio, sapiente distinctio illo?
                                     </div>
                                 </div>
                             </div>
                         </li>
 
 
-
                         <li>
                             <div class="comment-main-level">
                                 <!-- Avatar -->
-                                <div class="comment-avatar"><img src="https://api.adorable.io/avatars/285/nikola@gmail.com" alt=""></div>
+                                <div class="comment-avatar"><img
+                                            src="https://api.adorable.io/avatars/285/nikola@gmail.com" alt=""></div>
                                 <!-- Contenedor del Comentario -->
                                 <div class="comment-box">
                                     <div class="comment-head">
@@ -255,7 +247,8 @@
                                         <i class="fa fa-heart"></i>
                                     </div>
                                     <div class="comment-content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et
+                                        iure laudantium vitae, praesentium optio, sapiente distinctio illo?
                                     </div>
                                 </div>
                             </div>
@@ -265,21 +258,6 @@
                     <!-- /one comment - Foreach -->
                 </div>
                 <!-- /Comments List -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             </div>
