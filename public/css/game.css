@@ -216,6 +216,20 @@
     border-radius: 3px;
 }
 
+.comment-box .comment-name.by-me, .comment-box .comment-name.by-me a {color: #8900d0;}
+.comment-box .comment-name.by-me:after {
+    content: 'me';
+    background: #8900d0;
+    color: #FFF;
+    font-size: 12px;
+    padding: 3px 5px;
+    font-weight: 700;
+    margin-left: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
 /** =====================
  * Responsive
  ========================*/

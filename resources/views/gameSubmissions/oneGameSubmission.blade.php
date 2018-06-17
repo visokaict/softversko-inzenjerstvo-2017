@@ -198,14 +198,11 @@
 
                 </div>
 
-
                 <!-- Comments List -->
                 <div>
 
                     <ul id="comments-list" class="comments-list">
-
-
-                        <li>
+                        {{--<li>
                             <div class="comment-main-level">
                                 <!-- Avatar -->
                                 <div class="comment-avatar"><img
@@ -216,11 +213,6 @@
                                         <h6 class="comment-name by-author"><a
                                                     href="http://creaticode.com/blog">goran</a></h6>
                                         <span>2018-05-26 02:06:16</span>
-
-                                        {{--
-                                        var timeagoInstance = timeago();
-                                        timeagoInstance.format('2016-06-12');
-                                        --}}
 
                                         <i class="fa fa-times"></i>
                                     </div>
@@ -252,7 +244,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li>--}}
                     </ul>
 
                     <!-- /one comment - Foreach -->
@@ -273,9 +265,11 @@
     <script src="https://cdn.rawgit.com/hustcc/timeago.js/e8354c59/dist/timeago.min.js"></script>
     <script>
         var idGameSubmission = "{{$gameSubmission->idGameSubmission}}";
+        var idGameSubmissionUserCreatorId = "{{$gameSubmission->idUserCreator}}";
         $(document).ready(function () {
             slamjam.games.initOneGamePage();
             slamjam.badges.initBadgesOnGamesPage();
+            slamjam.comments.initGameSubmissionComments();
         });
     </script>
 @endsection

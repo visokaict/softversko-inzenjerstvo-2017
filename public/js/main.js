@@ -80,7 +80,7 @@ slamjam.common = (function () {
     }
 
     function _confirmBox($element) {
-        $element.on("click", function(){
+        $element.on("click", function () {
             $("#modal-confirm-yes").attr("href", $element.attr("data-url"));
             $(".modal-info").css("display", "block");
             $(".modal-confirm").css({"display": "block"});
@@ -296,7 +296,7 @@ slamjam.badges = (function () {
 
         var result = `<div class="col-md-4 col-xs-6 col-sm-4 relative-badge">
                          <img style="width: 100%;" src="${slamjam.common.createURL("/" + badgeData.path, true)}" alt="${badgeData.alt}" title="${badgeData.name}">
-                         ${badgeData.idUser == __user.idUser ? removeHtml : ''}
+                         ${window.__user && badgeData.idUser == __user.idUser ? removeHtml : ''}
                       </div>`;
         return result;
     }
@@ -362,7 +362,7 @@ slamjam.badges = (function () {
         $("#badgesRenderedList").on("click", ".remove-badge-a", function () {
             var $this = $(this);
             var badgeId = $this.data('id');
-            if(badgeId) {
+            if (badgeId) {
                 slamjam.common.ajax({
                     url: slamjam.common.createURL(`/games/${idGameSubmission}/badges/${badgeId}`),
                     method: "DELETE",
@@ -370,8 +370,7 @@ slamjam.badges = (function () {
                         $this.parent().remove();
 
                         var $parent = $("#badgesRenderedList");
-                        if($parent && $parent.children().length === 0)
-                        {
+                        if ($parent && $parent.children().length === 0) {
                             $parent.html("<i>There is currently no badges for this game.</i>");
                         }
                     },
@@ -568,7 +567,6 @@ slamjam.search = (function () {
         });
 
         function getGameJams(page, gameJamsType, gameClass) {
-            console.log(gameClass);
             $.ajax({
                 data: {
                     page: page,
@@ -595,5 +593,192 @@ slamjam.search = (function () {
 *   Comments
 **/
 slamjam.comments = (function () {
-    //todo
+    var timeagoInstance = null;
+
+    function _renderComment(data) {
+        var isCreator = window.__user && data.idUser == __user.idUser;
+
+        var removeHtml = `<a href="javascript:void(0)" class="remove-comment-a" data-id="${data.idGameSubmissionComment}">
+                             <i class="fa fa-times"></i>
+                         </a>`;
+        var editHtml = `<a href="javascript:void(0)" class="edit-comment-a" data-id="${data.idGameSubmissionComment}">
+                             <i class="fa fa-edit"></i>
+                         </a>`;
+
+        var result = `<li>
+                            <div class="comment-main-level">
+                                <!-- Avatar -->
+                                <div class="comment-avatar"><img src="${data.avatarImagePath}" alt="User avatar"></div>
+                                <!-- Contenedor del Comentario -->
+                                <div class="comment-box">
+                                    <div class="comment-head">
+                                        <h6 class="comment-name ${idGameSubmissionUserCreatorId == data.idUser ? 'by-author' : (isCreator ? 'by-me' : '') }"><a href="${slamjam.common.createURL('/user/' + data.username, true)}">${data.username}</a></h6>
+                                        <span>${timeagoInstance.format(data.editedAt + "000")}</span>
+
+                                        ${isCreator ? (removeHtml + editHtml) : ''}
+                                    </div>
+                                    <div class="comment-content">
+                                        ${data.text}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>`
+
+        return result;
+    }
+
+    function _getCommentsAndRenderView() {
+        slamjam.common.ajax({
+            url: slamjam.common.createURL(`/games/${idGameSubmission}/comments`),
+            success: function (data) {
+                if (data && data.length) {
+                    var commentsHtml = data.map(function (item) {
+                        return _renderComment(item);
+                    });
+
+                    $("#comments-list").html(commentsHtml.join(''));
+                } else {
+                    $("#comments-list").html("<i>There is currently no comment for this game.</i>");
+                }
+            },
+            error: function (error) {
+                var message = "Getting game comments has failed.";
+                try {
+                    message = error.responseJSON.error.message;
+                } catch (e) {
+                    //todo
+                }
+
+                slamjam.error.print(message, slamjam.error.enumList.ERROR)
+            }
+        });
+    }
+
+    function _initAddCommentBiding() {
+        //
+        //edit binding
+        $("#btnAddComment").on("click", function () {
+
+            var comment = $("#comment").val();
+
+            if (comment) {
+                slamjam.common.ajax({
+                    url: slamjam.common.createURL(`/games/${idGameSubmission}/comments`),
+                    method: "POST",
+                    data: {text: comment},
+                    success: function (data) {
+                        if(data) {
+                            var commentsHtml = _renderComment(data);
+                            $("#comments-list").append(commentsHtml);
+                        }
+
+                        //reset form
+                        $("#comment").val("");
+                    },
+                    error: function (error) {
+                        var message = "Posting game comment has failed.";
+                        try {
+                            message = error.responseJSON.error.message;
+                        } catch (e) {
+                            //todo
+                        }
+
+                        slamjam.error.print(message, slamjam.error.enumList.ERROR)
+                    }
+                });
+            }
+
+        });
+    }
+
+    function _initRemoveCommentBiding(){
+        $("#comments-list").on("click", ".remove-comment-a", function () {
+            var $this = $(this);
+            var commentId = $this.data("id");
+
+            if (commentId) {
+                slamjam.common.ajax({
+                    url: slamjam.common.createURL(`/games/${idGameSubmission}/comments/${commentId}`),
+                    method: "DELETE",
+                    success: function (data) {
+                        // remove comment
+                        $this.closest('li').remove();
+                    },
+                    error: function (error) {
+                        var message = "Removing game comment has failed.";
+                        try {
+                            message = error.responseJSON.error.message;
+                        } catch (e) {
+                            //todo
+                        }
+
+                        slamjam.error.print(message, slamjam.error.enumList.ERROR)
+                    }
+                });
+            }
+        });
+    }
+
+    function _initUpdateCommentBiding() {
+        $("#comments-list").on("click", ".edit-comment-a", function () {
+            var commentid = $(this).data("id");
+            var $text = $(this).parent().next();
+
+            if(commentid && $text.length){
+                var editHtml = `<div class="input-group">
+                    <textarea type="text" class="form-control resize-vertical">${$text.text().trim()}</textarea>
+                    <a href="javascript:void(0)" data-id="${commentid}" class="input-group-addon update-comment-a"><i class="fa fa-check"></i></a>
+                  </div>`;
+
+                // insert update html
+                $text.html(editHtml);
+            }
+        });
+
+        $("#comments-list").on("click", ".update-comment-a", function () {
+
+            var commentId = $(this).data("id");
+            var commentText = $(this).prev().val();
+            var $parent = $(this).parent();
+
+            if(commentId && commentText) {
+
+                slamjam.common.ajax({
+                    url: slamjam.common.createURL(`/games/${idGameSubmission}/comments/${commentId}`),
+                    method: "PATCH",
+                    data: {text: commentText},
+                    success: function (data) {
+                        $parent.html(commentText);
+                    },
+                    error: function (error) {
+                        var message = "Removing game comment has failed.";
+                        try {
+                            message = error.responseJSON.error.message;
+                        } catch (e) {
+                            //todo
+                        }
+
+                        slamjam.error.print(message, slamjam.error.enumList.ERROR)
+                    }
+                });
+
+            }
+        });
+    }
+
+    function _initGameSubmissionComments() {
+        //init timeago instance
+        timeagoInstance = timeago();
+
+        _getCommentsAndRenderView();
+
+        _initAddCommentBiding();
+        _initRemoveCommentBiding();
+
+        _initUpdateCommentBiding();
+    }
+
+    return {
+        initGameSubmissionComments: _initGameSubmissionComments,
+    };
 })();
