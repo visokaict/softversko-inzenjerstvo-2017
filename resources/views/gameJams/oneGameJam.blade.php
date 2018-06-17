@@ -88,20 +88,20 @@
             @endif
 
             <div class="game-jam-join-buttons">
-                <div class="game-jam-join-button-holder">
                 @if(!$userJoinedGameJam)
+                <div class="game-jam-join-button-holder">
                     <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/join') }}" class="game-jam-join-button">Join game jam</a>
                 </div>
                 @else
                 <div class="game-jam-join-button-holder">
                     <a href="#" id="game-jam-leave-button" data-url="{{ asset('/game-jams/'.$gameJam->idGameJam.'/leave') }}" data-text="Are you sure you want to leave this game jam?" class="game-jam-leave-button">Leave game jam</a>
-                @endif
                 </div>
-                <div class="game-jam-join-button-holder">
+                @endif
                 @if($gameJam->startDate < time() && $gameJam->endDate > time() && $userJoinedGameJam)
+                <div class="game-jam-join-button-holder">
                     <a href="{{ asset('/games/create/' . $gameJam->idGameJam) }}" class="game-jam-add-button">Add game submission</a>
-                @endif
                 </div>
+                @endif
             </div>
         </div>
         </div>
