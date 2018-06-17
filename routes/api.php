@@ -25,3 +25,8 @@ Route::get('/game-jams/chart', 'GameJamController@getChartGameJams');
 Route::get('/games/{gameId}/badges', 'BadgesController@get');
 Route::post('/games/{gameId}/badges/{badgeId}', 'BadgesController@add')->middleware('canAccessApi');
 Route::delete('/games/{gameId}/badges/{badgeId}', 'BadgesController@remove')->middleware('canAccessApi');
+
+//game submission comments
+Route::get('/games/{gameId}/comments', 'GameSubmissionCommentController@get');
+Route::post('/games/{gameId}/comments', 'GameSubmissionCommentController@add')->middleware('canAccessApi');
+Route::delete('/games/{gameId}/comments/{commentId}', 'GameSubmissionCommentController@remove')->middleware('canAccessApi');
