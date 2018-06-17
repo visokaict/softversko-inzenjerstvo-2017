@@ -102,10 +102,9 @@ class BadgesController extends Controller implements IBadge
 
         $userId = $request->attributes->get('userInfo')->idUser;
 
-        //todo
         try {
-            $badges = new GameBadges();
-            $gameBadge = $badges->getById($badgeId);
+            $games = new GameSubmissions();
+            $gameBadge = $games->getOneGameSubmissionBadgeById($badgeId);
 
             // da li postoji badge
             if(empty($gameBadge))
@@ -128,9 +127,7 @@ class BadgesController extends Controller implements IBadge
                 return response()->json(["error"=>["message"=>"You cannot remove others badge!"]], 400);
             }
 
-
-            $games = new GameSubmissions();
-            $removedBadge = $games->removeBadge($badgeId);
+            $games->removeBadge($badgeId);
 
             return response()->json(null, 204);
         } catch (\Exception $e) {

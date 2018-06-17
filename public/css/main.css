@@ -894,3 +894,15 @@ span.game-category {
 .owl-nav .owl-next {
     right: -30px;
 }
+
+
+/*******************/
+.remove-badge-a{
+    position: absolute;
+    top: 0;
+    right:  0;
+}
+
+.relative-badge{
+    position: relative;
+}
