@@ -129,25 +129,25 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                     <div class="game-jam-dates">
-                        <div class="game-jam-date">
-                            <em>{{date("l", $gameJam->startDate)}}</em>
-                            <strong>{{date("F", $gameJam->startDate)}}</strong>
-                            <span>{{date("j", $gameJam->startDate)}}</span>
-                            <i class="game-jam-date-time" data-date="{{$gameJam->startDate}}"></i>
+                        <div class="game-jam-date" data-date="{{$gameJam->startDate}}">
+                            <em><!--{{date("l", $gameJam->startDate)}}--></em>
+                            <strong><!--{{date("F", $gameJam->startDate)}}--></strong>
+                            <span><!--{{date("j", $gameJam->startDate)}}--></span>
+                            <i class="game-jam-date-time"></i>
                             <i class="game-jam-date-tooltip">Start date</i>
                         </div>
-                        <div class="game-jam-date">
-                            <em>{{date("l", $gameJam->endDate)}}</em>
-                            <strong>{{date("F", $gameJam->endDate)}}</strong>
-                            <span>{{date("j", $gameJam->endDate)}}</span>
-                            <i class="game-jam-date-time" data-date="{{$gameJam->endDate}}"></i>
+                        <div class="game-jam-date" data-date="{{$gameJam->endDate}}">
+                            <em><!--{{date("l", $gameJam->endDate)}}--></em>
+                            <strong><!--{{date("F", $gameJam->endDate)}}--></strong>
+                            <span><!--{{date("j", $gameJam->endDate)}}--></span>
+                            <i class="game-jam-date-time" ></i>
                             <i class="game-jam-date-tooltip">End date</i>
                         </div>
-                        <div class="game-jam-date">
-                            <em>{{date("l", $gameJam->votingEndDate)}}</em>
-                            <strong>{{date("F", $gameJam->votingEndDate)}}</strong>
-                            <span>{{date("j", $gameJam->votingEndDate)}}</span>
-                            <i class="game-jam-date-time" data-date="{{$gameJam->votingEndDate}}"></i>
+                        <div class="game-jam-date" data-date="{{$gameJam->votingEndDate}}">
+                            <em><!--{{date("l", $gameJam->votingEndDate)}}--></em>
+                            <strong><!--{{date("F", $gameJam->votingEndDate)}}--></strong>
+                            <span><!--{{date("j", $gameJam->votingEndDate)}}--></span>
+                            <i class="game-jam-date-time"></i>
                             <i class="game-jam-date-tooltip">Voting end date</i>
                         </div>
                     </div>
@@ -210,8 +210,12 @@
         slamjam.common.confirmBox($("#btn-remove-game-jam"));
         slamjam.common.confirmBox($("#game-jam-leave-button"));
 
-        $(".game-jam-date-time").each(function(){
-            $(this).html(slamjam.common.dateToStringAMPM(new Date($(this).attr("data-date") * 1000)));
+        $(".game-jam-date").each(function(){
+            var formattedDate = slamjam.common.getDateComponents(new Date($(this).attr("data-date") * 1000));
+            $(this).find("em").html(formattedDate.dayName);
+            $(this).find("strong").html(formattedDate.monthName);
+            $(this).find("span").html(formattedDate.day);
+            $(this).find(".game-jam-date-time").html(formattedDate.time);
         });
     });
    

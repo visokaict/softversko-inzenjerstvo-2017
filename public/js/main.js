@@ -92,7 +92,13 @@ slamjam.common = (function () {
         });
     }
 
-    function _dateToStringAMPM(date) {
+    function _getDateComponents(date) {
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
+        var dayName = days[date.getDay()];
+        var monthName = months[date.getMonth()];
+        
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -101,7 +107,13 @@ slamjam.common = (function () {
         hours = hours < 10 ? '0' + hours: hours;
         minutes = minutes < 10 ? '0' + minutes : minutes;
         var strTime = hours + ':' + minutes + ' ' + ampm;
-        return strTime;
+
+        return {
+            time: strTime,
+            day: date.getDate(),
+            dayName: dayName,
+            monthName: monthName
+        };
     }
 
     return {
@@ -113,7 +125,7 @@ slamjam.common = (function () {
         stopLoader: _stopLoader,
 
         confirmBox: _confirmBox,
-        dateToStringAMPM: _dateToStringAMPM
+        getDateComponents: _getDateComponents
     };
 })();
 
