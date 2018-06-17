@@ -325,8 +325,7 @@ footer.custom-footer {
 }
 
 .one-game-jam-content {
-    min-height: 500px;
-    padding: 0;
+    min-height: 400px;
 }
 
 .reg-role-description {
@@ -701,7 +700,7 @@ span.game-category {
 }
 
 .game-jam-description, .game-criteria {
-    padding: 15px 0 15px;
+    padding: 35px 0 15px;
 }
 
 .game-criteria ul {
