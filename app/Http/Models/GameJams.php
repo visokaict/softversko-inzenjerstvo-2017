@@ -42,6 +42,25 @@ class GameJams extends Generic
             ->get();
     }
 
+    public function getAllUsersGameJams($userId, $offset = 0, $limit = 6)
+    {
+        $return = [];
+
+        $result = \DB::table($this->tableName)
+            ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
+            ->join('images', 'gamejams.idCoverImage', '=', 'images.idImage')
+            ->where('gamejams.idUserCreator', '=', $userId)
+            ->select("*");
+
+        $return["count"] = $result->count();
+
+        $result->offset($offset)
+            ->limit($limit);
+        $return["result"] = $result->get();
+
+        return $return;
+    }
+
     public function getFilteredGameJams($filter, $offset = 0, $limit = 6)
     {
         $return = [];

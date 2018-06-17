@@ -34,8 +34,14 @@ Route::get('/profile', 'FrontEndController@profile')->middleware('isLoggedIn');
 Route::get('/profile/edit', 'FrontEndController@editProfile')->middleware('isLoggedIn');
 Route::get('/user/{username}', 'FrontEndController@getUserProfileInfo')->where('username', '\w+');
 
+Route::get('/user/{username}/game-jams', 'ProfileController@getUsersGameJams')->where('username', '\w+');
+Route::get('/user/{username}/games', 'ProfileController@getUsersGames')->where('username', '\w+');
+Route::get('/user/{username}/wins', 'ProfileController@getUsersWins')->where('username', '\w+');
+
 // logic
 Route::post('/profile/edit', 'ProfileController@edit')->middleware('isLoggedIn');
+
+
 
 
 //

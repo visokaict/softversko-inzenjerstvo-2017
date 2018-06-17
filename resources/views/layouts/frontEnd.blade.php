@@ -125,9 +125,9 @@
                                 <li><a href="{{asset('/profile')}}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                                 <li class="divider"></li>
 
-                                <li><a href="{{asset('/')}}"><span class="fa fa-cube"></span> My Game Jams</a></li>
-                                <li><a href="{{asset('/')}}"><span class="fa fa-gamepad"></span> My Game Submissions</a></li>
-                                <li><a href="{{asset('/')}}"><span class="fa fa-trophy"></span> My Wins</a></li>
+                                <li><a href="{{asset('/user/'. $userDataProvider->username .'/game-jams')}}"><span class="fa fa-cube"></span> My Game Jams</a></li>
+                                <li><a href="{{asset('/user/'. $userDataProvider->username .'/games')}}"><span class="fa fa-gamepad"></span> My Game Submissions</a></li>
+                                <li><a href="{{asset('/user/'. $userDataProvider->username .'/wins')}}"><span class="fa fa-trophy"></span> My Wins</a></li>
 
                                 <li class="divider"></li>
                                 <li><a href="{{asset('/logout')}}"><span class="glyphicon glyphicon-off"></span> Logout</a></li>

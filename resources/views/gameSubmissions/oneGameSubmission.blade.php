@@ -74,10 +74,10 @@
     @if(session()->has('user') && session()->get('user')[0]->idUser == $gameSubmission->idUser)
         <!-- edit and remove -->
             <div class="row">
-                <div class="col-md-offset-8 col-md-4">
-                    <button class="btn btn-primary pull-right" style="margin-left: 20px;">Delete game jam</button>
-                    <a class="btn btn-primary pull-right"
-                       href="{{asset('/games/'. $gameSubmission->idGameSubmission.'/edit')}}">Edit game jam</a>
+                <div class="col-md-4">
+                    <a class="btn btn-primary"
+                       href="{{asset('/games/'. $gameSubmission->idGameSubmission.'/edit')}}">Edit</a>
+                    <button class="btn btn-danger">Remove</button>
                 </div>
             </div>
             <br>
