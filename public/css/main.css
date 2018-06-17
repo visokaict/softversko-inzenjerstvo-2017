@@ -902,3 +902,16 @@ span.game-category {
 .relative-badge{
     position: relative;
 }
+
+.vis-item.chart-game-jam-bar {
+    cursor: pointer;
+}
+.vis-item.chart-game-jam-bar:hover span {
+    display: inline;
+}
+.vis-item.chart-game-jam-bar span {
+    display: none;
+}
+.vis-item.chart-game-jam-bar-red {
+    background-color: #ffdddd;
+}

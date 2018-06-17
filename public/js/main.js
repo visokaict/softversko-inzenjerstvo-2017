@@ -410,11 +410,34 @@ slamjam.gameJam = (function () {
             var parsedData = data.map(function (item) {
                 return {
                     id: item.idGameJam,
-                    group: item.idGameJam,// so items are in one line
-                    content: item.title,
+                    group: item.idGameJam, // so items are in one line
+                    content: item.title + "<span> - Submissions start!</span>",
                     start: new Date(Number(item.startDate) * 1000),
                     end: new Date(Number(item.endDate) * 1000),
                     link: "game-jams/" + item.idGameJam,
+                    className: "chart-game-jam-bar chart-game-jam-bar-blue" };
+            });
+
+            for(var i = 0; i < data.length; i++){
+                var item = data[i];
+                parsedData.push({
+                    group: item.idGameJam, // so items are in one line
+                    content: item.title + "<span> - Voting starts!</span>",
+                    start: new Date(Number(item.endDate) * 1000),
+                    end: new Date(Number(item.votingEndDate) * 1000),
+                    link: "game-jams/" + item.idGameJam,
+                    className: "chart-game-jam-bar chart-game-jam-bar-red"
+                });
+            }
+
+            return new vis.DataSet(parsedData);
+        }
+
+        function _mapChartGroups(data) {
+            var parsedData = data.map(function (item) {
+                return {
+                    id: item.idGameJam,
+                    content: "",
                     //className: "", // call some type of generator that will return same css class for some value
                 };
             });
@@ -441,18 +464,24 @@ slamjam.gameJam = (function () {
                 end: (new Date()).setDate(date.getDate() + timelineDuration),
                 template: function (data, x, y) {
                     return `<a href='${data.link}'>${data.content}</a>`;
-                }
+                },
+                margin: {
+                    item : {
+                        horizontal : 0
+                    }
+                },
+                stack: false
             };
 
             var items = _mapChartData(data);
+            var groups = _mapChartGroups(data);
 
             var timeline = new vis.Timeline(container);
-            timeline.setOptions(options);
+            timeline.setOptions(options); 
             timeline.setItems(items);
+            timeline.setGroups(groups);
             timeline.moveTo(date);
-            //timeline.setGroups(groups);
         }
-
 
         slamjam.common.ajax({
             url: slamjam.common.createURL('/game-jams/chart'),
