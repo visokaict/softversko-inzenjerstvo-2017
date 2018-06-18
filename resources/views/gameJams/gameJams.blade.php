@@ -20,7 +20,7 @@
                             participating in game jams online. Anyone can start hosting a game jam immediately. Here you
                             can find some of the game jams that are going on.</p>
                     </div>
-                    <div class="col-md-4 col-md-offset-4">
+                    <div class="col-md-4 col-md-offset-4 tooltip-hover-trigger">
 
                         <a
                                 @if(session()->has('user'))
@@ -35,6 +35,10 @@
                                     href="{{asset('/login')}}"
                                 @endif
                                 class="btn btn-success host-own-game-jam">Host own Game Jam</a>
+
+                        @if(session()->has('roles') && !\App\Http\Models\Roles::arrayOfRolesHasRoleByName(session()->get('roles')[0], 'jamMaker'))
+                            <i class="generic-tooltip">Check roles in profile.</i>
+                        @endif
 
                     </div>
                 </div>
@@ -56,7 +60,7 @@
     <div class="container-fluid no-padding">
         <h2 class="margin-bottom-40">Game Jams in progress</h2>
         <div class="game-jams-in-progress-container" id="game-jams-in-progress-container">
-            @include('ajax.loadGameJamsInProgress') 
+            @include('ajax.loadGameJamsInProgress')
         </div>
 
         <br>

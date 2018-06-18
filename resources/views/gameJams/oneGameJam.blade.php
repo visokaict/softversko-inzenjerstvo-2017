@@ -90,7 +90,20 @@
             <div class="game-jam-join-buttons">
                 @if(!$userJoinedGameJam)
                 <div class="game-jam-join-button-holder tooltip-hover-trigger">
-                    <a href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/join') }}" class="game-jam-join-button" >Join game jam</a>
+                    <a
+                            @if(session()->has('user'))
+
+                                @if(\App\Http\Models\Roles::arrayOfRolesHasRoleByName(session()->get('roles')[0], 'jamMaker'))
+                                    href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/join') }}"
+                                @else
+                                    href="{{asset('/profile/edit')}}"
+                                @endif
+
+                            @else
+                                href="{{asset('/login')}}"
+                            @endif
+                            class="game-jam-join-button" >Join game jam</a>
+
                     @if(session()->has('roles') && !\App\Http\Models\Roles::arrayOfRolesHasRoleByName(session()->get('roles')[0], 'jamDeveloper'))
                         <i class="generic-tooltip">Check roles in profile.</i>
                     @endif
