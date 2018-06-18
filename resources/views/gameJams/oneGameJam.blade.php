@@ -116,11 +116,15 @@
 
         <div class="game-criteria">
             <h4>Criteria:</h4>
-            <ul>
-                @foreach($gameJam->criteria as $criteria)
-                    <li>{{ $criteria->name }}</li>
-                @endforeach
-            </ul>
+            @if(count($gameJam->criteria) > 0)
+                <ul>
+                    @foreach($gameJam->criteria as $criteria)
+                        <li>{{ $criteria->name }}</li>
+                    @endforeach
+                </ul>
+            @else
+                <i>There is no criteria for this game jam.</i>
+            @endif
         </div>
 
         <div class="nav-tabs-custom">
