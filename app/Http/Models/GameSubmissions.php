@@ -123,8 +123,8 @@ class GameSubmissions extends Generic
         return \DB::table('gamesubmissions_badges')
             ->join('gamebadges', 'gamesubmissions_badges.idBadge', '=', 'gamebadges.idGameBadges')
             ->join('images', 'images.idImage', '=', 'gamebadges.idImage')
-            ->where('gamesubmissions_badges.idGameSubmission', '=', $id)
-            ->get();
+            ->where('gamesubmissions_badges.idGameSubmissionsBadge', '=', $id)
+            ->first();
     }
 
     public function getOneGameSubmissionBadgeById($id)

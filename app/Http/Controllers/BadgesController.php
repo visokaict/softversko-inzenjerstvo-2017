@@ -87,9 +87,8 @@ class BadgesController extends Controller implements IBadge
 
         // insert and return data
         $newBadge = $games->addBadge($gameId, $badgeId, $userId);
-        $result = $bages->getByGameSubmissionId($gameId);
 
-        return response()->json($result, 201);
+        return response()->json($newBadge, 201);
     }
 
     public function remove(Request $request, $gameId, $badgeId)

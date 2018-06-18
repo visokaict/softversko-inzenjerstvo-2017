@@ -338,7 +338,7 @@ slamjam.badges = (function () {
                 url: slamjam.common.createURL(`/games/${idGameSubmission}/badges/${badgeId}`),
                 method: "POST",
                 success: function (data) {
-                    var badge = _renderBadge(data[0]);
+                    var badge = _renderBadge(data);
                     var $parent = $("#badgesRenderedList");
                     if ($parent.find("i").length) {
                         $parent.html(badge);
