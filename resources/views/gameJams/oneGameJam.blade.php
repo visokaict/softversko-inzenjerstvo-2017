@@ -93,7 +93,7 @@
                     <a
                             @if(session()->has('user'))
 
-                                @if(\App\Http\Models\Roles::arrayOfRolesHasRoleByName(session()->get('roles')[0], 'jamMaker'))
+                                @if(\App\Http\Models\Roles::arrayOfRolesHasRoleByName(session()->get('roles')[0], 'jamDeveloper'))
                                     href="{{ asset('/game-jams/'.$gameJam->idGameJam.'/join') }}"
                                 @else
                                     href="{{asset('/profile/edit')}}"
