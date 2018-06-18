@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h2 class="games-title">Users Game Jams</h2>
+    <h2 class="games-title">My Game Jams</h2>
 
     @include('ajax.loadGameJamsUpcoming')
 @endsection

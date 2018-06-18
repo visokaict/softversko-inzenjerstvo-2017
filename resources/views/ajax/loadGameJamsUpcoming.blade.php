@@ -25,7 +25,7 @@
             @endforeach
 
         @else
-            <i>There is currently no upcoming game jams</i>
+            <i>There is currently no game jams</i>
         @endif
 
     </div>
