@@ -63,19 +63,18 @@
 
 
 
-
     <form action="{{ asset('/game-jams/create') }}" method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
             <label>Title:</label>
-            <input type="text" name="tbTitle" class="form-control">
+            <input type="text" name="tbTitle" class="form-control" value="{{old('tbTitle')}}">
         </div>
 
     
         <div class="form-group">
             <label>Start date: </label>
             <div class='input-group date datetimepicker' id='datetimepicker1'>
-                <input type='text' class="form-control" name="dStartDate"/>
+                <input type='text' class="form-control" name="dStartDate" value="{{old('dStartDate')}}"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -84,7 +83,7 @@
         <div class="form-group">
             <label>End date: </label>
             <div class='input-group date datetimepicker' id='datetimepicker2'>
-                <input type='text' class="form-control" name="dEndDate"/>
+                <input type='text' class="form-control" name="dEndDate" value="{{old('dEndDate')}}"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -93,7 +92,7 @@
         <div class="form-group">
             <label>Voting end date: </label>
             <div class='input-group date datetimepicker' id='datetimepicker3'>
-                <input type='text' class="form-control" name="dVotingEndDate"/>
+                <input type='text' class="form-control" name="dVotingEndDate" value="{{old('dVotingEndDate')}}"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -104,10 +103,10 @@
       
         <label>Criterias: </label>
         @isset($criteria)
-            @foreach($criteria as $c)
+            @foreach($criteria as $c )
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="chbCriteria[]" value='{{ $c->idGameCriteria }}'>{{ $c->name }}
+                    <input type="checkbox" name="chbCriteria[]" value='{{ $c->idGameCriteria }}' {{ (is_array(old('chbCriteria')) && in_array($c->idGameCriteria, old('chbCriteria'))) ? ' checked' : '' }}>{{ $c->name }}
                 </label>
             </div>
             @endforeach
@@ -126,7 +125,7 @@
         <label>Others can vote: </label>
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="chbOthers">
+            <input type="checkbox" name="chbOthers" {{old('chbOthers') ? 'checked' : ''}}>
             Yes
           </label>
         </div>
@@ -136,7 +135,7 @@
         <label>Lock submittion after submitting: </label>
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="chbLock">
+            <input type="checkbox" name="chbLock" {{old('chbLock') ? 'checked' : ''}}>
             Yes
           </label>
         </div>
@@ -144,7 +143,7 @@
   
       <div class="form-group">
         <label for="description">Description:</label>
-        <textarea class="form-control resize-vertical" rows="5" id="description" name="taDescription"></textarea>
+        <textarea class="form-control resize-vertical" rows="5" id="description" name="taDescription">{{old('taDescription')}}</textarea>
       </div> 
 
       <div class="form-group">
@@ -199,7 +198,7 @@
         }
 
         function getSample() {
-            var s = "";
+            var s = "{{old('taContent')}}";
                 $.each(sample, function( index, value ) {
                 //alert( index + ": " + value );
                 s = s + value + "\n\r";
