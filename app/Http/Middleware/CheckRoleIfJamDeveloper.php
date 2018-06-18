@@ -25,6 +25,6 @@ class CheckRoleIfJamDeveloper
             return $next($request);
         }
 
-        return back()->with('message', 'You don\'t have role to access this resource!');
+        return back()->with('message', 'You don\'t have Jam Developer role to access this resource! \n Add');
     }
 }
