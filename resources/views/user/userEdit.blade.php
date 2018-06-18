@@ -16,12 +16,6 @@
         @endif
     @endisset
 
-    @if(session()->has('messages'))
-        <div class="alert alert-success">
-            <div>{{ session('messages') }}</div>
-        </div>
-    @endif
-
     @if(session()->has('error'))
         <div class="alert alert-danger">
             <div>{{ session('error') }}</div>

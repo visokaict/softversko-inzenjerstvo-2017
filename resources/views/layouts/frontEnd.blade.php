@@ -143,6 +143,13 @@
 
 <!-- Page Content -->
 <div class="container main-container @yield('addClassesToBodyCover')">
+
+    @if(session()->has('messages'))
+        <div class="alert alert-success">
+            <div>{{ session('messages') }}</div>
+        </div>
+    @endif
+
     <!--<div class="row alert-parent" id="alert-messages">
         @if(session()->has('message'))
             <div class="col-md-offset-1 col-md-10 alert alert-info">{{session()->get('message')}}</div>
