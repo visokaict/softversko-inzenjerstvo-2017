@@ -9,6 +9,8 @@
     <link rel="shortcut icon" type="image/png" href="{{asset('/favicon.png')}}"/>
     <title>Game Jams - @yield('pageTitle')</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"
           id="bootstrap-css">
 

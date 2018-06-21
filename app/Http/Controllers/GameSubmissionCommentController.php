@@ -48,7 +48,7 @@ class GameSubmissionCommentController extends Controller implements IGameSubmiss
             $time = time();
             $userId = $request->attributes->get('userInfo')->idUser;
 
-            $comment = new Comment();
+            $comment = new Comments();
             $commentId = $comment->insertGetId([
                 "text" => $commentText,
                 "idUserCreator" => $userId,
@@ -108,7 +108,7 @@ class GameSubmissionCommentController extends Controller implements IGameSubmiss
                 return response()->json(["error" => ["message" => "Comment doesn't exist!"]], 400);
             }
 
-            $comments = new Comment();
+            $comments = new Comments();
             $commentData = $comments->getById($commentGSData->idComment);
 
 
@@ -154,7 +154,7 @@ class GameSubmissionCommentController extends Controller implements IGameSubmiss
                 return response()->json(["error" => ["message" => "Comment doesn't exist!"]], 400);
             }
 
-            $comments = new Comment();
+            $comments = new Comments();
             $commentData = $comments->getById($commentGSData->idComment);
 
 
