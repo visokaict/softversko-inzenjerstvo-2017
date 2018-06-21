@@ -69,7 +69,7 @@ class UpdateController extends Controller implements IUpdate
                 ]);
         
                 if ($validacija->fails()) {
-                    return response()->json(["message" => "Bad password."], 500);;
+                    return response()->json(["message" => "Bad password."], 500);
                 }
 
                 $updateData['password'] = md5($request->get('tbPassword'));
