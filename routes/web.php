@@ -84,7 +84,14 @@ Route::post("/register", "AuthController@register")->middleware('isNotLoggedIn')
 
 
 //
-// admin stuff
+// admin
 //
-Route::get("/admin", "AdminController@index")->middleware('isLoggedIn', 'isAdmin');
+Route::get("/admin/{page?}", "Admin\AdminController@index")->middleware('isLoggedIn', 'isAdmin');
+Route::post("/admin/get-by-id", "Admin\AdminController@getById")->middleware('isLoggedIn', 'isAdmin');
+Route::delete("/admin/delete", "Admin\AdminController@delete")->middleware("isLoggedIn", "isAdmin");
 
+// update
+Route::post("/admin/update/users", "Admin\UpdateController@users")->middleware("isLoggedIn", "isAdmin");
+
+// insert
+Route::post("/admin/insert/users", "Admin\InsertController@users")->middleware("isLoggedIn", "isAdmin");

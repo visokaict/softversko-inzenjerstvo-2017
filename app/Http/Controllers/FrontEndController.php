@@ -40,7 +40,7 @@ class FrontEndController extends Controller
         $this->viewData["currentPageGameJamsUpcoming"] = $page;
 
         if ($request->ajax()) {
-            if($request->get("gameJamsType") === "inProgress"){
+            if($request->get("gameJamsType") === "inProgress") {
                 return view('ajax.loadGameJamsInProgress', $this->viewData)->render();
             }
             else{

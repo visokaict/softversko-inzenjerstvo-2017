@@ -9,10 +9,10 @@ class Generic
     protected $tableName;
     private $idName;
 
-    public function __construct($tableName, $idName)
+    public function __construct($tableName, $idName = null)
     {
         $this->tableName = $tableName;
-        $this->idName = $idName;
+        $this->idName = !empty($idName) ? $idName : $this->getTableIdColumnName();
     }
 
     public function getAll()
@@ -56,6 +56,12 @@ class Generic
             ->delete();
     }
 
+    public function deleteMultiple($ids) {
+        return DB::table($this->tableName)
+            ->whereIn($this->idName, $ids)
+            ->delete();
+    }
+
     public function count()
     {
         return DB::table($this->tableName)
@@ -74,6 +80,16 @@ class Generic
         return \DB::table($this->tableName)
             ->where($this->idName, $id)
             ->exists();
+    }
+
+    public function getTableColumnNames()
+    {
+        return DB::getSchemaBuilder()->getColumnListing($this->tableName);
+    }
+
+    public function getTableIdColumnName()
+    {
+        return DB::getSchemaBuilder()->getColumnListing($this->tableName)[0];
     }
 
 }

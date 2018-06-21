@@ -13,9 +13,11 @@ class Users extends Generic
     // methods
     //
 
-    public function insert($email, $username, $password)
+    public function insert($email, $username, $password, $isBanned = 0, $avatar = null)
     {
         $timeCreatedAt = time();
+
+        $avatar = empty($avatar) ? 'https://api.adorable.io/avatars/285/' . $email : $avatar;
 
         $insertData = [
             'email' => $email,
@@ -23,8 +25,8 @@ class Users extends Generic
             'password' => md5($password),
             'createdAt' => $timeCreatedAt,
             'updatedAt' => $timeCreatedAt,
-            'avatarImagePath' => 'https://api.adorable.io/avatars/285/' . $email,
-            'isBanned' => 0,
+            'avatarImagePath' => $avatar,
+            'isBanned' => $isBanned,
         ];
         return parent::insertGetId($insertData);
     }
@@ -46,7 +48,30 @@ class Users extends Generic
                     })
 					->first();
 		return $result;
-	}
+    }
+    
+    public function getAll() {
+        $users = \DB::table($this->tableName)
+            ->select("*")
+            ->get();
+
+        foreach ($users as $user) {
+            $user->{"roles"} = $this->getAllRoles($user->idUser);
+        }
+
+        return $users;
+    }
+
+    public function getById($id) {
+        $user = \DB::table($this->tableName)
+            ->select("*")
+            ->where("idUser", "=", $id)
+            ->first();
+
+        $user->{"roles"} = $this->getAllRoles($id);
+
+        return $user;
+    }
 
 	public function getByUsername($username)
     {

@@ -1,216 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title>Slam Jam Admin - @yield("pageTitle")</title>
-    
-        <!-- Favicon-->
-        <link rel="icon" href="../favicon.ico" type="image/x-icon">
-    
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-    
-        <!-- Bootstrap Core Css -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    
-        <!-- Waves Effect Css -->
-        <link href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css" rel="stylesheet" />
-    
-        <!-- Animation Css -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
-    
-        <!-- Custom Css -->
-        <link href="https://cdn.rawgit.com/gurayyarar/AdminBSBMaterialDesign/46c70c12/css/style.min.css" rel="stylesheet">
-    
-        <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-        <link href="https://cdn.rawgit.com/gurayyarar/AdminBSBMaterialDesign/46c70c12/css/themes/theme-purple.min.css" rel="stylesheet" />
-    
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        @yield("styles")
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
+        <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Anton|Roboto" rel="stylesheet"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="{{ asset('css/admin.css') }}" type="text/css"/>
+        <title>Slam Jam - @yield('title') - Admin panel</title>
     </head>
-
-    <body class="theme-red">
-    
-<div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="preloader">
-            <div class="spinner-layer pl-red">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
-        <p>Please wait...</p>
-    </div>
-</div>
-    
-        <div class="overlay"></div>
-    
-        <nav class="navbar">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-                    <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="{{-- route("home") --}}">Blog - Dashboard</a>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    
-        <section>
-    
-    
-            <!-- Left Sidebar -->
-<aside id="leftsidebar" class="sidebar">
-    <div class="user-info">
-        <div class="image">
-            <img src="{{ asset("admin/images/user.png") }}" width="48" height="48" alt="User" />
-        </div>
-        <div class="info-container">
-            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{-- session()->get('user')->first_name . " " . session()->get('user')->last_name  --}}</div>
-            <div class="email">{{-- session()->get('user')->email --}}</div>
-        </div>
-    </div>
-    <!-- Menu -->
-        <div class="menu">
-            <ul class="list">
-                <li class="header">MAIN NAVIGATION</li>
-                <li>
-                    <a href="{{-- route("home") --}}">
-                        <i class="material-icons">home</i>
-                        <span>Back to website</span>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="material-icons">person</i>
-                        <span>Users</span>
-                    </a>
-                    <ul class="ml-menu">
-                        <li>
-                            <a href="{{-- route("users.create") --}}">Add</a>
-                        </li>
-                        <li>
-                            <a href="{{-- route("users.index") --}}">Show</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="material-icons">menu</i>
-                        <span>Navigation</span>
-                    </a>
-                    <ul class="ml-menu">
-                        <li>
-                            <a href="{{-- route("navigation.create") --}}">Add</a>
-                        </li>
-                        <li>
-                            <a href="{{-- route("navigation.index") --}}">Show</a>
-                        </li>
-                    </ul>
-                </li>
-                
-            </ul>
-        </div>
-        <!-- #Menu -->
-        <!-- Footer -->
-        <div class="legal">
-            <div class="copyright">
-                &copy; 2016 - 2017 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
-            </div>
-            <div class="version">
-                <b>Version: </b> 1.0.5
-            </div>
-        </div>
-        <!-- #Footer -->
-    </aside>
-    <!-- #END# Left Sidebar -->
-    
-    
-        </section>
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2>
-                                    {{-- $title --}}
-                                    <small>{{-- $subtitle --}}</small>
-                                </h2>
-                                <ul class="header-dropdown m-r--5">
-                                    <li class="dropdown">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                            <i class="material-icons">more_vert</i>
-                                        </a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="{{-- route($indexRoute) --}}">Show All</a></li>
-                                            <li><a href="{{-- route($createRoute) --}}">Add New</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="body">
-                                @yield("content")
-                            </div>
-                        </div>
+    <body>
+        <div class="modal-box modal-update-box" id="modal-update-box">
+            <div class="modal-box-inner">
+                <div class="modal-box-header">
+                    <div class="modal-close">
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
+                <div class="modal-box-content">
+                    <div class="data-form">
+                        <h3 id="form-title"></h3>
+                        <div class="alert alert-danger" id="form-errors">
+                            <a href="#" class="close" data-hide="alert" id="hide-form-errors" aria-label="close">&times;</a>
+                            <span></span>
+                        </div>
+                        @yield('updateForm')
+                    </div>
+                </div>
+                <div class="modal-confirm" id="modal-confirm">
+                    <a id="modal-confirm-yes" href="#" data-operation="" class="btn btn-primary">Save</a>
+                    <a id="modal-confirm-no" class="btn btn-danger">Cancel</a>
+                </div>
             </div>
+        </div>
+        <!-- LOADER -->
+        <div class="loading-overlay" id="loading-overlay"><img src="{{ asset('/images/loading.svg') }}" /></div>
+        <!-- /LOADER -->
+        <div class="main-container">
+            <div class="menu-container">
+                <div class="menu">
+                    <h2 class="title"><a href="{{ asset('/') }}" target="_blank">SLAM JAM</a></h2>
+                    <h3 class="sub-title">ADMIN PANEL</h3>
+                    <p class="dashboards-title">DASHBOARDS</p>
+                    <ul class="admin-menu-list">
+                        @foreach($adminNav as $item)
+                            <li @if(url('/admin/' . $item['url']) == $currentUrl) class="active" @endif><a href="{{ asset('/admin/' . $item['url']) }}">{{ $item['name'] }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="menu-open"><span></span></div>
+            </div>
+            <div class="main-content">
+                <h2>@yield('title')</h2>
+                <div class="main-commands">
+                    @yield('commands')
+                </div>
+                <div class="content" id="content">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+        @yield('jsfiles')
+        <script>
+            $(document).ready(function () {
+                $(".modal-close, #modal-confirm-no").on("click", function() {
+                    $(".modal-box").animate({
+                        opacity: 0
+                    }, 150, function() {
+                        $(".modal-box").css("display", "none");
+                    });
+                });
 
-        </section>
+                $(".modal-box").on("click", function (e) {
+                    if($(e.target).attr("class") !== "modal-box modal-update-box") return;
 
+                    $(".modal-box").animate({
+                        opacity: 0
+                    }, 150, function() {
+                        $(".modal-box").css("display", "none");
+                    });
+                });
 
-        <!-- Jquery Core Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                $("#hide-form-errors").on("click", function () {
+                    $(this).parent().hide();
+                });
 
-<!-- Bootstrap Core Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+                $(".menu-open span").on("click", function () {
+                    $(this).toggleClass("click");
+                    if($(".menu").css("opacity") == "1") {
+                        $(".menu-container").animate({ "left" : -235}, 300, function () {
+                            $(".menu").css("opacity", "0");
+                        });
+                        $(".menu-open").css("width", "50px");
+                        $(".menu-open span").css("left", "10px");
+                        $(".main-content").animate({ "margin-left" : "50px"}, 450);
+                    }
+                    else {
+                        $(".menu").css("opacity", "1");
+                        $(".menu-container").animate({ "left" : 0}, 400);
+                        $(".menu-open").css("width", "36px");
+                        $(".menu-open span").css("left", "7px");
+                        $(".main-content").animate({ "margin-left" : "271px"}, 400);
+                    }
+                });
 
-<!-- Select Plugin Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+                // delete
+                $("#content").on("click", ".main-table .data-delete a", function (e) {
+                    e.preventDefault();
 
-<!-- Slimscroll Plugin Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.0/jquery.slimscroll.min.js"></script>
+                    deleteData($(this).attr("data-id"));
 
-<!-- Waves Effect Plugin Js -->
-<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+                    return false;
+                });
 
-<!-- Custom Js -->
-<script src="https://cdn.rawgit.com/gurayyarar/AdminBSBMaterialDesign/46c70c12/js/admin.js"></script>
+                // delete selected
+                $("#deleteSelected").on("click", function (e) {
+                    e.preventDefault();
 
-<!-- Demo Js -->
-<script src="https://cdn.rawgit.com/gurayyarar/AdminBSBMaterialDesign/46c70c12/js/demo.js"></script>
+                    var ids = [];
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+                    $("input.chb-select-row").filter(function (i) {
+                        this.checked ? ids.push($(this).attr("data-id")) : null;
+                    });
 
-@yield("scripts")
+                    if(ids.length > 0){
+                        deleteData(ids);
+                    }
 
-<script>
-    @if(Session::has('error'))
-    toastr.error("{{ Session::get("error") }}")
-    @endif
+                    return false;
+                });
 
-    @if(Session::has('success'))
-    toastr.success("{{ Session::get("success") }}")
-    @endif
+                // select all checkboxes
+                $("#content").on("change", ".main-table #chbSelectAll", function () {
+                    $("input.chb-select-row").prop("checked", this.checked);
+                });
 
-    @if($errors->any())
-    @foreach($errors->all() as $err)
-    toastr.info("{{ $err }}");
-    @endforeach
-    @endif
-</script>
-   
+                var deleteData = function (ids) {
+                    var _ids = Array.isArray(ids) ? ids : [ids];
 
-</body>
+                    var url = "{{ asset('admin/delete/') }}";
+                    var tableName = "{{ !empty($tableName) ? $tableName : null }}";
+                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                    var viewName = "{{ $viewName }}";
+
+                    $.ajax({
+                        url: url,
+                        method: "DELETE",
+                        data: {
+                            _token: csrfToken,
+                            viewName: viewName,
+                            ids: _ids,
+                            tableName: tableName
+                        },
+                        beforeSend: function(data) {
+                            $("#loading-overlay").css("display", "block");
+                        },
+                        success: function (data) {
+                            $("#content").html(data);
+                        },
+                        complete: function() {
+                            $("#loading-overlay").css("display", "none");
+                        },
+                        error: function (error) {
+                            console.log(error.message);
+                        }
+                    });
+                };
+            });
+        </script>
+    </body>
 </html>
