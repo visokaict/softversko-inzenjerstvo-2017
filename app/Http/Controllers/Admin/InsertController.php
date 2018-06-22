@@ -94,6 +94,10 @@ class InsertController extends AdminController implements IInsert
         return parent::insert($request);
     }
 
+    public function imageCategories(Request $request) {
+        return parent::insert($request);
+    }
+
     public function platforms(Request $request) {
         return parent::insert($request);
     }

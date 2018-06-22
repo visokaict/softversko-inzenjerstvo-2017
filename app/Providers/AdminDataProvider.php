@@ -17,7 +17,7 @@ class AdminDataProvider extends ServiceProvider
                 ["name" => "Game categories", "url" => "game-categories"],
                 ["name" => "Game criteria", "url" => "game-criteria"],
                 ["name" => "Comments", "url" => "comments"],
-                ["name" => "Images", "url" => "images"],
+                ["name" => "Image categories", "url" => "image-categories"],
                 ["name" => "Navigations", "url" => "navigations"],
                 ["name" => "Poll", "url" => "poll"],
                 ["name" => "Reports", "url" => "reports"],
