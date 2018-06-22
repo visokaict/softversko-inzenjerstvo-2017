@@ -5,63 +5,94 @@
 @endsection
 
 @section('content')
-<div class="auth-box-body">
-    <p class="auth-box-msg auth-title">Edit game submission</p>
-    <form action="#" method="POST" enctype="multipart/form-data">
+    <div class="auth-box-body">
+        <p class="auth-box-msg auth-title">Edit game submission</p>
 
-      <input type="hidden" name="hIdGameJam" value="<GAME_JAM_ID>">
-
-      <div class="form-group">
-        <label>Categories: </label>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox">
-            FPS
-          </label>
+        <div>
+            @isset($errors)
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
+            @endisset
         </div>
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox">
-            RPG
-          </label>
-        </div>
-      </div>
+        <form action="{{asset('/games/'.$gameSubmissionId.'/edit')}}" method="POST" enctype="multipart/form-data">
 
-      <div class="form-group">
-          <label for="coverImage">Cover image: </label>
-          <input id="coverImage" type="file" name="fCoverImage">
+            {{ csrf_field() }}
+            <input type="hidden" name="hIdGameSubmission" value="{{$gameSubmissionId}}">
 
-          <p class="help-block">This will be your cover and teaser image.</p>
-      </div>
+            <div class="form-group">
+                <label>Title:</label>
+                <input type="text" name="tbTitle" class="form-control" value="{{$gameSubData->title}}">
+            </div>
 
-      <div class="form-group">
-          <label for="screenShot">Screen shots: </label>
-          <input id="screenShot" type="file" name="fScreenShots" multiple>
+            <div class="form-group">
+                <label>Categories: </label>
+                @if(!empty($gameCategories))
+                    @foreach($gameCategories as $category)
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="cbCategories[]"
+                                       value='{{ $category->idGameCategory }}' {{ (is_array($gameSubCategories) && in_array($category->idGameCategory, $gameSubCategories)) ? ' checked' : '' }} >
+                                {{$category->name}}
+                            </label>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
 
-          <p class="help-block">Select up to 4 screen shots.</p>
-      </div>
-  
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea class="form-control resize-vertical" rows="5" id="description" name="tbDescription"></textarea>
-      </div> 
+            <div class="form-group">
+                <label for="coverImage">Cover image: </label><i class="help-block" style="display: inline"> ( if added, old image is going to be replaced )</i>
+                <input id="coverImage" type="file" name="fCoverImage">
 
-      <div class="form-group">
-          <label for="gameFiles">Game file: </label>
-          <input id="gameFiles" type="file" name="fGameFiles">
+                <p class="help-block">This will be your cover and teaser image.</p>
+            </div>
 
-          <p class="help-block">Zip your game project.</p>
-      </div>
+            <div class="form-group">
+                <label for="screenShot">Screen shots: </label><i class="help-block" style="display: inline"> ( if added, please add all screen shots, others are removed )</i>
+                <input id="screenShot" type="file" name="fScreenShots[]" multiple>
 
-      <div class="row">
-        <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Update</button>
-        </div>
-      </div>
+                <p class="help-block">Select up to 8 screen shots.</p>
+            </div>
 
-    </form>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control resize-vertical" rows="5" id="description"
+                          name="taDescription">{{$gameSubData->description}}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="gamePlatform">Game platform: </label>
+                <select class="form-control" name="soGamePlatform" id="gamePlatform">
+                    <option {{empty( old('soGamePlatform') ) ? 'selected': ''}} disabled>Select game platform...
+                    </option>
+                    @foreach($gamePlatforms as $platform)
+                        <option value="{{$platform->idPlatform}}" {{ $gameSubPlatform->idPlatform == $platform->idPlatform ? 'selected': ''}} >{{$platform->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="gameFiles">Game file: </label><i class="help-block" style="display: inline"> ( if added, old game file is going to be replaced )</i>
+                <input id="gameFiles" type="file" name="fGameFiles">
+
+                <p class="help-block">Zip your game project.</p>
+            </div>
 
 
-  </div>
+            <br>
+            <br>
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Update game</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
 @endsection

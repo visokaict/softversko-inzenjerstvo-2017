@@ -171,5 +171,13 @@ class UpdateController extends AdminController implements IUpdate
     public function imageCategories(Request $request) {
         return parent::update($request);
     }
+  
+    public function platforms(Request $request) {
+        return parent::update($request);
+    }
+  
+    public function navigations(Request $request) {
+        return parent::update($request);
+    }
 
 }

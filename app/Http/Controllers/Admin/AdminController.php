@@ -17,6 +17,8 @@ class AdminController extends Controller implements IAdmin
         "gamecategories" => ["name"],
         "gamecriteria" => ["name", "description"],
         "imagecategories" => ["name"],
+        "platforms" => ["name", "classNameForIcon"],
+        "navigations" => ["path", "name", "position"],
         "users" => ["email", "username", "password", "avatarImagePath", "isBanned"]
     ];
     
