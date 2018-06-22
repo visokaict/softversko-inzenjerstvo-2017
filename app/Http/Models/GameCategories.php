@@ -8,4 +8,5 @@ class GameCategories extends Generic
     {
         parent::__construct('gamecategories', 'idGameCategory');
     }
+
 }

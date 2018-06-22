@@ -34,7 +34,7 @@
             <div class="game-header-right float-right">
                 <div class="row text-center">
                     <div class="col-md-8">
-                        <div>{{ $gameSubmission->numOfDownloads }}</div>
+                        <div id="gameNumOfDownloads">{{ $gameSubmission->numOfDownloads }}</div>
                         <div>downloads</div>
                     </div>
                     <div class="col-md-4">
@@ -77,7 +77,7 @@
                 <div class="col-md-4">
                     <a class="btn btn-primary"
                        href="{{asset('/games/'. $gameSubmission->idGameSubmission.'/edit')}}">Edit</a>
-                    <button class="btn btn-danger">Remove</button>
+                    <a href="#" id="btn-remove-game-jam" data-url="{{asset('/games/'. $gameSubmission->idGameSubmission.'/delete')}}" data-text="Are you sure you want to remove this game?" class="btn btn-danger">Remove</a>
                 </div>
             </div>
             <br>
@@ -92,25 +92,22 @@
                     <br>
 
                     @foreach($gameSubmissionDownloadFiles as $gameFiles)
-                        <div class="row">
+                        <div class="row download-row-game-submission">
                             <div>
                                 <div class="col-md-3">
                                     {{--
                                     session()->has('user')
                                     // we can make that user needs to be logedin first to be able to download files
                                     --}}
-                                    <button class="btn btn-block btn-social btn-bitbucket">
+                                    <a class="btn btn-block btn-social btn-bitbucket" href="{{asset('/download/'.$gameFiles->idDownloadFile)}}" onclick="slamjam.downloads.increment()">
                                         <i class="fa fa-download"></i>
                                         Download
-                                    </button>
+                                    </a>
                                 </div>
-                                <div class="col-md-6" style="padding: 8px 0 0 8px;">Text</div>
-                                <div class="col-md-3" style="padding: 8px 0 0 8px;">
-                                    2MB
-                                    <i class="fab fa-windows"></i>
-                                    <i class="fab fa-linux"></i>
-                                    <i class="fab fa-android"></i>
-                                    <i class="fab fa-apple"></i>
+                                <div class="col-md-6" style="padding: 8px 0 0 8px;">{{$gameFiles->name}}</div>
+                                <div class="col-md-3 text-right" style="padding: 8px 20px 0 8px;">
+                                    {{\App\Http\Models\Utilities::FormatBytes($gameFiles->size)}}
+                                    <i class="{{$gameFiles->classNameForIcon}}"></i>
                                 </div>
                             </div>
                         </div>
@@ -267,6 +264,8 @@
         var idGameSubmission = "{{$gameSubmission->idGameSubmission}}";
         var idGameSubmissionUserCreatorId = "{{$gameSubmission->idUserCreator}}";
         $(document).ready(function () {
+            slamjam.common.confirmBox($("#btn-remove-game-jam"));
+
             slamjam.games.initOneGamePage();
             slamjam.badges.initBadgesOnGamesPage();
             slamjam.comments.initGameSubmissionComments();

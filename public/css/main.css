@@ -1021,3 +1021,11 @@ span.game-category {
 .vis-item.chart-game-jam-bar-red {
     background-color: #ffdddd;
 }
+
+.download-row-game-submission{
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eee;
+    margin: 0 40px 0 20px;
+
+}
