@@ -7,9 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use App\Http\Models\Generic;
 use App\Http\Models\Users;
 
-class InsertController extends Controller implements IInsert
+class InsertController extends AdminController implements IInsert
 {
     private $viewData = [];
     
@@ -52,11 +53,11 @@ class InsertController extends Controller implements IInsert
             }
             catch(\Symfony\Component\HttpFoundation\File\Exception\FileException $ex) {
                 \Log::error('File error!'.$ex->getMessage());
-                return response()->json(["error" => ["message" => "File error!"]], 500);;
+                return response()->json(["error" => ["message" => "File error!"]], 500);
             }
             catch(\ErrorException $ex) { 
                 \Log::error('File error!'.$ex->getMessage());
-                return response()->json(["error" => ["message" => "Error!"]], 500);;
+                return response()->json(["error" => ["message" => "Error!"]], 500);
             }
         }
 
@@ -72,7 +73,7 @@ class InsertController extends Controller implements IInsert
 
         //something went wrong and user isn't inserted
         if (empty($userId)) {
-            return back()->withInput()->with('messages', 'Registration failed!');
+            return response()->json(["message" => "User not updated!"], 500);
         }
 
         //add roles
@@ -83,6 +84,14 @@ class InsertController extends Controller implements IInsert
         }
 
         return AdminController::getAll("users", "ajax.users");
+    }
+
+    public function gameCategories(Request $request) {
+        return parent::insert($request);
+    }
+
+    public function gameCriteria(Request $request) {
+        return parent::insert($request);
     }
 
 }

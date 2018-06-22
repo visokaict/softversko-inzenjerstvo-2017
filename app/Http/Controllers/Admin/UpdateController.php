@@ -7,9 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use App\Http\Models\Generic;
 use App\Http\Models\Users;
 
-class UpdateController extends Controller implements IUpdate
+class UpdateController extends AdminController implements IUpdate
 {
     private $viewData = [];
 
@@ -157,6 +158,14 @@ class UpdateController extends Controller implements IUpdate
         }
 
         return AdminController::getAll("users", "ajax.users");
+    }
+
+    public function gameCategories(Request $request) {
+        return parent::update($request);
+    }
+
+    public function gameCriteria(Request $request) {
+        return parent::update($request);
     }
 
 }
