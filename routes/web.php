@@ -3,10 +3,22 @@
 //
 // game submissions
 //Route::get('/games', 'FrontEndController@games');// this is moved to another controller
+
+// present
 Route::get('/games', 'GameSubmissionController@getFilteredGames');
-Route::get('/games/create/{id}', 'FrontEndController@createGameSubmission')->middleware('isLoggedIn', 'isJamDeveloper');
 Route::get('/games/{id}', 'GameSubmissionController@oneGameSubmission');
+Route::get('/games/create/{id}', 'FrontEndController@createGameSubmission')->middleware('isLoggedIn', 'isJamDeveloper');
 Route::get('/games/{id}/edit', 'FrontEndController@editGameSubmission')->middleware('isLoggedIn', 'isJamDeveloper');
+Route::get('/games/{id}/delete', 'GameSubmissionController@delete')->middleware('isLoggedIn', 'isJamDeveloper');
+
+//logic
+Route::post('/games/create', 'GameSubmissionController@insert')->middleware('isLoggedIn', 'isJamDeveloper');
+Route::post('/games/{id}/edit', 'GameSubmissionController@edit')->middleware('isLoggedIn', 'isJamDeveloper');
+
+//download game file
+Route::get('/download/{idDownloadFile}', 'GameSubmissionController@downloadFile')->middleware('isLoggedIn');
+
+
 
 //
 // game jams
@@ -95,9 +107,15 @@ Route::post("/admin/update/users", "Admin\UpdateController@users")->middleware("
 Route::post("/admin/update/game-categories", "Admin\UpdateController@gameCategories")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/game-criteria", "Admin\UpdateController@gameCriteria")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/roles", "Admin\UpdateController@roles")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/update/image-categories", "Admin\UpdateController@imageCategories")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/update/platforms", "Admin\UpdateController@platforms")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/update/navigations", "Admin\UpdateController@navigations")->middleware("isLoggedIn", "isAdmin");
 
 // insert
 Route::post("/admin/insert/users", "Admin\InsertController@users")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/game-categories", "Admin\InsertController@gameCategories")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/game-criteria", "Admin\InsertController@gameCriteria")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/roles", "Admin\InsertController@roles")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/insert/image-categories", "Admin\InsertController@imageCategories")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/insert/platforms", "Admin\InsertController@platforms")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/insert/navigations", "Admin\InsertController@navigations")->middleware("isLoggedIn", "isAdmin");

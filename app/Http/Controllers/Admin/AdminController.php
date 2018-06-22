@@ -22,6 +22,9 @@ class AdminController extends Controller implements IAdmin
             ["name", "text"],
             ["description", "text"]
         ],
+        "imagecategories" => [
+            ["name", "text"]
+        ],
         "roles" => [
             ["name", "text"],
             ["text", "text"],
@@ -34,6 +37,15 @@ class AdminController extends Controller implements IAdmin
             ["password", "text"],
             ["avatarImagePath", "text"],
             ["isBanned", "checkbox"]
+        ],
+        "platforms" => [
+            ["name", "text"],
+            ["classNameForIcon", "text"]
+        ],
+        "navigations" => [
+            ["path", "text"],
+            ["name", "text"],
+            ["position", "text"]
         ]
     ];
     
