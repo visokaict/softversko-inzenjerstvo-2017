@@ -20,7 +20,8 @@ class AdminDataProvider extends ServiceProvider
                 ["name" => "Images", "url" => "images"],
                 ["name" => "Navigations", "url" => "navigations"],
                 ["name" => "Poll", "url" => "poll"],
-                ["name" => "Reports", "url" => "reports"]
+                ["name" => "Reports", "url" => "reports"],
+                ["name" => "Platforms", "url" => "platforms"]
             ];
 
             view()->share('viewName', $view->getName());

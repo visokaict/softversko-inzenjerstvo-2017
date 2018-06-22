@@ -16,6 +16,7 @@ class AdminController extends Controller implements IAdmin
     private $columns = [
         "gamecategories" => ["name"],
         "gamecriteria" => ["name", "description"],
+        "platforms" => ["name", "classNameForIcon"],
         "users" => ["email", "username", "password", "avatarImagePath", "isBanned"]
     ];
     
