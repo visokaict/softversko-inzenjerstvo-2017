@@ -131,7 +131,7 @@ class GameJams extends Generic
     public function getCriteria($id)
     {
         return \DB::table('gamejams_criterias')
-            ->join('gamecriteries', 'gamejams_criterias.idCriteria', '=', 'gamecriteries.idGameCriteria')
+            ->join('gamecriteria', 'gamejams_criterias.idCriteria', '=', 'gamecriteria.idGameCriteria')
             ->select('*')
             ->where('gamejams_criterias.idGameJam', '=', $id)
             ->get();
