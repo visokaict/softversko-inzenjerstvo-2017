@@ -67,7 +67,7 @@ class FrontEndController extends Controller
 
         $this->viewData["userCanEditAndDeleteGameJam"] = $this->viewData["userJoinedGameJam"]  = false;
 
-        if(session()->has('user')){
+        if(session()->has('user')) {
             $idUser = session()->get('user')[0]->idUser;
             $this->viewData["userJoinedGameJam"] = $gameJams->userAlreadyJoined($idUser, $id);
 
