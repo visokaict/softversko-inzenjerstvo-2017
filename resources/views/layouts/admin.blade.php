@@ -27,7 +27,7 @@
                             <a href="#" class="close" data-hide="alert" id="hide-form-errors" aria-label="close">&times;</a>
                             <span></span>
                         </div>
-                        @yield('updateForm')
+                        @yield('dataForm')
                     </div>
                 </div>
                 <div class="modal-confirm" id="modal-confirm">
@@ -51,7 +51,12 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="menu-open"><span></span></div>
+                <div class="menu-open">
+                    <span></span>
+                    <a href="{{ asset('/logout') }}" class="admin-log-out">
+                        <i class="fas fa-sign-out-alt has-tooltip"><i class="tooltip">Log out</i></i>
+                    </a>
+                </div>
             </div>
             <div class="main-content">
                 <h2>@yield('title')</h2>
@@ -91,7 +96,7 @@
                 $(".menu-open span").on("click", function () {
                     $(this).toggleClass("click");
                     if($(".menu").css("opacity") == "1") {
-                        $(".menu-container").animate({ "left" : -235}, 300, function () {
+                        $(".menu-container").animate({ "left" : -237}, 300, function () {
                             $(".menu").css("opacity", "0");
                         });
                         $(".menu-open").css("width", "50px");
@@ -103,7 +108,7 @@
                         $(".menu-container").animate({ "left" : 0}, 400);
                         $(".menu-open").css("width", "36px");
                         $(".menu-open span").css("left", "7px");
-                        $(".main-content").animate({ "margin-left" : "271px"}, 400);
+                        $(".main-content").animate({ "margin-left" : "283px"}, 400);
                     }
                 });
 

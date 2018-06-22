@@ -50,7 +50,7 @@
                 <i class="fas fa-user has-tooltip" title="User"><span class="tooltip tooltip-small">User</span></i>
             @endif
             </td>
-            <td class="data-edit data-edit-user text-center"><a href="#" data-id="{{ $user->idUser }}"><i class="far fa-edit"></i></a></td>
+            <td class="data-edit text-center"><a href="#" data-id="{{ $user->idUser }}"><i class="far fa-edit"></i></a></td>
             <td class="data-delete text-center"><a href="#" data-id="{{ $user->idUser }}"><i class="fas fa-trash-alt"></i></a></td>
         </tr>
     @endforeach

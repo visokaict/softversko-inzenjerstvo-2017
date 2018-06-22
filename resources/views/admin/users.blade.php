@@ -17,8 +17,8 @@
     @endif
 @endsection
 
-@section('updateForm')
-<form action="" method="POST" id="userForm" enctype="multipart/form-data">
+@section('dataForm')
+<form action="" method="POST" id="dataForm" enctype="multipart/form-data">
     <div class="form-group">
         <input type="text" name="tbUsername" id="tbUsername" class="form-control" placeholder="Username">
     </div>
@@ -84,6 +84,7 @@
             document.getElementById("drag-and-drop-overlay").style.opacity = val === 0 ? 1 : 0;
         }
 
+        // clear form before insert or update
         function clearForm(title, operation, btn) {
             changeUploadImage(0, "", "");
 
@@ -121,8 +122,8 @@
             return false;
         });
 
-        // get by id for update
-        $("#content").on("click", ".main-table .data-edit-user a", function (e) {
+        // get by id for update => fill form
+        $("#content").on("click", ".main-table .data-edit a", function (e) {
             e.preventDefault();
 
             clearForm("Edit user", "update", "Save");
@@ -143,21 +144,21 @@
                     tableName: table,
                 },
                 success: function(data) {
-                    var user = JSON.parse(data);
+                    var item = JSON.parse(data);
 
                     $(".modal-box").css("display", "block");
                     $(".modal-box").animate({
                         opacity: 1
                     }, 150);
 
-                    $("#tbUsername").val(user.username);
-                    $("#tbEmail").val(user.email);
+                    $("#tbUsername").val(item.username);
+                    $("#tbEmail").val(item.email);
                     
-                    for(var i = 0; i < user.roles.length; i++){
-                        $("#userRole" + user.roles[i].idRole).prop("checked", true);
+                    for(var i = 0; i < item.roles.length; i++){
+                        $("#userRole" + item.roles[i].idRole).prop("checked", true);
                     }
 
-                    $("#chbIsBanned").prop("checked", user.isBanned === 1 ? true : false);
+                    $("#chbIsBanned").prop("checked", item.isBanned === 1 ? true : false);
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);
@@ -168,11 +169,14 @@
         });
 
         // update or insert
-        $("#modal-confirm-yes").on("click", function () {
-            var op = $(this).attr("data-operation");
-            var $form = $('#userForm');
 
-            var url = "";
+        var url = "";
+
+        $("#modal-confirm-yes").on("click", function (e) {
+            e.preventDefault();
+
+            var op = $(this).attr("data-operation");
+
             if(op == "update") {
                 url = "{{ asset('/admin/update/users') }}";
             }
@@ -180,44 +184,44 @@
                 url = "{{ asset('/admin/insert/users') }}";
             }
             
-            $form.submit(function (e) {
-                e.preventDefault();
+            $('#dataForm').submit();
+        });
 
-                var formData = new FormData($("#userForm")[0]);
-                formData.append('file', $('#userUploadAvatar')[0].files[0]);
+        $('#dataForm').submit(function (e) {
+            e.preventDefault();
 
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    enctype: 'multipart/form-data',
-                    data: formData,
-                    beforeSend: function(data) {
-                        $("#loading-overlay").css("display", "block");
-                    },
-                    success: function (data) {
-                        $("#content").html(data);
+            var formData = new FormData($(this)[0]);
+            formData.append('file', $('#userUploadAvatar')[0].files[0]);
 
-                        $(".modal-box").animate({
-                            opacity: 0
-                        }, 150, function () {
-                            $(".modal-box").css("display", "none");
-                        });
-                    },
-                    complete: function() {
-                        $("#loading-overlay").css("display", "none");
-                    },
-                    error: function (xhr, status, error) {
-                        var err = JSON.parse(xhr.responseText);
-                        $("#form-errors span").html(err.message);
-                        $("#form-errors").show();
-                    },
-                });
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                contentType: false,
+                processData: false,
+                enctype: 'multipart/form-data',
+                data: formData,
+                beforeSend: function(data) {
+                    $("#loading-overlay").css("display", "block");
+                },
+                success: function (data) {
+                    $("#content").html(data);
+
+                    $(".modal-box").animate({
+                        opacity: 0
+                    }, 150, function () {
+                        $(".modal-box").css("display", "none");
+                    });
+                },
+                complete: function() {
+                    $("#loading-overlay").css("display", "none");
+                },
+                error: function (xhr, status, error) {
+                    var err = JSON.parse(xhr.responseText);
+                    $("#form-errors span").html(err.message);
+                    $("#form-errors").show();
+                },
             });
-
-            $form.submit();
         });
     });
 </script>
