@@ -782,3 +782,29 @@ slamjam.comments = (function () {
         initGameSubmissionComments: _initGameSubmissionComments,
     };
 })();
+
+/*
+*   Downloads
+* */
+slamjam.downloads = (function () {
+    var $gameNumberOfDownloads = null;
+    function _findDownloadElement(){
+        if($gameNumberOfDownloads === null){
+            $gameNumberOfDownloads = $("#gameNumOfDownloads");
+        }
+        return $gameNumberOfDownloads;
+    }
+
+    function _increment(){
+        var $el = _findDownloadElement();
+
+        var value = $el.text();
+        if(!isNaN(value)){
+            $el.text( (Number(value) + 1) );
+        }
+    }
+
+    return {
+        increment: _increment,
+    }
+})();

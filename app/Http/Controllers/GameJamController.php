@@ -343,7 +343,7 @@ class GameJamController extends Controller
                 return Redirect::back()->withInput()->with('message', "You can't delete this game jam.");
             }
             else if($gameJams->getById($idGameJam)->startDate < time()){
-                return Redirect::back()->withInput()->with('message', 'You can delete an active game jam.');
+                return Redirect::back()->withInput()->with('message', 'You can\'t delete an active game jam.');
             }
             else{
                 $gameJams->update($idGameJam, ["isBlocked" => 1]);
