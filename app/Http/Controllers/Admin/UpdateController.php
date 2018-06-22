@@ -168,4 +168,8 @@ class UpdateController extends AdminController implements IUpdate
         return parent::update($request);
     }
 
+    public function navigations(Request $request) {
+        return parent::update($request);
+    }
+
 }
