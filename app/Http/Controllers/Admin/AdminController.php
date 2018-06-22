@@ -6,11 +6,18 @@ use \App\Http\Interfaces\Admin\IAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Generic;
-use App\Http\Models\Users;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller implements IAdmin
 {
     private $viewData = [];
+
+    private $columns = [
+        "gamecategories" => ["name"],
+        "gamecriteria" => ["name", "description"],
+        "users" => ["email", "username", "password", "avatarImagePath", "isBanned"]
+    ];
     
     public function index($page = null) {
         if(empty($page))
@@ -22,16 +29,53 @@ class AdminController extends Controller implements IAdmin
     }
 
     public function insert(Request $request) {
+        $table = $request->get("tableName");
+        $view = explode(".", $request->get("viewName"))[1];
         
+        $model = new Generic($table);
+
+        $insertData = [];
+
+        foreach($this->columns[$table] as $column) {
+            if(!empty($request->get($column))) {
+                $insertData[$column] = $request->get($column);
+            }
+        }
+
+        if(count($insertData)){
+            $result = $model->insertGetId($insertData);
+
+            if(empty($result)) {
+                return response()->json(["message" => "Failed to insert data."], 500);
+            }
+        }
+        else {
+            return response()->json(["message" => "No data provided."], 400);
+        }
+
+        return AdminController::getAll($table, "ajax." . $view);
     }
 
     public function update(Request $request) {
-        $id = $request->get("id");
-        $view = explode(".", $request->get("viewName"))[1];
+        $id = $request->get("hiddenId");
         $table = $request->get("tableName");
-        $data = $request->get("data");
+        $view = explode(".", $request->get("viewName"))[1];
 
-        $generic = new Generic($table, null);
+        $model = new Generic($table);
+
+        $updateData = [];
+
+        foreach($this->columns[$table] as $column) {
+            if(!empty($request->get($column))) {
+                $updateData[$column] = $request->get($column);
+            }
+        }
+
+        $result = $model->update($id, $updateData);
+
+        if(empty($result)) {
+            return response()->json(["message" => "Not updated."], 500);
+        }
 
         return AdminController::getAll($table, "ajax." . $view);
     }
@@ -61,12 +105,14 @@ class AdminController extends Controller implements IAdmin
     }
 
     public static function getAll($table, $view = null) {
+        $table = strtolower($table);
+
         $view = empty($view) ? $table : $view;
         $type = "App\\Http\\Models\\" . $table;
 
         $model = new $type($table);
 
-        return view("admin." . $view, ["tableData" => $model->getAll(), "tableName" => $view])->render();
+        return view("admin." . $view, ["tableData" => $model->getAll(), "tableName" => $table])->render();
     }
 
 }
