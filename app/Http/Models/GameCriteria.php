@@ -7,7 +7,7 @@ class GameCriteria extends Generic
 {
     public function __construct()
     {
-        parent::__construct('gamecriteries', 'idGameCriteria');
+        parent::__construct('gamecriteria', 'idGameCriteria');
     }
 
     //
