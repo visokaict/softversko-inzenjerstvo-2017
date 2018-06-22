@@ -25,7 +25,7 @@
             </td>
             <td>{{ $item->idReport }}</td>
             <td>{{ $item->reason }}</td>
-            <td><a href="{{ asset('/profile/' . $item->username) }}">{{ $item->username }}</a></td>
+            <td><a href="{{ asset('/user/' . $item->username) }}">{{ $item->username }}</a></td>
             <td>{{ date("d/m/Y h:i A", $item->createdAt) }}</td>
             <td class="data-delete text-center"><a href="#" data-id="{{ $item->idReport }}"><i class="fas fa-trash-alt"></i></a></td>
         </tr>
