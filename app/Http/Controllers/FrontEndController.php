@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Models\GameCategories;
 use App\Http\Models\Navigations;
+use App\Http\Models\Platform;
 use App\Http\Models\Polls;
 use App\Http\Models\Roles;
 use Illuminate\Http\Request;
@@ -51,6 +53,10 @@ class FrontEndController extends Controller
         return view('gameJams.gameJams', $this->viewData);
     }
     public function oneGameJam($id){
+        if (!preg_match("/^\d+$/", $id)) {
+            return back()->with('message', 'Invalid game jam id.');
+        }
+
         $gameJams = new GameJams();
 
         $gameJam = $gameJams->getById($id);
@@ -82,6 +88,10 @@ class FrontEndController extends Controller
         return view('gameJams.createGameJam', $this->viewData);
     }
     public function editGameJam($id){
+        if (!preg_match("/^\d+$/", $id)) {
+            return back()->with('message', 'Invalid game jam id.');
+        }
+
         $gameJams = new GameJams();
         $gameCriteria = new GameCriteria();
 
@@ -120,11 +130,18 @@ class FrontEndController extends Controller
     public function createGameSubmission($idGameJam){
         //todo
         //move to own controller
+        if (!preg_match("/^\d+$/", $idGameJam)) {
+            return back()->with('message', 'Invalid game jam id.');
+        }
 
         $gameJams = new GameJams();
         $gameSubmissions = new GameSubmissions();
 
-        $gameJam = $gameJams->getById($idGameJam);
+        #$gameJam = $gameJams->getById($idGameJam);
+        $gameJamExist = $gameJams->exist($idGameJam);
+        if(!$gameJamExist){
+            return Redirect::back()->withInput()->with('message', 'This game jam doesn\'t exist!');
+        }
 
         if(session()->has('user')){
             $idUser = session()->get('user')[0]->idUser;
@@ -139,6 +156,16 @@ class FrontEndController extends Controller
 
         }
 
+        $gameCategories = new GameCategories();
+        $gamePlatform = new Platform();
+
+        $this->viewData["gameJamId"] = $idGameJam;
+        $this->viewData["gameCategories"] = $gameCategories->getAll();
+        $this->viewData["gamePlatforms"] = $gamePlatform->getAll();
+
+
+
+
         return view('gameSubmissions.createGameSubmission', $this->viewData);
     }
     //removed one game submission get route from frontend
@@ -146,6 +173,37 @@ class FrontEndController extends Controller
     public function editGameSubmission($id){
         //todo
         //move to own controller
+        if (!preg_match("/^\d+$/", $id)) {
+            return back()->with('message', 'Invalid game submission id.');
+        }
+
+        $gameSubmissions = new GameSubmissions();
+
+        # does game exist
+        $gameSubData = $gameSubmissions->getById($id);
+        if(empty($gameSubData)){
+            return Redirect::back()->withInput()->with('message', 'This game doesn\'t exist!');
+        }
+
+        # is this user creator
+        $idUser = session()->get('user')[0]->idUser;
+        if($gameSubData->idUserCreator != $idUser){
+            return Redirect::back()->withInput()->with('message', 'You cannot edit this game!');
+        }
+
+
+        $gameCategories = new GameCategories();
+        $gamePlatform = new Platform();
+
+        $this->viewData["gameSubmissionId"] = $id;
+        $this->viewData["gameCategories"] = $gameCategories->getAll();
+        $this->viewData["gamePlatforms"] = $gamePlatform->getAll();
+        $this->viewData["gameSubData"] = $gameSubData;
+        $this->viewData["gameSubCategories"] = $gameSubmissions->getCategoriesIds($id);
+        $this->viewData["gameSubPlatform"] = $gameSubmissions->getGamePlatformId($id);
+
+        #dd($this->viewData);
+
         return view('gameSubmissions.editGameSubmission', $this->viewData);
     }
     //

@@ -3,10 +3,22 @@
 //
 // game submissions
 //Route::get('/games', 'FrontEndController@games');// this is moved to another controller
+
+// present
 Route::get('/games', 'GameSubmissionController@getFilteredGames');
-Route::get('/games/create/{id}', 'FrontEndController@createGameSubmission')->middleware('isLoggedIn', 'isJamDeveloper');
 Route::get('/games/{id}', 'GameSubmissionController@oneGameSubmission');
+Route::get('/games/create/{id}', 'FrontEndController@createGameSubmission')->middleware('isLoggedIn', 'isJamDeveloper');
 Route::get('/games/{id}/edit', 'FrontEndController@editGameSubmission')->middleware('isLoggedIn', 'isJamDeveloper');
+Route::get('/games/{id}/delete', 'GameSubmissionController@delete')->middleware('isLoggedIn', 'isJamDeveloper');
+
+//logic
+Route::post('/games/create', 'GameSubmissionController@insert')->middleware('isLoggedIn', 'isJamDeveloper');
+Route::post('/games/{id}/edit', 'GameSubmissionController@edit')->middleware('isLoggedIn', 'isJamDeveloper');
+
+//download game file
+Route::get('/download/{idDownloadFile}', 'GameSubmissionController@downloadFile')->middleware('isLoggedIn');
+
+
 
 //
 // game jams
