@@ -1,30 +1,22 @@
 @extends('layouts.admin')
 
 @section('title')
-    Game Categories
+    Reports
 @endsection
 
 @section('commands')
-    <a href="#" id="createNew" class="has-tooltip"><i class="fas fa-plus"></i><span class="tooltip">Create new</span></a>
     <a href="#" id="deleteSelected" class="has-tooltip"><i class="fas fa-trash-alt"></i><span class="tooltip">Delete selected</span></a>
 @endsection
 
 @section('content')
     @if(count($tableData))
-        @include('admin.ajax.gameCategories')
+        @include('admin.ajax.reports')
     @else
         <p class="no-data-found">No data found.</p>
     @endif
 @endsection
 
 @section('dataForm')
-<form action="" method="POST" id="dataForm">
-    <div class="form-group">
-        <input type="text" name="name" id="name" class="form-control" placeholder="Name">
-    </div>
-    <input type="hidden" name="hiddenId" id="hiddenId"/>
-    {{ csrf_field() }}
-</form>
 @endsection
 
 @section('jsfiles')

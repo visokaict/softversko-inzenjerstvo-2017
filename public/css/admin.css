@@ -272,6 +272,12 @@ table {
     padding-right: 0.5em;
 }
 
+.no-data-found {
+    font-style: italic;
+    padding-top: 25px;
+    font-size: 1.2em;
+}
+
 .main-table {
     width: 100%;
     max-width: 100%;
@@ -279,6 +285,10 @@ table {
     background-color: transparent;
     white-space: nowrap;
     box-shadow: 5px 4px 8px #1f2129;
+}
+
+.main-table a {
+    color: #67a7d8;
 }
 
 .main-table tbody tr {

@@ -12,6 +12,7 @@ class AdminDataProvider extends ServiceProvider
             $items = [
                 ["name" => "Overview", "url" => ""],
                 ["name" => "Users", "url" => "users"],
+                ["name" => "Roles", "url" => "roles"],
                 ["name" => "Game jams", "url" => "game-jams"],
                 ["name" => "Game submissions", "url" => "game-submissions"],
                 ["name" => "Game categories", "url" => "game-categories"],
