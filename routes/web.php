@@ -100,4 +100,3 @@ Route::post("/admin/update/reports", "Admin\UpdateController@reports")->middlewa
 Route::post("/admin/insert/users", "Admin\InsertController@users")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/game-categories", "Admin\InsertController@gameCategories")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/game-criteria", "Admin\InsertController@gameCriteria")->middleware("isLoggedIn", "isAdmin");
-Route::post("/admin/insert/reports", "Admin\InsertController@reports")->middleware("isLoggedIn", "isAdmin");

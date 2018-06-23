@@ -13,6 +13,7 @@ class Reports extends Generic
         return \DB::table("reports")
             ->join("users", "reports.idUserCreator", "=", "users.idUser")
             ->select("*", "users.username")
+            ->where("solved", 0)
             ->orderBy("idReport")
             ->get();
     }
