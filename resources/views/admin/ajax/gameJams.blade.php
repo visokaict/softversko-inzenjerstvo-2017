@@ -20,7 +20,7 @@
             <td class="table-cell-id">{{ $item->idGameJam }}</td>
             <td>{{ $item->title }}</td>
             <td class="text-center" title="{{ $item->description }}">{{ strlen($item->description) > 13 ? substr($item->description, 0, 10) . "..." : $item->description }}</td>
-            <td><img class="game-jam-cover" src="{{ asset($item->cover) }}"/></td>
+            <td><img class="data-cover" src="{{ asset($item->cover) }}"/></td>
             <td><p>{{ date("d/m/Y h:i A", $item->startDate) }}</p>
             <p>{{ date("d/m/Y h:i A", $item->endDate) }}</p>
             <p>{{ date("d/m/Y h:i A", $item->votingEndDate) }}</p>
