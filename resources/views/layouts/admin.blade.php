@@ -47,7 +47,7 @@
                     <p class="dashboards-title">DASHBOARDS</p>
                     <ul class="admin-menu-list">
                         @foreach($adminNav as $item)
-                            <li @if(url('/admin/' . $item['url']) == $currentUrl) class="active" @endif><a href="{{ asset('/admin/' . $item['url']) }}">{{ $item['name'] }}</a></li>
+                            <li @if($item['status'] == 'unfinished') class='strike-through' @endif @if(url('/admin/' . $item['url']) == $currentUrl) class="active" @endif><a href="{{ asset('/admin/' . $item['url']) }}">{{ $item['name'] }}</a></li>
                         @endforeach
                     </ul>
                 </div>
