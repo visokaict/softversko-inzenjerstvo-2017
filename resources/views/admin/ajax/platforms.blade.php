@@ -23,7 +23,7 @@
                     <span class="checkmark"></span>
                 </label>
             </td>
-            <td>{{ $item->idPlatform }}</td>
+            <td class="table-cell-id">{{ $item->idPlatform }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->classNameForIcon }}</td>
             <td class="data-edit text-center"><a href="#" data-id="{{ $item->idPlatform }}"><i class="far fa-edit"></i></a></td>

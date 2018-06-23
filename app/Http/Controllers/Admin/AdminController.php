@@ -58,6 +58,19 @@ class AdminController extends Controller implements IAdmin
         return AdminController::getAll($table);
     }
 
+    public function block(Request $request) {
+        $id = $request->get("id");
+        $table = $request->get("tableName");
+        $view = explode(".", $request->get("viewName"))[1];
+        $type = "App\\Http\\Models\\" . $table;
+
+        $model = new $type($table);
+
+        $model->update($id, ["isBlocked" => $request->get("isBlocked")]);
+
+        return AdminController::getAll($table, "ajax." . $view);
+    }
+
     public function insert(Request $request) {
         $table = $request->get("tableName");
         $view = explode(".", $request->get("viewName"))[1];

@@ -23,7 +23,7 @@
                     <span class="checkmark"></span>
                 </label>
             </td>
-            <td>{{ $item->idGameCriteria }}</td>
+            <td class="table-cell-id">{{ $item->idGameCriteria }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->description }}</td>
             <td class="data-edit text-center"><a href="#" data-id="{{ $item->idGameCriteria }}"><i class="far fa-edit"></i></a></td>
