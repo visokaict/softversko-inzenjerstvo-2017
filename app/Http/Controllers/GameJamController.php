@@ -133,7 +133,7 @@ class GameJamController extends Controller
 
         if($gameJams->exist($idGameJam)) {
             if($gameJams->userOwnsGameJam($idUser, $idGameJam)){
-                return Redirect::back()->withInput()->with('message', 'You can\'t join your own Game Jam you bitch.');
+                return Redirect::back()->withInput()->with('message', 'You can\'t join your own Game Jam.');
             }
             if($gameJams->getById($idGameJam)->endDate < time()){
                 return Redirect::back()->withInput()->with('message', 'You can no longer join this game jam.');
