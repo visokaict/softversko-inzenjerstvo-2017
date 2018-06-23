@@ -149,7 +149,7 @@
                     var err = JSON.parse(xhr.responseText);
                     $("#form-errors span").html(err.message);
                     $("#form-errors").show();
-                },
+                }
             });
         });
     });

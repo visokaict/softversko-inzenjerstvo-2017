@@ -22,7 +22,7 @@
                     <span class="checkmark"></span>
                 </label>
             </td>
-            <td>{{ $item->idGameCategory }}</td>
+            <td class="table-cell-id">{{ $item->idGameCategory }}</td>
             <td>{{ $item->name }}</td>
             <td class="data-edit text-center"><a href="#" data-id="{{ $item->idGameCategory }}"><i class="far fa-edit"></i></a></td>
             <td class="data-delete text-center"><a href="#" data-id="{{ $item->idGameCategory }}"><i class="fas fa-trash-alt"></i></a></td>

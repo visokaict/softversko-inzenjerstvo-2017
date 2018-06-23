@@ -24,7 +24,7 @@
                     <span class="checkmark"></span>
                 </label>
             </td>
-            <td>{{ $item->idNavigation }}</td>
+            <td class="table-cell-id">{{ $item->idNavigation }}</td>
             <td>{{ $item->path }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->position }}</td>
