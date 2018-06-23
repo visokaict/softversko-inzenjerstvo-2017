@@ -97,11 +97,11 @@
 
             </ul>
 
-            <form action="{{asset('/search')}}" method="GET" class="navbar-form navbar-left">
+            <form action="{{asset('/search')}}" method="GET" class="navbar-form navbar-left" data-toggle="validator" role="form">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="tbSearch">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="tbSearch" required>
                     <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">
+                        <button class="btn btn-default" type="submit" title="Please first search something">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </div>
@@ -242,6 +242,7 @@
         });
     });
 </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 <script type="text/javascript" src="{{ asset('/js/main.js') }}"></script>
 
 @yield('jsfiles')

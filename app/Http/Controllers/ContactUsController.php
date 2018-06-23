@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Interfaces\IContactUs;
 use App\Http\Models\Polls;
 use App\Mail\ContactUsMail;
 use Illuminate\Http\Request;
