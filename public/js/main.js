@@ -821,20 +821,56 @@ slamjam.validation = (function () {
             //custom file size validation
             filesize: function ($el) {
                 var maxKilobytes = $el.data('filesize') * 1024;
-                if ($el[0].files[0].size > maxKilobytes) {
+                if ($el[0].files[0] && $el[0].files[0].size > maxKilobytes) {
                     return "File must be smaller than " + $el.data('filesize') + " kB."
                 }
             },
             //custom file type validation
             filetype: function ($el) {
                 var acceptableTypes = $el.data('filetype').split(',');
-                var fileType = $el[0].files[0].type;
+                var file = $el[0].files[0];
 
-                if (acceptableTypes.indexOf(fileType) === -1) {
+                if (file && acceptableTypes.indexOf(file.type) === -1) {
                     return "Invalid file type"
                 }
             },
+            "datetime-gt": function ($el) {
+                //
+                // this is not that robust
+                // no time for now
+                //
+                var datetimeformat = $el.data('datetime-gt');
+                var value = $el.val();
+                var ONE_DAY = 86400;
 
+                if (value) {
+                    var isDef = false;
+
+                    switch (datetimeformat) {
+                        case 'now':
+                            //check if time is gt then Date.now, if not return false
+                            break;
+                        case 'one-day':
+                            if (new Date(value).getTime() < (Date.now() + ONE_DAY)) {
+                                return "Date need to be at least 1 day from now.";
+                            }
+                            break;
+                        default:
+                            isDef = true;
+                            break;
+                    }
+
+                    //
+                    //this is default case
+                    if (isDef) {
+                        var fromEl = $(datetimeformat).val();
+
+                        if(fromEl && new Date(value).getTime() < (new Date(fromEl).getTime() + ONE_DAY)){
+                            return "Date need to be at least 1 day from time before.";
+                        }
+                    }
+                }
+            },
             //add more if needed
         }
     });

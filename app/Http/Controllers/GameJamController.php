@@ -328,7 +328,7 @@ class GameJamController extends Controller
                 $gameJams->insertCriteria($idGameJam, $idGameCriteria);
             }
 
-            return redirect("/game-jams/" . $idGameJam)->with('message', 'Updated Game jam!');
+            return redirect("/game-jams/" . $idGameJam)->with('message', 'Game jam updated successfully!');
         }
     }
 
