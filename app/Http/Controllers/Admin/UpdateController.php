@@ -168,6 +168,17 @@ class UpdateController extends AdminController implements IUpdate
         return parent::update($request);
     }
 
+    public function reports(Request $request) {
+        $table = $request->get("tableName");
+        $view = explode(".", $request->get("viewName"))[1];
+
+        $model = new Generic($table);
+
+        $model->update($request->get("id"), ["solved" => 1]);
+
+        return AdminController::getAll($table, "ajax." . $view);
+    }
+  
     public function roles(Request $request) {
         return parent::update($request);
     }

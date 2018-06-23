@@ -106,6 +106,7 @@ Route::delete("/admin/delete", "Admin\AdminController@delete")->middleware("isLo
 Route::post("/admin/update/users", "Admin\UpdateController@users")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/game-categories", "Admin\UpdateController@gameCategories")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/game-criteria", "Admin\UpdateController@gameCriteria")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/update/reports", "Admin\UpdateController@reports")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/roles", "Admin\UpdateController@roles")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/image-categories", "Admin\UpdateController@imageCategories")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/platforms", "Admin\UpdateController@platforms")->middleware("isLoggedIn", "isAdmin");

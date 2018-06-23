@@ -13,7 +13,7 @@
     @if(count($tableData))
         @include('admin.ajax.gameCategories')
     @else
-        <i>No data found.</i>
+        <p class="no-data-found">No data found.</p>
     @endif
 @endsection
 

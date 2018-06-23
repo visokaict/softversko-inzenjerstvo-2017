@@ -20,7 +20,7 @@ class AdminDataProvider extends ServiceProvider
                 ["name" => "Navigations", "url" => "navigations", "status" => "done"],
                 ["name" => "Poll", "url" => "poll", "status" => "unfinished"],
                 ["name" => "Roles", "url" => "roles", "status" => "done"],
-                ["name" => "Reports", "url" => "reports", "status" => "unfinished"],
+                ["name" => "Reports", "url" => "reports", "status" => "done"],
                 ["name" => "Platforms", "url" => "platforms", "status" => "done"]
             ];
 
