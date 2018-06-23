@@ -19,6 +19,15 @@ class GameSubmissions extends Generic
 
     }
 
+    public function getAll() {
+        return \DB::table($this->tableName)
+            ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
+            ->join('gamejams', 'gamesubmissions.idGameJam', '=', 'gamejams.idGameJam')
+            ->join('images', 'gamesubmissions.idCoverImage', '=', 'images.idImage')
+            ->select(\DB::raw("gamesubmissions.*, gamejams.title as gameJam, (gamesubmissions.sumOfVotes / gamesubmissions.numberOfVotes) as rating, users.username, images.path as cover"))
+            ->get();
+    }
+
     public function get($offset = 0, $limit = 9, $sort)
     {
         $sort["name"] = "gamesubmissions." . $sort["name"];
