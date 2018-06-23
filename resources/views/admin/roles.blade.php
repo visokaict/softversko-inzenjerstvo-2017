@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Game Criteria
+    Roles
 @endsection
 
 @section('commands')
@@ -11,9 +11,9 @@
 
 @section('content')
     @if(count($tableData))
-        @include('admin.ajax.gameCriteria')
+        @include('admin.ajax.roles')
     @else
-        <p class="no-data-found">No data found.</p>
+        <i>No data found.</i>
     @endif
 @endsection
 
@@ -23,7 +23,14 @@
         <input type="text" name="name" id="name" class="form-control" placeholder="Name">
     </div>
     <div class="form-group">
+        <input type="text" name="text" id="text" class="form-control" placeholder="Text">
+    </div>
+    <div class="form-group">
         <input type="text" name="description" id="description" class="form-control" placeholder="Description">
+    </div>
+    <div class="form-group">
+        <p>Is available for user:</p>
+        <label><input type="checkbox" id="isAvailableForUser" name="isAvailableForUser"/>Yes</label>
     </div>
     <input type="hidden" name="hiddenId" id="hiddenId"/>
     {{ csrf_field() }}
@@ -51,7 +58,7 @@
         $("#createNew").on("click", function (e) {
             e.preventDefault();
 
-            clearForm("Create new criteria", "insert", "Create");
+            clearForm("Create new role", "insert", "Create");
 
             $(".modal-box").css("display", "block");
             $(".modal-box").animate({
@@ -65,7 +72,7 @@
         $("#content").on("click", ".main-table .data-edit a", function (e) {
             e.preventDefault();
 
-            clearForm("Edit criteria", "update", "Save");
+            clearForm("Edit role", "update", "Save");
 
             var id = $(this).attr("data-id");
             var table = "{{ $tableName }}";
@@ -91,6 +98,8 @@
                     }, 150);
 
                     $("#name").val(item.name);
+                    $("#text").val(item.text);
+                    $("#isAvailableForUser").prop("checked", item.isAvailableForUser === 1 ? true : false);
                     $("#description").val(item.description);
                 },
                 error: function(xhr, status, error) {
@@ -111,10 +120,10 @@
             var op = $(this).attr("data-operation");
             
             if(op == "update") {
-                url = "{{ asset('/admin/update/game-criteria') }}";
+                url = "{{ asset('/admin/update/roles') }}";
             }
             else {
-                url = "{{ asset('/admin/insert/game-criteria') }}";
+                url = "{{ asset('/admin/insert/roles') }}";
             }
 
             $('#dataForm').submit();
@@ -149,7 +158,7 @@
                     var err = JSON.parse(xhr.responseText);
                     $("#form-errors span").html(err.message);
                     $("#form-errors").show();
-                }
+                },
             });
         });
     });

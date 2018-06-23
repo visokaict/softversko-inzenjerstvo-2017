@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Game Criteria
+    Platforms
 @endsection
 
 @section('commands')
@@ -11,9 +11,9 @@
 
 @section('content')
     @if(count($tableData))
-        @include('admin.ajax.gameCriteria')
+        @include('admin.ajax.platforms')
     @else
-        <p class="no-data-found">No data found.</p>
+        <i>No data found.</i>
     @endif
 @endsection
 
@@ -23,7 +23,7 @@
         <input type="text" name="name" id="name" class="form-control" placeholder="Name">
     </div>
     <div class="form-group">
-        <input type="text" name="description" id="description" class="form-control" placeholder="Description">
+        <input type="text" name="classNameForIcon" id="classNameForIcon" class="form-control" placeholder="Font awesome class">
     </div>
     <input type="hidden" name="hiddenId" id="hiddenId"/>
     {{ csrf_field() }}
@@ -51,7 +51,7 @@
         $("#createNew").on("click", function (e) {
             e.preventDefault();
 
-            clearForm("Create new criteria", "insert", "Create");
+            clearForm("Create new platform", "insert", "Create");
 
             $(".modal-box").css("display", "block");
             $(".modal-box").animate({
@@ -65,7 +65,7 @@
         $("#content").on("click", ".main-table .data-edit a", function (e) {
             e.preventDefault();
 
-            clearForm("Edit criteria", "update", "Save");
+            clearForm("Edit platform", "update", "Save");
 
             var id = $(this).attr("data-id");
             var table = "{{ $tableName }}";
@@ -91,7 +91,7 @@
                     }, 150);
 
                     $("#name").val(item.name);
-                    $("#description").val(item.description);
+                    $("#classNameForIcon").val(item.classNameForIcon);
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);
@@ -111,10 +111,10 @@
             var op = $(this).attr("data-operation");
             
             if(op == "update") {
-                url = "{{ asset('/admin/update/game-criteria') }}";
+                url = "{{ asset('/admin/update/platforms') }}";
             }
             else {
-                url = "{{ asset('/admin/insert/game-criteria') }}";
+                url = "{{ asset('/admin/insert/platforms') }}";
             }
 
             $('#dataForm').submit();
@@ -149,7 +149,7 @@
                     var err = JSON.parse(xhr.responseText);
                     $("#form-errors span").html(err.message);
                     $("#form-errors").show();
-                }
+                },
             });
         });
     });

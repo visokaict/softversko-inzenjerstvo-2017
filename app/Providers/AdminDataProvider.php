@@ -10,19 +10,18 @@ class AdminDataProvider extends ServiceProvider
     {
         view()->composer("*", function ($view) {
             $items = [
-                ["name" => "Overview", "url" => ""],
-                ["name" => "Users", "url" => "users"],
-                ["name" => "Roles", "url" => "roles"],
-                ["name" => "Game jams", "url" => "game-jams"],
-                ["name" => "Game submissions", "url" => "game-submissions"],
-                ["name" => "Game categories", "url" => "game-categories"],
-                ["name" => "Game criteria", "url" => "game-criteria"],
-                ["name" => "Comments", "url" => "comments"],
-                ["name" => "Images", "url" => "images"],
-                ["name" => "Navigations", "url" => "navigations"],
-                ["name" => "Poll", "url" => "poll"],
-                ["name" => "Reports", "url" => "reports"],
-                ["name" => "Platforms", "url" => "platforms"]
+                ["name" => "Overview", "url" => "", "status" => "in-progress"],
+                ["name" => "Users", "url" => "users", "status" => "done"],
+                ["name" => "Game jams", "url" => "game-jams", "status" => "done"],
+                ["name" => "Game submissions", "url" => "game-submissions", "status" => "done"],
+                ["name" => "Game categories", "url" => "game-categories", "status" => "done"],
+                ["name" => "Game criteria", "url" => "game-criteria", "status" => "done"],
+                ["name" => "Image categories", "url" => "image-categories", "status" => "done"],
+                ["name" => "Navigations", "url" => "navigations", "status" => "done"],
+                ["name" => "Poll", "url" => "poll", "status" => "unfinished"],
+                ["name" => "Roles", "url" => "roles", "status" => "done"],
+                ["name" => "Reports", "url" => "reports", "status" => "done"],
+                ["name" => "Platforms", "url" => "platforms", "status" => "done"]
             ];
 
             view()->share('viewName', $view->getName());

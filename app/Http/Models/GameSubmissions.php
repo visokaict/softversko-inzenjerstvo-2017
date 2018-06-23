@@ -19,6 +19,15 @@ class GameSubmissions extends Generic
 
     }
 
+    public function getAll() {
+        return \DB::table($this->tableName)
+            ->join('users', 'gamesubmissions.idUserCreator', '=', 'users.idUser')
+            ->join('gamejams', 'gamesubmissions.idGameJam', '=', 'gamejams.idGameJam')
+            ->join('images', 'gamesubmissions.idCoverImage', '=', 'images.idImage')
+            ->select(\DB::raw("gamesubmissions.*, gamejams.title as gameJam, (gamesubmissions.sumOfVotes / gamesubmissions.numberOfVotes) as rating, users.username, images.path as cover"))
+            ->get();
+    }
+
     public function get($offset = 0, $limit = 9, $sort)
     {
         $sort["name"] = "gamesubmissions." . $sort["name"];
@@ -46,6 +55,18 @@ class GameSubmissions extends Generic
             ->select('*')
             ->where('gamesubmissions_categories.idGameSubmission', '=', $id)
             ->get();
+    }
+
+    public function getCategoriesIds($id)
+    {
+        $categories = $this->getCategories($id);
+        $result =[];
+        foreach($categories as $c)
+        {
+            $result[] = $c->idCategory;
+        }
+
+        return $result;
     }
 
     public function getByUserAndGameJam($idUser, $idGameJam)
@@ -104,10 +125,36 @@ class GameSubmissions extends Generic
     public function getDownloadFiles($id)
     {
         return \DB::table('gamesubmissions_downloadfiles')
+            ->select(['gamesubmissions_downloadfiles.*', 'downloadfiles.*', 'platforms.classNameForIcon'])
             ->join('downloadfiles', 'gamesubmissions_downloadfiles.idDownloadFile', '=', 'downloadfiles.idDownloadFile')
             ->join('platforms', 'downloadfiles.idPlatform', '=', 'platforms.idPlatform')
             ->where('gamesubmissions_downloadfiles.idGameSubmission', '=', $id)
             ->get();
+    }
+
+    public function getGamePlatformId($id)
+    {
+        return \DB::table('gamesubmissions_downloadfiles')
+            ->select('downloadfiles.idPlatform')
+            ->join('downloadfiles', 'gamesubmissions_downloadfiles.idDownloadFile', '=', 'downloadfiles.idDownloadFile')
+            ->where('gamesubmissions_downloadfiles.idGameSubmission', '=', $id)
+            ->first();
+    }
+
+    public function saveRelationshipWithDownloadFile($idGameSubmission, $idFile)
+    {
+        return \DB::table('gamesubmissions_downloadfiles')
+            ->insert([
+                "idGameSubmission" => $idGameSubmission,
+                "idDownloadFile" => $idFile,
+            ]);
+    }
+
+    public function removeRelationshipWithDownloadFile($idGame)
+    {
+        return \DB::table('gamesubmissions_downloadfiles')
+            ->where('idGameSubmission', '=', $idGame)
+            ->delete();
     }
 
     public function addBadge($idGame, $idBadge, $idUser)
@@ -188,5 +235,38 @@ class GameSubmissions extends Generic
         }
 
         return $return;
+    }
+
+    public function saveGameCategories($model)
+    {
+        return \DB::table('gamesubmissions_categories')
+            ->insertGetId($model);
+    }
+
+    public function removeAllCategories($idGame){
+        return \DB::table('gamesubmissions_categories')
+            ->where('idGameSubmission', '=', $idGame)
+            ->delete();
+    }
+
+    public function userOwnsGameSubmission($idUser, $idGameSubmission)
+    {
+        //todo
+    }
+
+    public function getGameIdByDownloadFileId($id)
+    {
+        return \DB::table('gamesubmissions_downloadfiles')
+            ->select('*')
+            ->where('idDownloadFile', '=', $id)
+            ->first();
+    }
+
+    public function getDownloadFileIdByGameId($id)
+    {
+        return \DB::table('gamesubmissions_downloadfiles')
+            ->select('*')
+            ->where('idGameSubmission', '=', $id)
+            ->first();
     }
 }

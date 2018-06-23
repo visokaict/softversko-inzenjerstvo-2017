@@ -133,7 +133,7 @@ class GameJamController extends Controller
 
         if($gameJams->exist($idGameJam)) {
             if($gameJams->userOwnsGameJam($idUser, $idGameJam)){
-                return Redirect::back()->withInput()->with('message', 'You can\'t join your own Game Jam you bitch.');
+                return Redirect::back()->withInput()->with('message', 'You can\'t join your own Game Jam.');
             }
             if($gameJams->getById($idGameJam)->endDate < time()){
                 return Redirect::back()->withInput()->with('message', 'You can no longer join this game jam.');
@@ -328,7 +328,7 @@ class GameJamController extends Controller
                 $gameJams->insertCriteria($idGameJam, $idGameCriteria);
             }
 
-            return redirect("/game-jams/" . $idGameJam)->with('message', 'Updated Game jam!');
+            return redirect("/game-jams/" . $idGameJam)->with('message', 'Game jam updated successfully!');
         }
     }
 
@@ -343,7 +343,7 @@ class GameJamController extends Controller
                 return Redirect::back()->withInput()->with('message', "You can't delete this game jam.");
             }
             else if($gameJams->getById($idGameJam)->startDate < time()){
-                return Redirect::back()->withInput()->with('message', 'You can delete an active game jam.');
+                return Redirect::back()->withInput()->with('message', 'You can\'t delete an active game jam.');
             }
             else{
                 $gameJams->update($idGameJam, ["isBlocked" => 1]);

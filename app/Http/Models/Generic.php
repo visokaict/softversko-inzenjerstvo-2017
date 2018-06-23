@@ -92,4 +92,11 @@ class Generic
         return DB::getSchemaBuilder()->getColumnListing($this->tableName)[0];
     }
 
+    public function increment($id, $columnName)
+    {
+        return \DB::table($this->tableName)
+            ->where($this->idName, '=', $id)
+            ->increment($columnName, 1);
+    }
+
 }

@@ -4,11 +4,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <!-- Favicon-->
+        <link rel="icon" href="{{asset('/images/admin-favicon.png')}}" type="image/png">
+
         <meta name="csrf-token" content="{{ csrf_token() }}"/>
         <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Anton|Roboto" rel="stylesheet"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}" type="text/css"/>
         <title>Slam Jam - @yield('title') - Admin panel</title>
     </head>
@@ -47,7 +52,7 @@
                     <p class="dashboards-title">DASHBOARDS</p>
                     <ul class="admin-menu-list">
                         @foreach($adminNav as $item)
-                            <li @if(url('/admin/' . $item['url']) == $currentUrl) class="active" @endif><a href="{{ asset('/admin/' . $item['url']) }}">{{ $item['name'] }}</a></li>
+                            <li @if($item['status'] == 'unfinished') class='strike-through' @endif @if(url('/admin/' . $item['url']) == $currentUrl) class="active" @endif><a href="{{ asset('/admin/' . $item['url']) }}">{{ $item['name'] }}</a></li>
                         @endforeach
                     </ul>
                 </div>

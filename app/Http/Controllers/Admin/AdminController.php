@@ -14,9 +14,39 @@ class AdminController extends Controller implements IAdmin
     private $viewData = [];
 
     private $columns = [
-        "gamecategories" => ["name"],
-        "gamecriteria" => ["name", "description"],
-        "users" => ["email", "username", "password", "avatarImagePath", "isBanned"]
+        "gamecategories" => [
+            // field name, field type
+            ["name", "text"]
+        ],
+        "gamecriteria" => [
+            ["name", "text"],
+            ["description", "text"]
+        ],
+        "imagecategories" => [
+            ["name", "text"]
+        ],
+        "roles" => [
+            ["name", "text"],
+            ["text", "text"],
+            ["isAvailableForUser", "checkbox"],
+            ["description", "text"]
+        ],
+        "users" => [
+            ["email", "text"],
+            ["username", "text"],
+            ["password", "text"],
+            ["avatarImagePath", "text"],
+            ["isBanned", "checkbox"]
+        ],
+        "platforms" => [
+            ["name", "text"],
+            ["classNameForIcon", "text"]
+        ],
+        "navigations" => [
+            ["path", "text"],
+            ["name", "text"],
+            ["position", "text"]
+        ]
     ];
     
     public function index($page = null) {
@@ -28,6 +58,19 @@ class AdminController extends Controller implements IAdmin
         return AdminController::getAll($table);
     }
 
+    public function block(Request $request) {
+        $id = $request->get("id");
+        $table = $request->get("tableName");
+        $view = explode(".", $request->get("viewName"))[1];
+        $type = "App\\Http\\Models\\" . $table;
+
+        $model = new $type($table);
+
+        $model->update($id, ["isBlocked" => $request->get("isBlocked")]);
+
+        return AdminController::getAll($table, "ajax." . $view);
+    }
+
     public function insert(Request $request) {
         $table = $request->get("tableName");
         $view = explode(".", $request->get("viewName"))[1];
@@ -37,8 +80,14 @@ class AdminController extends Controller implements IAdmin
         $insertData = [];
 
         foreach($this->columns[$table] as $column) {
-            if(!empty($request->get($column))) {
-                $insertData[$column] = $request->get($column);
+            $value = $request->get($column[0]);
+            if($column[1] === "checkbox") {
+                $insertData[$column[0]] = $request->has($column[0]) ? 1 : 0;
+            }
+            else if(!empty($value)) {
+                if($column[1] === "text") {
+                    $insertData[$column[0]] = $value;
+                }
             }
         }
 
@@ -66,8 +115,14 @@ class AdminController extends Controller implements IAdmin
         $updateData = [];
 
         foreach($this->columns[$table] as $column) {
-            if(!empty($request->get($column))) {
-                $updateData[$column] = $request->get($column);
+            $value = $request->get($column[0]);
+            if($column[1] === "checkbox") {
+                $updateData[$column[0]] = $request->has($column[0]) ? 1 : 0;
+            }
+            else if(!empty($value)) {
+                if($column[1] === "text") {
+                    $updateData[$column[0]] = $value;
+                }
             }
         }
 

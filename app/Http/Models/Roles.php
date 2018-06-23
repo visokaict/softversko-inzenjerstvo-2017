@@ -13,7 +13,7 @@ class Roles extends Generic
 {
     public function __construct()
     {
-        parent::__construct('roles', 'idRoles');
+        parent::__construct('roles', 'idRole');
     }
 
     public function getAllAvailable()

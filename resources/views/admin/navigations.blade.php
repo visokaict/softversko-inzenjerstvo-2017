@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Game Criteria
+    Navigations
 @endsection
 
 @section('commands')
@@ -11,19 +11,22 @@
 
 @section('content')
     @if(count($tableData))
-        @include('admin.ajax.gameCriteria')
+        @include('admin.ajax.navigations')
     @else
-        <p class="no-data-found">No data found.</p>
+        <i>No data found.</i>
     @endif
 @endsection
 
 @section('dataForm')
 <form action="" method="POST" id="dataForm">
     <div class="form-group">
+        <input type="text" name="path" id="path" class="form-control" placeholder="Path">
+    </div>
+    <div class="form-group">
         <input type="text" name="name" id="name" class="form-control" placeholder="Name">
     </div>
     <div class="form-group">
-        <input type="text" name="description" id="description" class="form-control" placeholder="Description">
+        <input type="text" name="position" id="position" class="form-control" placeholder="Position">
     </div>
     <input type="hidden" name="hiddenId" id="hiddenId"/>
     {{ csrf_field() }}
@@ -51,7 +54,7 @@
         $("#createNew").on("click", function (e) {
             e.preventDefault();
 
-            clearForm("Create new criteria", "insert", "Create");
+            clearForm("Create new link", "insert", "Create");
 
             $(".modal-box").css("display", "block");
             $(".modal-box").animate({
@@ -65,7 +68,7 @@
         $("#content").on("click", ".main-table .data-edit a", function (e) {
             e.preventDefault();
 
-            clearForm("Edit criteria", "update", "Save");
+            clearForm("Edit link", "update", "Save");
 
             var id = $(this).attr("data-id");
             var table = "{{ $tableName }}";
@@ -90,8 +93,9 @@
                         opacity: 1
                     }, 150);
 
+                    $("#path").val(item.path);
                     $("#name").val(item.name);
-                    $("#description").val(item.description);
+                    $("#position").val(item.position);
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);
@@ -111,10 +115,10 @@
             var op = $(this).attr("data-operation");
             
             if(op == "update") {
-                url = "{{ asset('/admin/update/game-criteria') }}";
+                url = "{{ asset('/admin/update/navigations') }}";
             }
             else {
-                url = "{{ asset('/admin/insert/game-criteria') }}";
+                url = "{{ asset('/admin/insert/navigations') }}";
             }
 
             $('#dataForm').submit();
@@ -149,7 +153,7 @@
                     var err = JSON.parse(xhr.responseText);
                     $("#form-errors span").html(err.message);
                     $("#form-errors").show();
-                }
+                },
             });
         });
     });

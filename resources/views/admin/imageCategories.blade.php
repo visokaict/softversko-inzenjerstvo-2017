@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Game Criteria
+    Image Categories
 @endsection
 
 @section('commands')
@@ -11,9 +11,9 @@
 
 @section('content')
     @if(count($tableData))
-        @include('admin.ajax.gameCriteria')
+        @include('admin.ajax.imageCategories')
     @else
-        <p class="no-data-found">No data found.</p>
+        <i>No data found.</i>
     @endif
 @endsection
 
@@ -21,9 +21,6 @@
 <form action="" method="POST" id="dataForm">
     <div class="form-group">
         <input type="text" name="name" id="name" class="form-control" placeholder="Name">
-    </div>
-    <div class="form-group">
-        <input type="text" name="description" id="description" class="form-control" placeholder="Description">
     </div>
     <input type="hidden" name="hiddenId" id="hiddenId"/>
     {{ csrf_field() }}
@@ -51,7 +48,7 @@
         $("#createNew").on("click", function (e) {
             e.preventDefault();
 
-            clearForm("Create new criteria", "insert", "Create");
+            clearForm("Create new category", "insert", "Create");
 
             $(".modal-box").css("display", "block");
             $(".modal-box").animate({
@@ -65,7 +62,7 @@
         $("#content").on("click", ".main-table .data-edit a", function (e) {
             e.preventDefault();
 
-            clearForm("Edit criteria", "update", "Save");
+            clearForm("Edit category", "update", "Save");
 
             var id = $(this).attr("data-id");
             var table = "{{ $tableName }}";
@@ -91,7 +88,6 @@
                     }, 150);
 
                     $("#name").val(item.name);
-                    $("#description").val(item.description);
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);
@@ -111,10 +107,10 @@
             var op = $(this).attr("data-operation");
             
             if(op == "update") {
-                url = "{{ asset('/admin/update/game-criteria') }}";
+                url = "{{ asset('/admin/update/image-categories') }}";
             }
             else {
-                url = "{{ asset('/admin/insert/game-criteria') }}";
+                url = "{{ asset('/admin/insert/image-categories') }}";
             }
 
             $('#dataForm').submit();
@@ -149,7 +145,7 @@
                     var err = JSON.parse(xhr.responseText);
                     $("#form-errors span").html(err.message);
                     $("#form-errors").show();
-                }
+                },
             });
         });
     });
