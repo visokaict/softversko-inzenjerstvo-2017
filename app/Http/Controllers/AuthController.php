@@ -14,7 +14,7 @@ class AuthController extends Controller implements IAuthorization
     {
         $validation = Validator::make($request->all(), [
             'tbUsernameEmail' => 'required',
-            'tbPassword' => 'required'
+            'tbPassword' => 'required|min:6'
         ]);
 
         $validation->setAttributeNames([
