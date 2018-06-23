@@ -95,16 +95,16 @@ slamjam.common = (function () {
     function _getDateComponents(date) {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        
+
         var dayName = days[date.getDay()];
         var monthName = months[date.getMonth()];
-        
+
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var ampm = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
         hours = hours ? hours : 12;
-        hours = hours < 10 ? '0' + hours: hours;
+        hours = hours < 10 ? '0' + hours : hours;
         minutes = minutes < 10 ? '0' + minutes : minutes;
         var strTime = hours + ':' + minutes + ' ' + ampm;
 
@@ -414,10 +414,11 @@ slamjam.gameJam = (function () {
                     start: new Date(Number(item.startDate) * 1000),
                     end: new Date(Number(item.endDate) * 1000),
                     link: "game-jams/" + item.idGameJam,
-                    className: "chart-game-jam-bar chart-game-jam-bar-blue" };
+                    className: "chart-game-jam-bar chart-game-jam-bar-blue"
+                };
             });
 
-            for(var i = 0; i < data.length; i++){
+            for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 parsedData.push({
                     group: item.idGameJam, // so items are in one line
@@ -465,8 +466,8 @@ slamjam.gameJam = (function () {
                     return `<a href='${data.link}'>${data.content}</a>`;
                 },
                 margin: {
-                    item : {
-                        horizontal : 0
+                    item: {
+                        horizontal: 0
                     }
                 },
                 stack: false
@@ -476,7 +477,7 @@ slamjam.gameJam = (function () {
             var groups = _mapChartGroups(data);
 
             var timeline = new vis.Timeline(container);
-            timeline.setOptions(options); 
+            timeline.setOptions(options);
             timeline.setItems(items);
             timeline.setGroups(groups);
             timeline.moveTo(date);
@@ -667,7 +668,7 @@ slamjam.comments = (function () {
                     method: "POST",
                     data: {text: comment},
                     success: function (data) {
-                        if(data) {
+                        if (data) {
                             var commentsHtml = _renderComment(data);
                             $("#comments-list").append(commentsHtml);
                         }
@@ -691,7 +692,7 @@ slamjam.comments = (function () {
         });
     }
 
-    function _initRemoveCommentBiding(){
+    function _initRemoveCommentBiding() {
         $("#comments-list").on("click", ".remove-comment-a", function () {
             var $this = $(this);
             var commentId = $this.data("id");
@@ -724,7 +725,7 @@ slamjam.comments = (function () {
             var commentid = $(this).data("id");
             var $text = $(this).parent().next();
 
-            if(commentid && $text.length){
+            if (commentid && $text.length) {
                 var editHtml = `<div class="input-group">
                     <textarea type="text" class="form-control resize-vertical">${$text.text().trim()}</textarea>
                     <a href="javascript:void(0)" data-id="${commentid}" class="input-group-addon update-comment-a"><i class="fa fa-check"></i></a>
@@ -741,7 +742,7 @@ slamjam.comments = (function () {
             var commentText = $(this).prev().val();
             var $parent = $(this).parent();
 
-            if(commentId && commentText) {
+            if (commentId && commentText) {
 
                 slamjam.common.ajax({
                     url: slamjam.common.createURL(`/games/${idGameSubmission}/comments/${commentId}`),
@@ -788,19 +789,20 @@ slamjam.comments = (function () {
 * */
 slamjam.downloads = (function () {
     var $gameNumberOfDownloads = null;
-    function _findDownloadElement(){
-        if($gameNumberOfDownloads === null){
+
+    function _findDownloadElement() {
+        if ($gameNumberOfDownloads === null) {
             $gameNumberOfDownloads = $("#gameNumOfDownloads");
         }
         return $gameNumberOfDownloads;
     }
 
-    function _increment(){
+    function _increment() {
         var $el = _findDownloadElement();
 
         var value = $el.text();
-        if(!isNaN(value)){
-            $el.text( (Number(value) + 1) );
+        if (!isNaN(value)) {
+            $el.text((Number(value) + 1));
         }
     }
 
@@ -808,3 +810,35 @@ slamjam.downloads = (function () {
         increment: _increment,
     }
 })();
+
+/*
+*   Validation
+* */
+slamjam.validation = (function () {
+    // add validation rules to validator
+    $('form[data-toggle="validator"]').validator({
+        custom: {
+            //custom file size validation
+            filesize: function ($el) {
+                var maxKilobytes = $el.data('filesize') * 1024;
+                if ($el[0].files[0].size > maxKilobytes) {
+                    return "File must be smaller than " + $el.data('filesize') + " kB."
+                }
+            },
+            //custom file type validation
+            filetype: function ($el) {
+                var acceptableTypes = $el.data('filetype').split(',');
+                var fileType = $el[0].files[0].type;
+
+                if (acceptableTypes.indexOf(fileType) === -1) {
+                    return "Invalid file type"
+                }
+            },
+
+            //add more if needed
+        }
+    });
+
+    return {};
+})();
+

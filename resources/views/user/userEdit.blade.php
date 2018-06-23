@@ -22,30 +22,34 @@
         </div>
     @endif
 
-    <form action="{{ asset('/profile/edit') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ asset('/profile/edit') }}" method="post" enctype="multipart/form-data" data-toggle="validator" role="form">
         <div class="form-group user-edit-control">
-            <input type="password" name="tbCurrentPassword" class="form-control" placeholder="Current password">
+            <input type="password" name="tbCurrentPassword" class="form-control" placeholder="Current password" data-minlength="6">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <div class="help-block with-errors"></div>
         </div>
         <div class="form-group user-edit-control">
-            <input type="password" name="tbPassword" class="form-control" placeholder="New password">
+            <input type="password" name="tbPassword" id="tbPassword" class="form-control" placeholder="New password" data-minlength="6">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <div class="help-block with-errors"></div>
         </div>
         <div class="form-group user-edit-control">
-            <input type="password" name="tbPassword_confirmation" class="form-control" placeholder="Retype new password">
+            <input type="password" name="tbPassword_confirmation" class="form-control" placeholder="Retype new password" data-minlength="6" data-match="#tbPassword">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <div class="help-block with-errors"></div>
         </div>
         <p>Upload avatar image:</p>
         <div class="form-group user-edit-file">
-            <input type="file" accept="image/*" class="user-edit-upload-file-control" id="userUploadAvatar" name="fAvatarImage"/>
+            <input type="file" accept="image/*" class="user-edit-upload-file-control" id="userUploadAvatar" name="fAvatarImage" data-filesize="2000" data-filetype="image/png,image/jpeg"/>
             <div class="drag-and-drop-overlay" id="drag-and-drop-overlay">
                 <i class="fas fa-cloud-upload-alt"></i>
                 <p>Click or Drag &amp; Drop Your File Here</p>
             </div>
-            
+            <div class="help-block with-errors"></div>
+
                 <img id="uploadedImage" />
                 <p class="image-filename" id="image-filename">Filename.jpg</p>
-            
+
         </div>
         <div class="form-group user-edit-roles">
         @isset($userAvailableRoles)
@@ -74,11 +78,13 @@
         document.getElementById("userUploadAvatar").addEventListener("change", function(){
             var img = document.getElementById('uploadedImage');
             var imgFilename = document.getElementById("image-filename");
-            img.src = window.URL.createObjectURL(this.files[0]);
-            img.style.opacity = 1;
-            imgFilename.style.opacity = 1;
-            imgFilename.innerHTML = this.files[0].name;
-            document.getElementById("drag-and-drop-overlay").style.opacity = 0;
+            if(this.files[0]){
+                img.src = window.URL.createObjectURL(this.files[0]);
+                img.style.opacity = 1;
+                imgFilename.style.opacity = 1;
+                imgFilename.innerHTML = this.files[0].name;
+                document.getElementById("drag-and-drop-overlay").style.opacity = 0;
+            }
         });
     </script>
 @endsection
