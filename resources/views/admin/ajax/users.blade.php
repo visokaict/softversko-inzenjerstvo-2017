@@ -28,7 +28,7 @@
                     <span class="checkmark"></span>
                 </label>
             </td>
-            <td>{{ $user->idUser }}</td>
+            <td class="table-cell-id">{{ $user->idUser }}</td>
             <td>{{ $user->username }}</td>
             <td>{{ $user->email }}</td>
             <td class="data-user-image text-center"><img src="{{ asset($user->avatarImagePath) }}" alt="User image"/></td>

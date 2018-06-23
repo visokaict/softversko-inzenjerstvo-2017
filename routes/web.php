@@ -119,3 +119,6 @@ Route::post("/admin/insert/roles", "Admin\InsertController@roles")->middleware("
 Route::post("/admin/insert/image-categories", "Admin\InsertController@imageCategories")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/platforms", "Admin\InsertController@platforms")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/navigations", "Admin\InsertController@navigations")->middleware("isLoggedIn", "isAdmin");
+
+// block
+Route::post("/admin/block", "Admin\AdminController@block")->middleware("isLoggedIn", "isAdmin");

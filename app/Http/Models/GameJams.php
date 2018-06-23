@@ -34,6 +34,14 @@ class GameJams extends Generic
         return parent::insertGetId($insertData);
     }
 
+    public function getAll() {
+        return \DB::table($this->tableName)
+            ->join('users', 'gamejams.idUserCreator', '=', 'users.idUser')
+            ->join('images', 'gamejams.idCoverImage', '=', 'images.idImage')
+            ->select("gamejams.*", "users.username", "images.path as cover")
+            ->get();
+    }
+
     public function getAllWhereVotingEndDateNotFinished()
     {
         return \DB::table($this->tableName)

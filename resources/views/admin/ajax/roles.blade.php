@@ -25,7 +25,7 @@
                     <span class="checkmark"></span>
                 </label>
             </td>
-            <td>{{ $item->idRole }}</td>
+            <td class="table-cell-id">{{ $item->idRole }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->text }}</td>
             <td>{{ $item->isAvailableForUser === 1 ? "Yes" : "No" }}</td>
