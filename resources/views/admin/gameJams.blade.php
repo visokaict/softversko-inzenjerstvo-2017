@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Game Criteria
+    Game Jams
 @endsection
 
 @section('commands')
