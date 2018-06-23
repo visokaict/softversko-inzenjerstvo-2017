@@ -818,9 +818,13 @@ slamjam.validation = (function () {
     // add validation rules to validator
     $('form[data-toggle="validator"]').validator({
         custom: {
+
+            // make it so it works with multiple files
+
             //custom file size validation
             filesize: function ($el) {
                 var maxKilobytes = $el.data('filesize') * 1024;
+
                 if ($el[0].files[0] && $el[0].files[0].size > maxKilobytes) {
                     return "File must be smaller than " + $el.data('filesize') + " kB."
                 }
