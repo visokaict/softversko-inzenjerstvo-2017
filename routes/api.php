@@ -31,3 +31,7 @@ Route::get('/games/{gameId}/comments', 'GameSubmissionCommentController@get');
 Route::post('/games/{gameId}/comments', 'GameSubmissionCommentController@add')->middleware('canAccessApi');
 Route::patch('/games/{gameId}/comments/{commentId}', 'GameSubmissionCommentController@edit')->middleware('canAccessApi');
 Route::delete('/games/{gameId}/comments/{commentId}', 'GameSubmissionCommentController@remove')->middleware('canAccessApi');
+
+//statistics for admin site
+Route::get('/admin/statistics/chart/all', 'Admin\StatisticsController@getAllChart');
+Route::get('/admin/statistics/count/all', 'Admin\StatisticsController@getAllCount');
