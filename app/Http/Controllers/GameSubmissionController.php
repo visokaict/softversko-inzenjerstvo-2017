@@ -9,6 +9,7 @@ use App\Http\Models\GameJams;
 use App\Http\Models\Images;
 use App\Http\Models\Navigations;
 use App\Http\Interfaces\IGameSubmission;
+use App\Http\Models\Reports;
 use Illuminate\Http\Request;
 use App\Http\Models\GameSubmissions;
 use Illuminate\Support\Facades\Input;
@@ -406,6 +407,51 @@ class GameSubmissionController extends Controller implements IGameSubmission
         $download_path = (public_path() . '/' . $downloadFile->path);
 
         return response()->download($download_path, $fileName);
+    }
+
+    public function report(Request $request){
+        $validation = Validator::make($request->all(), [
+            'taReason' => 'required|regex:/^[\w\.\s\,\"\'\!\?\:\;]+$/',
+            'gameId' => 'required',
+        ]);
+
+        $validation->setAttributeNames([
+            'taReason' => 'reason',
+            'gameId' => 'game',
+        ]);
+
+        if ($validation->fails()) {
+            return back()->withInput()->withErrors($validation);
+        }
+
+        $reason = $request->get('taReason');
+        $idGame = $request->get('gameId');
+        $idUser = session()->get('user')[0]->idUser;
+
+        //if game exists
+        $gameSubmissions = new GameSubmissions();
+        if (!$gameSubmissions->exist( $idGame )) {
+            return back()->withInput()->with('message', 'Game doesn\'t exist.');
+        }
+
+        //da nije vec reportovo
+        $reportManager = new Reports();
+        $hasReported = $reportManager->userHasReportedGame($idGame, $idUser);
+
+        if($hasReported){
+            return back()->withInput()->with('message', 'You already reported this game.');
+        }
+
+        //save it
+        $reportManager->insertGetId([
+            "reason"=> $reason,
+            "idUserCreator"=> $idUser,
+            "idReportObject"=> $idGame,
+            "createdAt"=> time(),
+            "solved"=> 0,
+        ]);
+
+        return back()->with('message', 'You have successfully reported the game.');
     }
 
     /*private function setupNavigation(){

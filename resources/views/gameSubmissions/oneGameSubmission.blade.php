@@ -77,7 +77,9 @@
                 <div class="col-md-4">
                     <a class="btn btn-primary"
                        href="{{asset('/games/'. $gameSubmission->idGameSubmission.'/edit')}}">Edit</a>
-                    <a href="#" id="btn-remove-game-jam" data-url="{{asset('/games/'. $gameSubmission->idGameSubmission.'/delete')}}" data-text="Are you sure you want to remove this game?" class="btn btn-danger">Remove</a>
+                    <a href="#" id="btn-remove-game-jam"
+                       data-url="{{asset('/games/'. $gameSubmission->idGameSubmission.'/delete')}}"
+                       data-text="Are you sure you want to remove this game?" class="btn btn-danger">Remove</a>
                 </div>
             </div>
             <br>
@@ -99,7 +101,9 @@
                                     session()->has('user')
                                     // we can make that user needs to be logedin first to be able to download files
                                     --}}
-                                    <a class="btn btn-block btn-social btn-bitbucket" href="{{asset('/download/'.$gameFiles->idDownloadFile)}}" onclick="slamjam.downloads.increment()">
+                                    <a class="btn btn-block btn-social btn-bitbucket"
+                                       href="{{asset('/download/'.$gameFiles->idDownloadFile)}}"
+                                       onclick="slamjam.downloads.increment()">
                                         <i class="fa fa-download"></i>
                                         Download
                                     </a>
@@ -199,61 +203,78 @@
                 <div>
 
                     <ul id="comments-list" class="comments-list">
-                        {{--<li>
-                            <div class="comment-main-level">
-                                <!-- Avatar -->
-                                <div class="comment-avatar"><img
-                                            src="https://api.adorable.io/avatars/285/goran@gmail.com" alt=""></div>
-                                <!-- Contenedor del Comentario -->
-                                <div class="comment-box">
-                                    <div class="comment-head">
-                                        <h6 class="comment-name by-author"><a
-                                                    href="http://creaticode.com/blog">goran</a></h6>
-                                        <span>2018-05-26 02:06:16</span>
 
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                    <div class="comment-content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et
-                                        iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li>
-                            <div class="comment-main-level">
-                                <!-- Avatar -->
-                                <div class="comment-avatar"><img
-                                            src="https://api.adorable.io/avatars/285/nikola@gmail.com" alt=""></div>
-                                <!-- Contenedor del Comentario -->
-                                <div class="comment-box">
-                                    <div class="comment-head">
-                                        <h6 class="comment-name"><a href="http://creaticode.com/blog">nikola</a></h6>
-                                        <span> at 2018-05-26 02:06:16</span>
-                                        <i class="fa fa-reply"></i>
-                                        <i class="fa fa-heart"></i>
-                                    </div>
-                                    <div class="comment-content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et
-                                        iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                    </div>
-                                </div>
-                            </div>
-                        </li>--}}
                     </ul>
 
                     <!-- /one comment - Foreach -->
                 </div>
                 <!-- /Comments List -->
+                <!-- report -->
 
 
             </div>
         </div>
 
+        @if(session()->has('user'))
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="row game-report">
+                <div class="col-md-offset-2 col-md-8 col-xs-offset-0 col-xs-12">
+
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse"
+                                       data-parent="#accordion"
+                                       href="#collapseOne">
+                                        <i class="fa fa-flag"></i> Report
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+
+                                    <form action="{{asset('/report')}}" method="POST" data-toggle="validator"
+                                          role="form">
+                                        {{ csrf_field() }}
+
+                                        <input type="hidden" name="gameId" value="{{$gameSubmission->idGameSubmission}}">
+
+                                        <div class="form-group">
+                                            <label for="description">Reason for reporting this game:</label>
+                                            <textarea class="form-control resize-vertical" rows="5" id="taReason"
+                                                      name="taReason" required >{{old('taReason')}}</textarea>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-12 col-xs-offset-0 col-md-4 col-md-offset-8">
+                                                <button type="submit" class="btn btn-primary btn-block btn-flat">Submit
+                                                    report
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+
     </div>
     <!-- -->
+
+
+
+
+
 @endsection
 
 @section('jsfiles')
@@ -269,6 +290,19 @@
             slamjam.games.initOneGamePage();
             slamjam.badges.initBadgesOnGamesPage();
             slamjam.comments.initGameSubmissionComments();
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $("#chat-label").click(function () {
+
+                $('#live-chat').toggleClass('open-chat');
+                $('#chat-label').toggleClass('open-chat-label');
+                $('.live-chat-up-arrow').toggleClass('hide-up-arrow');
+                $('.live-chat-down-arrow').toggleClass('show-down-arrow');
+
+            });
         });
     </script>
 @endsection
