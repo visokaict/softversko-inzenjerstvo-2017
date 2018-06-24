@@ -59,7 +59,38 @@ class AdminController extends Controller implements IAdmin
             ["idPollQuestion", "number"]
         ]
     ];
-    
+
+    public static function getTypeByTableName($tableName){
+        $result = "App\\Http\\Models\\";
+        $c = "";
+        switch ($tableName){
+            case 'comments': $c = "Comments"; break;
+            case 'downloadfiles': $c = "DownloadFiles"; break;
+            case 'gamebadges': $c = "GameBadges"; break;
+            case 'gamecategories': $c = "GameCategories"; break;
+            case 'gamecriteria': $c = "GameCriteria"; break;
+            case 'gamejams': $c = "GameJams"; break;
+            case 'gamesubmission_comment': $c = "GameSubmission_Comment"; break;
+            case 'gamesubmissions': $c = "GameSubmissions"; break;
+            case 'generic': $c = "Generic"; break;
+            case 'imagecategories': $c = "ImageCategories"; break;
+            case 'images': $c = "Images"; break;
+            case 'navigations': $c = "Navigations"; break;
+            case 'platform': $c = "Platform"; break;
+            case 'platforms': $c = "Platforms"; break;
+            case 'pollanswers': $c = "PollAnswers"; break;
+            case 'pollquestions': $c = "PollQuestions"; break;
+            case 'polls': $c = "Polls"; break;
+            case 'reports': $c = "Reports"; break;
+            case 'roles': $c = "Roles"; break;
+            case 'statistics': $c = "Statistics"; break;
+            case 'users': $c = "Users"; break;
+            case 'utilities': $c = "Utilities"; break;
+        }
+
+        return $result . $c;
+    }
+
     public function index($page = null) {
         if(empty($page)) {
             return view("admin.index", $this->viewData);
@@ -72,7 +103,8 @@ class AdminController extends Controller implements IAdmin
         $id = $request->get("id");
         $table = $request->get("tableName");
         $view = explode(".", $request->get("viewName"))[1];
-        $type = "App\\Http\\Models\\" . $table;
+        //$type = "App\\Http\\Models\\" . $table;
+        $type = AdminController::getTypeByTableName($table);
 
         $model = new $type($table);
 
@@ -163,7 +195,8 @@ class AdminController extends Controller implements IAdmin
         $id = $request->get("id");
         $table = $request->get("tableName");
 
-        $type = "App\\Http\\Models\\" . $table;
+        //$type = "App\\Http\\Models\\" . $table;
+        $type = AdminController::getTypeByTableName($table);
         $model = new $type($table);
 
         $result = $model->getById($id);
@@ -175,7 +208,9 @@ class AdminController extends Controller implements IAdmin
         $table = strtolower($table);
 
         $view = empty($view) ? $table : $view;
-        $type = "App\\Http\\Models\\" . $table;
+        //$type = "App\\Http\\Models\\" . $table;
+
+        $type = AdminController::getTypeByTableName($table);
 
         $model = new $type($table);
         $result = null;

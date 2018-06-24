@@ -317,7 +317,7 @@ CREATE TABLE `images` (
 -- Dumping data for table `images`
 --
 
-INSERT INTO `images` (`idImage`, `idImageCategory`, `alt`, `path`) VALUES
+INSERT INTO `images` (`idImage`, `idImageCategory`, `alt`, `path`, `createdAt`) VALUES
 (1, 4, 'Game of the Year', 'images/badges/game-of-the-year.png', 0),
 (2, 4, 'Best audio', 'images/badges/audio.png', 0),
 (3, 4, 'Best creativity', 'images/badges/creativity.png', 0),
