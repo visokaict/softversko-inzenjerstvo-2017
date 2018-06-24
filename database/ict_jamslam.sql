@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2018 at 05:35 PM
+-- Generation Time: Jun 24, 2018 at 07:22 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ict_jamslam`
+-- Database: `ict_slamjam`
 --
 
 -- --------------------------------------------------------
@@ -30,11 +30,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `comments` (
   `idComment` int(32) NOT NULL,
-  `text` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `idUserCreator` int(32) NOT NULL,
   `createdAt` int(15) NOT NULL,
   `editedAt` int(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -44,8 +44,13 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `downloadfiles` (
   `idDownloadFile` int(32) NOT NULL,
-  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `size` int(64) NOT NULL,
+  `idPlatform` int(4) NOT NULL,
+  `createdAt` int(15) NOT NULL,
+  `fileExtension` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -55,9 +60,22 @@ CREATE TABLE `downloadfiles` (
 
 CREATE TABLE `gamebadges` (
   `idGameBadges` int(32) NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `idImage` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `gamebadges`
+--
+
+INSERT INTO `gamebadges` (`idGameBadges`, `name`, `idImage`) VALUES
+(1, 'Game of the year', 1),
+(2, 'Best Audio', 2),
+(3, 'Best creativity', 3),
+(4, 'Best design', 4),
+(5, 'Best mobile', 5),
+(6, 'Best VR/AR', 6),
+(7, 'Best web', 7);
 
 -- --------------------------------------------------------
 
@@ -65,22 +83,42 @@ CREATE TABLE `gamebadges` (
 -- Table structure for table `gamecategories`
 --
 
-CREATE TABLE `gamecategories` (
+CREATE TABLE `gamecategoria` (
   `idGameCategory` int(32) NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `gamecategories`
+--
+
+INSERT INTO `gamecategoria` (`idGameCategory`, `name`) VALUES
+(1, 'FPS'),
+(2, 'RPG'),
+(3, 'RTS'),
+(4, 'Racing');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gamecriteries`
+-- Table structure for table `gamecriteria`
 --
 
-CREATE TABLE `gamecriteries` (
+CREATE TABLE `gamecriteria` (
   `idGameCriteria` int(32) NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `gamecriteria`
+--
+
+INSERT INTO `gamecriteria` (`idGameCriteria`, `name`, `description`) VALUES
+(1, 'Gameplay', 'How the game plays'),
+(2, 'Design', 'Design of the game'),
+(3, 'Sound', 'The audio of the game'),
+(4, 'Performance', 'The game performance');
 
 -- --------------------------------------------------------
 
@@ -90,19 +128,20 @@ CREATE TABLE `gamecriteries` (
 
 CREATE TABLE `gamejams` (
   `idGameJam` int(32) NOT NULL,
-  `title` int(11) NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idCoverImage` int(32) NOT NULL,
   `startDate` int(15) NOT NULL,
   `endDate` int(15) NOT NULL,
   `votingEndDate` int(15) NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text COLLATE utf8_unicode_ci NOT NULL,
   `lockSubmissionAfterSubmitting` int(1) NOT NULL,
   `othersCanVote` int(1) NOT NULL,
   `isBlocked` int(1) NOT NULL,
   `idUserCreator` int(32) NOT NULL,
-  `numOfViews` int(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `numOfViews` int(64) NOT NULL,
+  `createdAt` int(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -114,7 +153,7 @@ CREATE TABLE `gamejams_criterias` (
   `idGameJamCriteria` int(32) NOT NULL,
   `idGameJam` int(32) NOT NULL,
   `idCriteria` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -126,7 +165,7 @@ CREATE TABLE `gamejams_participants` (
   `idGameJamParticipant` int(32) NOT NULL,
   `idUser` int(32) NOT NULL,
   `idGameJam` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -140,15 +179,17 @@ CREATE TABLE `gamesubmissions` (
   `idTeaserImage` int(32) NOT NULL,
   `idCoverImage` int(32) NOT NULL,
   `idUserCreator` int(32) NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
   `createdAt` int(15) NOT NULL,
   `editedAt` int(15) NOT NULL,
   `numOfViews` int(64) NOT NULL,
   `numOfDownloads` int(64) NOT NULL,
   `isBlocked` int(1) NOT NULL,
   `numberOfVotes` int(64) NOT NULL,
-  `sumOfVotes` int(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `sumOfVotes` int(64) NOT NULL,
+  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `isWinner` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -159,8 +200,9 @@ CREATE TABLE `gamesubmissions` (
 CREATE TABLE `gamesubmissions_badges` (
   `idGameSubmissionsBadge` int(32) NOT NULL,
   `idGameSubmission` int(32) NOT NULL,
-  `idBadge` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `idBadge` int(32) NOT NULL,
+  `idUser` int(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -172,7 +214,7 @@ CREATE TABLE `gamesubmissions_categories` (
   `idGameSubmissionCategory` int(32) NOT NULL,
   `idGameSubmission` int(32) NOT NULL,
   `idCategory` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -184,7 +226,7 @@ CREATE TABLE `gamesubmissions_comments` (
   `idGameSubmissionComment` int(32) NOT NULL,
   `idGameSubmission` int(32) NOT NULL,
   `idComment` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -196,7 +238,7 @@ CREATE TABLE `gamesubmissions_downloadfiles` (
   `idGameSubmissionDownloadFile` int(32) NOT NULL,
   `idGameSubmission` int(32) NOT NULL,
   `idDownloadFile` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -208,7 +250,7 @@ CREATE TABLE `gamesubmissions_reports` (
   `idGameSubmissionReport` int(32) NOT NULL,
   `idGameSubmission` int(32) NOT NULL,
   `idReport` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -220,7 +262,7 @@ CREATE TABLE `gamesubmissions_screenshots` (
   `idGameSubmissionScreenShot` int(32) NOT NULL,
   `idGameSubmission` int(32) NOT NULL,
   `idImage` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -233,7 +275,7 @@ CREATE TABLE `gamesubmissions_votes` (
   `idUserVoter` int(32) NOT NULL,
   `rating` int(6) NOT NULL,
   `idGameSubmission` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -243,8 +285,19 @@ CREATE TABLE `gamesubmissions_votes` (
 
 CREATE TABLE `imagecategories` (
   `idImageCategory` int(32) NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `imagecategories`
+--
+
+INSERT INTO `imagecategories` (`idImageCategory`, `name`) VALUES
+(1, 'Cover'),
+(2, 'Avatar'),
+(3, 'Teaser'),
+(4, 'Badge'),
+(5, 'ScreenShot');
 
 -- --------------------------------------------------------
 
@@ -255,9 +308,71 @@ CREATE TABLE `imagecategories` (
 CREATE TABLE `images` (
   `idImage` int(32) NOT NULL,
   `idImageCategory` int(32) NOT NULL,
-  `alt` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `alt` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `createdAt` int(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `images`
+--
+
+INSERT INTO `images` (`idImage`, `idImageCategory`, `alt`, `path`) VALUES
+(1, 4, 'Game of the Year', 'images/badges/game-of-the-year.png', 0),
+(2, 4, 'Best audio', 'images/badges/audio.png', 0),
+(3, 4, 'Best creativity', 'images/badges/creativity.png', 0),
+(4, 4, 'Best design', 'images/badges/design.png', 0),
+(5, 4, 'Best Mobile', 'images/badges/mobile.png', 0),
+(6, 4, 'Best VR/AR', 'images/badges/vr_ar.png', 0),
+(7, 4, 'Best web', 'images/badges/web.png', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `navigations`
+--
+
+CREATE TABLE `navigations` (
+  `idNavigation` int(32) NOT NULL,
+  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `navigations`
+--
+
+INSERT INTO `navigations` (`idNavigation`, `path`, `name`, `position`) VALUES
+(1, '/', 'Game Jams', 1),
+(2, '/games', 'Games', 2),
+(3, '/about', 'About', 3),
+(4, '/contact-us', 'Contact us', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `platforms`
+--
+
+CREATE TABLE `platforms` (
+  `idPlatform` int(2) NOT NULL,
+  `name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `classNameForIcon` varchar(128) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `platforms`
+--
+
+INSERT INTO `platforms` (`idPlatform`, `name`, `classNameForIcon`) VALUES
+(1, 'windows', 'fab fa-windows'),
+(2, 'linux', 'fab fa-linux'),
+(3, 'apple', 'fab fa-apple'),
+(4, 'android', 'fab fa-android'),
+(5, 'playstation', 'fab fa-playstation'),
+(6, 'xbox', 'fab fa-xbox'),
+(7, 'nintendo switch', 'fab fa-nintendo-switch');
 
 -- --------------------------------------------------------
 
@@ -267,10 +382,24 @@ CREATE TABLE `images` (
 
 CREATE TABLE `pollanswers` (
   `idPollAnswer` int(32) NOT NULL,
-  `text` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `idPollQuestion` int(32) NOT NULL,
-  `numberOfVotes` int(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `numberOfVotes` int(64) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `pollanswers`
+--
+
+INSERT INTO `pollanswers` (`idPollAnswer`, `text`, `idPollQuestion`, `numberOfVotes`) VALUES
+(1, 'Under 18', 1, 0),
+(2, '18-24', 1, 3),
+(3, '25-34', 1, 0),
+(4, '35-44', 1, 0),
+(5, 'Above 45', 1, 0),
+(6, 'Yes', 2, 0),
+(7, 'Maybe', 2, 0),
+(8, 'No', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -280,8 +409,17 @@ CREATE TABLE `pollanswers` (
 
 CREATE TABLE `pollquestions` (
   `idPollQuestion` int(32) NOT NULL,
-  `text` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `text` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `active` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `pollquestions`
+--
+
+INSERT INTO `pollquestions` (`idPollQuestion`, `text`, `active`) VALUES
+(1, 'What is your age?', 0),
+(2, 'Do you like our website?', 1);
 
 -- --------------------------------------------------------
 
@@ -292,8 +430,10 @@ CREATE TABLE `pollquestions` (
 CREATE TABLE `pollvotes` (
   `idPollVotes` int(32) NOT NULL,
   `idUserVoter` int(32) NOT NULL,
-  `idPollAnswer` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `idPollAnswer` int(32) NOT NULL,
+  `idPollQuestion` int(32) NOT NULL,
+  `createdAt` int(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -303,10 +443,12 @@ CREATE TABLE `pollvotes` (
 
 CREATE TABLE `reports` (
   `idReport` int(32) NOT NULL,
-  `reason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reason` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idUserCreator` int(32) NOT NULL,
-  `createdAt` int(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `idReportObject` int(64) NOT NULL,
+  `createdAt` int(15) NOT NULL,
+  `solved` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -316,11 +458,11 @@ CREATE TABLE `reports` (
 
 CREATE TABLE `roles` (
   `idRole` int(32) NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `text` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `text` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `isAvailableForUser` int(1) NOT NULL DEFAULT '1',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `roles`
@@ -339,23 +481,23 @@ INSERT INTO `roles` (`idRole`, `name`, `text`, `isAvailableForUser`, `descriptio
 
 CREATE TABLE `users` (
   `idUser` int(32) NOT NULL,
-  `email` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `createdAt` int(15) NOT NULL,
   `updatedAt` int(15) NOT NULL,
-  `avatarImagePath` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `isBanned` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `avatarImagePath` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `isBanned` int(1) NOT NULL,
+  `accessToken` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`idUser`, `email`, `username`, `password`, `createdAt`, `updatedAt`, `avatarImagePath`, `isBanned`) VALUES
-(1, 'goran@gmail.com', 'goran', '336eaae94eec2c96eebec51af6f1a7fd', 1527343576, 1527343576, 'https://api.adorable.io/avatars/285/goran@gmail.com', 0),
-(2, 'nikola@gmail.com', 'nikola', '5f4dcc3b5aa765d61d8327deb882cf99', 1527343576, 1527343576, 'https://api.adorable.io/avatars/285/nikola@gmail.com', 0),
-(3, 'test1@gmail.com', 'test1', 'cc03e747a6afbbcbf8be7668acfebee5', 1527348467, 1527348467, 'https://api.adorable.io/avatars/285/test1@gmail.com', 0);
+INSERT INTO `users` (`idUser`, `email`, `username`, `password`, `createdAt`, `updatedAt`, `avatarImagePath`, `isBanned`, `accessToken`) VALUES
+(1, 'goran@gmail.com', 'goran', '5f4dcc3b5aa765d61d8327deb882cf99', 1527343576, 1527343576, 'https://api.adorable.io/avatars/285/goran@gmail.com', 0, NULL),
+(2, 'nikola@gmail.com', 'nikola', '5f4dcc3b5aa765d61d8327deb882cf99', 1527343576, 1527343576, 'https://api.adorable.io/avatars/285/nikola@gmail.com', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -367,7 +509,7 @@ CREATE TABLE `users_roles` (
   `idUserRoles` int(32) NOT NULL,
   `idUser` int(32) NOT NULL,
   `idRole` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users_roles`
@@ -379,8 +521,7 @@ INSERT INTO `users_roles` (`idUserRoles`, `idUser`, `idRole`) VALUES
 (3, 1, 3),
 (4, 2, 1),
 (5, 2, 2),
-(6, 2, 3),
-(7, 3, 2);
+(6, 2, 3);
 
 --
 -- Indexes for dumped tables
@@ -390,13 +531,15 @@ INSERT INTO `users_roles` (`idUserRoles`, `idUser`, `idRole`) VALUES
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`idComment`);
+  ADD PRIMARY KEY (`idComment`),
+  ADD KEY `fk_comments_users` (`idUserCreator`);
 
 --
 -- Indexes for table `downloadfiles`
 --
 ALTER TABLE `downloadfiles`
-  ADD PRIMARY KEY (`idDownloadFile`);
+  ADD PRIMARY KEY (`idDownloadFile`),
+  ADD KEY `fk_downloadfiles_platforms` (`idPlatform`);
 
 --
 -- Indexes for table `gamebadges`
@@ -412,9 +555,9 @@ ALTER TABLE `gamecategories`
   ADD PRIMARY KEY (`idGameCategory`);
 
 --
--- Indexes for table `gamecriteries`
+-- Indexes for table `gamecriteria`
 --
-ALTER TABLE `gamecriteries`
+ALTER TABLE `gamecriteria`
   ADD PRIMARY KEY (`idGameCriteria`);
 
 --
@@ -457,7 +600,8 @@ ALTER TABLE `gamesubmissions`
 ALTER TABLE `gamesubmissions_badges`
   ADD PRIMARY KEY (`idGameSubmissionsBadge`),
   ADD KEY `fk_gamesubmissionbages_gamesubmission` (`idGameSubmission`),
-  ADD KEY `fk_gamesubmissionbages_gamebage` (`idBadge`);
+  ADD KEY `fk_gamesubmissionbages_gamebage` (`idBadge`),
+  ADD KEY `fk_gamesubmissionbadges_user` (`idUser`);
 
 --
 -- Indexes for table `gamesubmissions_categories`
@@ -521,6 +665,18 @@ ALTER TABLE `images`
   ADD KEY `fk_images_imagecategory` (`idImageCategory`);
 
 --
+-- Indexes for table `navigations`
+--
+ALTER TABLE `navigations`
+  ADD PRIMARY KEY (`idNavigation`);
+
+--
+-- Indexes for table `platforms`
+--
+ALTER TABLE `platforms`
+  ADD PRIMARY KEY (`idPlatform`);
+
+--
 -- Indexes for table `pollanswers`
 --
 ALTER TABLE `pollanswers`
@@ -538,8 +694,10 @@ ALTER TABLE `pollquestions`
 --
 ALTER TABLE `pollvotes`
   ADD PRIMARY KEY (`idPollVotes`),
+  ADD UNIQUE KEY `unique_idUserVoter_idPollQuestion` (`idUserVoter`,`idPollQuestion`) USING BTREE,
   ADD KEY `fk_pollvotes_users` (`idUserVoter`),
-  ADD KEY `fk_pollvotes_pollanswers` (`idPollAnswer`);
+  ADD KEY `fk_pollvotes_pollanswers` (`idPollAnswer`),
+  ADD KEY `fk_pollvotes_pollquestions` (`idPollQuestion`);
 
 --
 -- Indexes for table `reports`
@@ -588,19 +746,19 @@ ALTER TABLE `downloadfiles`
 -- AUTO_INCREMENT for table `gamebadges`
 --
 ALTER TABLE `gamebadges`
-  MODIFY `idGameBadges` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `idGameBadges` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `gamecategories`
 --
 ALTER TABLE `gamecategories`
-  MODIFY `idGameCategory` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `idGameCategory` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `gamecriteries`
+-- AUTO_INCREMENT for table `gamecriteria`
 --
-ALTER TABLE `gamecriteries`
-  MODIFY `idGameCriteria` int(32) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `gamecriteria`
+  MODIFY `idGameCriteria` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `gamejams`
@@ -672,25 +830,37 @@ ALTER TABLE `gamesubmissions_votes`
 -- AUTO_INCREMENT for table `imagecategories`
 --
 ALTER TABLE `imagecategories`
-  MODIFY `idImageCategory` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `idImageCategory` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `idImage` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `idImage` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `navigations`
+--
+ALTER TABLE `navigations`
+  MODIFY `idNavigation` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `platforms`
+--
+ALTER TABLE `platforms`
+  MODIFY `idPlatform` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `pollanswers`
 --
 ALTER TABLE `pollanswers`
-  MODIFY `idPollAnswer` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPollAnswer` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pollquestions`
 --
 ALTER TABLE `pollquestions`
-  MODIFY `idPollQuestion` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPollQuestion` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pollvotes`
@@ -714,17 +884,29 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idUser` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users_roles`
 --
 ALTER TABLE `users_roles`
-  MODIFY `idUserRoles` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idUserRoles` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `fk_comments_users` FOREIGN KEY (`idUserCreator`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `downloadfiles`
+--
+ALTER TABLE `downloadfiles`
+  ADD CONSTRAINT `fk_downloadfiles_platforms` FOREIGN KEY (`idPlatform`) REFERENCES `platforms` (`idPlatform`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `gamebadges`
@@ -744,7 +926,7 @@ ALTER TABLE `gamejams`
 --
 ALTER TABLE `gamejams_criterias`
   ADD CONSTRAINT `fk_gamejamcriteria_gamejam` FOREIGN KEY (`idGameJam`) REFERENCES `gamejams` (`idGameJam`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_gamejamscriteria_gamecriteries` FOREIGN KEY (`idCriteria`) REFERENCES `gamecriteries` (`idGameCriteria`);
+  ADD CONSTRAINT `fk_gamejamscriteria_gamecriteries` FOREIGN KEY (`idCriteria`) REFERENCES `gamecriteria` (`idGameCriteria`);
 
 --
 -- Constraints for table `gamejams_participants`
@@ -766,6 +948,7 @@ ALTER TABLE `gamesubmissions`
 -- Constraints for table `gamesubmissions_badges`
 --
 ALTER TABLE `gamesubmissions_badges`
+  ADD CONSTRAINT `fk_gamesubmissionbadges_user` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_gamesubmissionbages_gamebage` FOREIGN KEY (`idBadge`) REFERENCES `gamebadges` (`idGameBadges`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_gamesubmissionbages_gamesubmission` FOREIGN KEY (`idGameSubmission`) REFERENCES `gamesubmissions` (`idGameSubmission`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -828,6 +1011,7 @@ ALTER TABLE `pollanswers`
 --
 ALTER TABLE `pollvotes`
   ADD CONSTRAINT `fk_pollvotes_pollanswers` FOREIGN KEY (`idPollAnswer`) REFERENCES `pollanswers` (`idPollAnswer`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_pollvotes_pollquestions` FOREIGN KEY (`idPollQuestion`) REFERENCES `pollquestions` (`idPollQuestion`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_pollvotes_users` FOREIGN KEY (`idUserVoter`) REFERENCES `users` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
