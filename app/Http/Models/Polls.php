@@ -9,29 +9,59 @@ namespace App\Http\Models;
 
 use Illuminate\Support\Facades\DB;
 
-class Polls
+class Polls extends Generic
 {
-
-    public function getActivePollQuestion()
-    {
-        return DB::table('pollQuestions')
-            ->select('*')
-            ->where('active', '=', 0)
-            ->first();
+    public function __construct($tableName = null, $idName = null) {
+        parent::__construct($tableName === null ? "pollquestions" : $tableName, $idName === null ? "idPollQuestion" : $idName);
     }
 
-    public function getAnswersByQuestionId($id)
-    {
-        return DB::table('pollAnswers')
+    public function getAll() {
+        $questions = DB::table('pollquestions')
+            ->select('*')
+            ->get();
+
+        foreach($questions as $question) {
+            $question->{"answers"} = $this->getAnswersByQuestionId($question->idPollQuestion);
+        }
+
+        return $questions;
+    }
+
+    public function getAnswersByQuestionId($id) {
+        return DB::table('pollanswers')
             ->select('*')
             ->where('idPollQuestion', '=', $id)
             ->get();
     }
 
+    public function getByIdAnswer($id) {
+        return DB::table('pollanswers')
+            ->select('*')
+            ->where("idPollAnswer", $id)
+            ->first();
+    }
+
+    public function getActivePollQuestion()
+    {
+        return DB::table('pollquestions')
+            ->select('*')
+            ->where('active', '=', 0)
+            ->first();
+    }
+
+    public function setActivePollQuestion($id) {
+        DB::table('pollquestions')
+            ->update(['active' => 0]);
+        
+        return DB::table('pollquestions')
+            ->where('idPollQuestion', $id)
+            ->update(['active' => 1]);
+    }
+
     public function pollVote($userId, $idPollQuestion, $idPollAnswer)
     {
         try {
-            DB::table('pollVotes')
+            DB::table('pollvotes')
                 ->insert([
                     'idUserVoter' => $userId,
                     'idPollQuestion' => $idPollQuestion,

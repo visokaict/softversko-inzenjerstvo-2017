@@ -121,7 +121,26 @@
                 $("#content").on("click", ".main-table .data-delete a", function (e) {
                     e.preventDefault();
 
-                    deleteData($(this).attr("data-id"));
+                    var resetElements = [];
+
+                    if($(this).attr("data-poll-type") === "question") {
+                        var pollQuestionId = $(this).attr("data-id");
+                        $(".inner-table-wrap:visible").each(function () {
+                            if($(this).attr("data-poll-question-id") !== pollQuestionId) {
+                                resetElements.push([".inner-table-wrap", $(".inner-table-wrap").index($(this)), $(this).attr("data-poll-question-id")]);
+                            }
+                        });
+                        deleteData(pollQuestionId, "pollquestions", resetElements);
+                    }
+                    else if($(this).attr("data-poll-type") === "answer") {
+                        $(".inner-table-wrap:visible").each(function () {
+                            resetElements.push([".inner-table-wrap", $(".inner-table-wrap").index($(this)), $(this).attr("data-poll-question-id")]); 
+                        });
+                        deleteData($(this).attr("data-id"), "pollanswers", resetElements);
+                    }
+                    else{
+                        deleteData($(this).attr("data-id"));
+                    }
 
                     return false;
                 });
@@ -148,11 +167,11 @@
                     $("input.chb-select-row").prop("checked", this.checked);
                 });
 
-                var deleteData = function (ids) {
+                var deleteData = function (ids, table = null, resetElements = null) {
                     var _ids = Array.isArray(ids) ? ids : [ids];
 
                     var url = "{{ asset('admin/delete/') }}";
-                    var tableName = "{{ !empty($tableName) ? $tableName : null }}";
+                    var tableName = table === null ? "{{ !empty($tableName) ? $tableName : null }}" : table;
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
                     var viewName = "{{ $viewName }}";
 
@@ -170,6 +189,15 @@
                         },
                         success: function (data) {
                             $("#content").html(data);
+
+                            if(resetElements !== null) {
+                                for(var i = 0; i < resetElements.length; i++){
+                                    var $element = $(resetElements[i][0] + ":eq(" + resetElements[i][1] + ")");
+                                    $element.show();
+                                    $(".table-poll-question-row[data-id='" + resetElements[i][2] + "']").find(".expand-poll-question").addClass("click");
+                                }
+                                
+                            }
                         },
                         complete: function() {
                             $("#loading-overlay").css("display", "none");

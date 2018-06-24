@@ -250,7 +250,7 @@ table {
     padding: 0 0 0.5em 0.25em;
 }
 
-.main-commands a {
+.main-commands a, .inner-table tbody tr td a.add-new-answer-btn {
     background-color: #23262e;
     color: #d1d5e2;
     border: 1px solid #d1d5e2;
@@ -265,7 +265,7 @@ table {
     outline: 0;
 }
 
-.main-commands a:hover {
+.main-commands a:hover, .inner-table tbody tr td a.add-new-answer-btn:hover {
     color: #fafbfd;
     border: 1px solid #fafbfd;
 }
@@ -282,7 +282,7 @@ table {
     font-size: 1.2em;
 }
 
-.main-table {
+.main-table, .inner-table {
     width: 100%;
     max-width: 100%;
     margin-bottom: 1em;
@@ -309,7 +309,11 @@ table {
     background-color: #2d313b;
 }
 
-.main-table tbody tr:hover {
+.poll-table tbody tr.table-odd-row {
+    background-color: #292c35;
+}
+
+.main-table tbody tr:not(.table-poll-answers):hover {
     background-color: #353a46;
 }
 
@@ -347,7 +351,7 @@ table {
 .main-table thead tr th:nth-child(2), .main-table tbody tr td:nth-child(2) {
     padding-right: 0.5em;
     padding-left: 0.3em;
-    width: 55px;
+    width: 50px;
 }
 
 .main-table tbody tr td.table-cell-id {
@@ -401,6 +405,125 @@ table {
 .data-cover {
     width: 80px;
     height: 50px;
+}
+
+.inner-table-wrap {
+    padding: 0 0.8em;
+}
+
+.inner-table {
+    width: 100%;
+}
+
+.inner-table tbody tr {
+    border: none;
+}
+
+.inner-table tbody tr td:nth-child(1) {
+    color: #67a7d8;
+    padding-left: 1.6em;
+}
+
+.inner-table tbody tr td:nth-child(2) {
+    width: 90%;
+    padding-left: 1.8em;
+}
+
+.main-table tbody tr.table-poll-answers {
+    background-color: #292c35;
+}
+
+.main-table tbody tr.table-poll-answers > td {
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: .2s padding;
+}
+
+.table-cell-70 {
+    width: 70px;
+}
+
+.inner-table-wrap {
+    display: none;
+}
+
+.inner-table tbody tr:nth-child(1) td {
+    border-top: none;
+}
+
+.expand-poll-question {
+    cursor: pointer;
+    display: block;
+    width: 25px;
+    height: 25px;
+}
+
+.expand-poll-question:before {
+    content: "";
+    display: block;
+    border-bottom: 3px solid #fff;
+    margin-bottom: 5px;
+    position: relative;
+    transition: transform .25s ease-in-out, top .25s ease-in-out;
+    outline: 1px solid transparent;
+    transform: rotate(45deg);
+    top: 13px;
+    left: 0px;
+    width: 15px;
+}
+        
+.expand-poll-question:after {
+    content: "";
+    display: block;
+    color: #fff;
+    border-bottom: 3px solid #fff;
+    margin-bottom: 5px;
+    position: relative;
+    transition: transform .25s ease-in-out, top .25s ease-in-out;
+    outline: 1px solid transparent;
+    transform: rotate(-45deg);
+    top: 5px;
+    left: 9px;
+    width: 15px;
+}
+
+.expand-poll-question.click:before {
+    transform: rotate(-45deg);
+}
+
+.expand-poll-question.click:after {
+    transform: rotate(45deg);
+}
+
+.inner-table tbody tr.add-new-answer td {
+    padding-top: 1.1em;
+    padding-bottom: 0;
+    padding-left: 1.4em;
+}
+
+.inner-table tbody tr.add-new-answer td form {
+    display: inline-block;
+    width: 40%;
+}
+
+.inner-table tbody tr.add-new-answer td:nth-child(2) {
+    padding: 0;
+}
+
+.inner-table tbody tr td a.add-new-answer-btn i {
+    font-size: 1.2em;
+}
+
+.inner-table tbody tr td a.add-new-answer-btn {
+    padding-left: 0.7em;
+    font-size: 1.1em;
+    width: 2.5em;
+    margin-top: 0em;
+    margin-left: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.3em;
+    display: inline-block;
+    transform: translateY(1px);
 }
 
 

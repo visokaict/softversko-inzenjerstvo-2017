@@ -9,7 +9,7 @@ class Generic
     protected $tableName;
     private $idName;
 
-    public function __construct($tableName, $idName = null)
+    public function __construct($tableName = null, $idName = null)
     {
         $this->tableName = $tableName;
         $this->idName = !empty($idName) ? $idName : $this->getTableIdColumnName();
@@ -26,7 +26,7 @@ class Generic
     {
         return DB::table($this->tableName)
             ->select('*')
-            ->where($this->idName,'=', $id)
+            ->where($this->idName, '=', $id)
             ->first();
     }
 

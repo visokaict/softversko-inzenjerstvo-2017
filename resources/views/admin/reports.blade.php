@@ -38,7 +38,8 @@
                     _token: csrfToken,
                     id: id,
                     tableName: table,
-                    viewName: viewName
+                    viewName: viewName,
+                    solved: 1
                 },
                 beforeSend: function(data) {
                     $("#loading-overlay").css("display", "block");

@@ -111,6 +111,9 @@ Route::post("/admin/update/roles", "Admin\UpdateController@roles")->middleware("
 Route::post("/admin/update/image-categories", "Admin\UpdateController@imageCategories")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/platforms", "Admin\UpdateController@platforms")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/update/navigations", "Admin\UpdateController@navigations")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/update/pollquestions", "Admin\UpdateController@pollquestions")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/update/pollquestions/active", "Admin\UpdateController@setActivePollQuestion")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/update/pollanswers", "Admin\UpdateController@pollanswers")->middleware("isLoggedIn", "isAdmin");
 
 // insert
 Route::post("/admin/insert/users", "Admin\InsertController@users")->middleware("isLoggedIn", "isAdmin");
@@ -120,6 +123,8 @@ Route::post("/admin/insert/roles", "Admin\InsertController@roles")->middleware("
 Route::post("/admin/insert/image-categories", "Admin\InsertController@imageCategories")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/platforms", "Admin\InsertController@platforms")->middleware("isLoggedIn", "isAdmin");
 Route::post("/admin/insert/navigations", "Admin\InsertController@navigations")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/insert/pollquestions", "Admin\InsertController@pollquestions")->middleware("isLoggedIn", "isAdmin");
+Route::post("/admin/insert/pollanswers", "Admin\InsertController@pollanswers")->middleware("isLoggedIn", "isAdmin");
 
 // block
 Route::post("/admin/block", "Admin\AdminController@block")->middleware("isLoggedIn", "isAdmin");
