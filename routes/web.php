@@ -17,7 +17,8 @@ Route::post('/games/{id}/edit', 'GameSubmissionController@edit')->middleware('is
 
 //download game file
 Route::get('/download/{idDownloadFile}', 'GameSubmissionController@downloadFile')->middleware('isLoggedIn');
-
+//report
+Route::post("/report", "GameSubmissionController@report")->middleware('isLoggedIn');
 
 
 //
