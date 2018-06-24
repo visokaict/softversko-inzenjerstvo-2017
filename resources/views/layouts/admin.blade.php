@@ -17,6 +17,9 @@
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}" type="text/css"/>
         <script>
             var base_url_api = window.base_url_api = "{{URL::to('/api')}}";
+            var delete_url = window.delete_url = "{{ asset('admin/delete/') }}";
+            var base_table_name = window.base_table_name = "{{ !empty($tableName) ? $tableName : null }}";
+            var base_view_name = window.base_view_name = "{{ $viewName }}"
             var slamjam = {};
         </script>
         @yield('header')
