@@ -22,7 +22,8 @@ class Images extends Generic
         $insertData = [
             'idImageCategory' => $category,
             'alt' => $alt,
-            'path' => $path
+            'path' => $path,
+            'createdAt' => time(),
         ];
 
         return parent::insertGetId($insertData);

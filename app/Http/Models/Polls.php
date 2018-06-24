@@ -35,7 +35,8 @@ class Polls
                 ->insert([
                     'idUserVoter' => $userId,
                     'idPollQuestion' => $idPollQuestion,
-                    'idPollAnswer' => $idPollAnswer
+                    'idPollAnswer' => $idPollAnswer,
+                    'createdAt' => time(),
                 ]);
 
             DB::table('pollAnswers')

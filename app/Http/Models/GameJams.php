@@ -29,7 +29,8 @@ class GameJams extends Generic
             'othersCanVote' => $othersCanVote,
             'isBlocked' => 0,
             'idUserCreator' => $idUserCreator,
-            'numOfViews' => 0
+            'numOfViews' => 0,
+            'createdAt'=> time(),
         ];
         return parent::insertGetId($insertData);
     }
