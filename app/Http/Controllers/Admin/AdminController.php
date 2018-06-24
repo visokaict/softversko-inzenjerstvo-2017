@@ -6,6 +6,7 @@ use \App\Http\Interfaces\Admin\IAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Generic;
+use App\Http\Models\PollQuestions;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
@@ -46,16 +47,25 @@ class AdminController extends Controller implements IAdmin
             ["path", "text"],
             ["name", "text"],
             ["position", "text"]
+        ],
+        "reports" => [
+            ["solved", "checkbox"]
+        ],
+        "pollquestions" => [
+            ["text", "text"]
+        ],
+        "pollanswers" => [
+            ["text", "text"],
+            ["idPollQuestion", "number"]
         ]
     ];
     
     public function index($page = null) {
-        if(empty($page))
+        if(empty($page)) {
             return view("admin.index", $this->viewData);
+        }
 
-        $table = str_replace("-", "", $page);
-
-        return AdminController::getAll($table);
+        return AdminController::getAll(str_replace("-", "", $page));
     }
 
     public function block(Request $request) {
@@ -85,7 +95,7 @@ class AdminController extends Controller implements IAdmin
                 $insertData[$column[0]] = $request->has($column[0]) ? 1 : 0;
             }
             else if(!empty($value)) {
-                if($column[1] === "text") {
+                if($column[1] === "text" || $column[1] === "number") {
                     $insertData[$column[0]] = $value;
                 }
             }
@@ -106,7 +116,7 @@ class AdminController extends Controller implements IAdmin
     }
 
     public function update(Request $request) {
-        $id = $request->get("hiddenId");
+        $id = $request->has("hiddenId") ? $request->get("hiddenId") : $request->get("id");
         $table = $request->get("tableName");
         $view = explode(".", $request->get("viewName"))[1];
 
@@ -137,7 +147,9 @@ class AdminController extends Controller implements IAdmin
 
     public function delete(Request $request) {
         $ids = $request->get("ids");
-        $view = explode(".", $request->get("viewName"))[1];
+        $count = count(explode(".", $request->get("viewName")));
+        $view = $count > 1 ? explode(".", $request->get("viewName"))[1] : $request->get("viewName");
+        
         $table = $request->get("tableName");
 
         $generic = new Generic($table, null);
@@ -166,8 +178,11 @@ class AdminController extends Controller implements IAdmin
         $type = "App\\Http\\Models\\" . $table;
 
         $model = new $type($table);
+        $result = null;
 
-        return view("admin." . $view, ["tableData" => $model->getAll(), "tableName" => $table])->render();
+        $result = $model->getAll();
+        
+        return view("admin." . $view, ["tableData" => $result, "tableName" => $table])->render();
     }
 
 }

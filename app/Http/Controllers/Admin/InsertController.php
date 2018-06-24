@@ -110,4 +110,12 @@ class InsertController extends AdminController implements IInsert
         return parent::insert($request);
     }
 
+    public function pollquestions(Request $request) {
+        return parent::insert($request);
+    }
+
+    public function pollanswers(Request $request) {
+        return parent::insert($request);
+    }
+
 }

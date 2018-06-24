@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use App\Http\Models\Generic;
 use App\Http\Models\Users;
+use App\Http\Models\Polls;
 
 class UpdateController extends AdminController implements IUpdate
 {
@@ -169,14 +170,7 @@ class UpdateController extends AdminController implements IUpdate
     }
 
     public function reports(Request $request) {
-        $table = $request->get("tableName");
-        $view = explode(".", $request->get("viewName"))[1];
-
-        $model = new Generic($table);
-
-        $model->update($request->get("id"), ["solved" => 1]);
-
-        return AdminController::getAll($table, "ajax." . $view);
+        return parent::update($request);
     }
   
     public function roles(Request $request) {
@@ -193,6 +187,21 @@ class UpdateController extends AdminController implements IUpdate
   
     public function navigations(Request $request) {
         return parent::update($request);
+    }
+
+    public function pollquestions(Request $request) {
+        return parent::update($request);
+    }
+
+    public function pollanswers(Request $request) {
+        return parent::update($request);
+    }
+
+    public function setActivePollQuestion(Request $request) {
+        $model = new Polls();
+        $model->setActivePollQuestion($request->get("id"));
+
+        return AdminController::getAll("pollquestions", "ajax.polls");
     }
 
 }
