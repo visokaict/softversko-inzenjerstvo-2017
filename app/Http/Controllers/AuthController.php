@@ -31,6 +31,11 @@ class AuthController extends Controller implements IAuthorization
         $dbUser = $user->getByUsernameOrEmailAndPassword($request->get('tbUsernameEmail'), $request->get('tbPassword'));
 
         if (!empty($dbUser)) {
+
+            if($dbUser->isBanned == 1){
+                return back()->withErrors(['message' => "This account is removed, go to \"Contact us\" for more information."]);
+            }
+
             $userRoles = $user->getAllRoles($dbUser->idUser);
 
             $request->session()->push("user", $dbUser);
