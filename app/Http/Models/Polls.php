@@ -65,7 +65,8 @@ class Polls extends Generic
                 ->insert([
                     'idUserVoter' => $userId,
                     'idPollQuestion' => $idPollQuestion,
-                    'idPollAnswer' => $idPollAnswer
+                    'idPollAnswer' => $idPollAnswer,
+                    'createdAt' => time(),
                 ]);
 
             DB::table('pollAnswers')
