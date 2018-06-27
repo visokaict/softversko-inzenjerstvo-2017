@@ -633,6 +633,7 @@ slamjam.comments = (function () {
             url: slamjam.common.createURL(`/games/${idGameSubmission}/comments`),
             success: function (data) {
                 if (data && data.length) {
+                    data.sort(function(a,b){ return a.createdAt - b.createdAt; });
                     var commentsHtml = data.map(function (item) {
                         return _renderComment(item);
                     });
