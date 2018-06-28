@@ -163,7 +163,7 @@
                     <label for="description">Content:</label>
                     <div class="row">
                         <div class="col-md-6">
-                            <textarea id="smde" class="CodeMirror" name="taContent" required></textarea>
+                            <textarea id="smde" class="CodeMirror" name="taContent"></textarea>
                         </div>
                         <div class="col-md-6" id="write_here">
                         </div>

@@ -46,7 +46,7 @@ class GameJams extends Generic
     public function getAllWhereVotingEndDateNotFinished()
     {
         return \DB::table($this->tableName)
-            ->select(["idGameJam", "title", "startDate", "endDate", "votingEndDate"])
+            ->select("idGameJam", "title", "startDate", "endDate", "votingEndDate", \DB::raw("(SELECT count(*) FROM gamejams_participants WHERE gamejams_participants.idGameJam = gamejams.idGameJam) as countJoined"))
             ->where('votingEndDate', '>', time())
             ->get();
     }

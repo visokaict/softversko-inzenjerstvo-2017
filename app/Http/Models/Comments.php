@@ -2,7 +2,7 @@
 
 namespace App\Http\Models;
 
-class Comment extends Generic
+class Comments extends Generic
 {
     public function __construct()
     {

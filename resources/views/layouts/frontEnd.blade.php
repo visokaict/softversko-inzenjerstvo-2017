@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <base href="{{ asset('/') }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" type="image/png" href="{{asset('/favicon.png')}}"/>
+    <link rel="shortcut icon" type="image/png" href="{{asset('/favicon.png?v=2')}}"/>
     <title>Game Jams - @yield('pageTitle')</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Press+Start+2P" rel="stylesheet">
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"
           id="bootstrap-css">
@@ -70,7 +71,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand nav-title" href="{{ asset('/') }}"><span>Slam Jam</span><img src="{{ asset('/images/logo.png') }}" class="slam-jam-logo" alt="Logo"/></a>
+            <a class="navbar-brand nav-title" href="{{ asset('/') }}"><img src="{{ asset('/images/logo.png') }}" class="slam-jam-logo"/><!--<span>Slam Jam</span>--></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

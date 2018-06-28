@@ -14,13 +14,13 @@
             <div class="mt-5">
                 <div class="row">
                     <div class="container">
-                        <h2 class="text-center">Game Jams on Slam Jam</h2>
-                        <hr>
+                        <h2 class="front-page-title text-center">Game Jams on Slam Jam</h2>
+                        <hr style="border: 1px solid #eee;">
                         <p class="col-md-8 col-md-offset-2 text-center">Slam Jam is a place for hosting and
                             participating in game jams online. Anyone can start hosting a game jam immediately. Here you
                             can find some of the game jams that are going on.</p>
                     </div>
-                    <div class="col-md-4 col-md-offset-4 tooltip-hover-trigger">
+                    <div class="col-md-4 col-md-offset-4 tooltip-hover-trigger game-jam-host-holder">
 
                         <a
                                 @if(session()->has('user'))
@@ -34,7 +34,7 @@
                                 @else
                                     href="{{asset('/login')}}"
                                 @endif
-                                class="btn btn-success host-own-game-jam">Host own Game Jam</a>
+                                class="btn game-jam-host-button">Host your own Game Jam</a>
 
                         @if(session()->has('roles') && !\App\Http\Models\Roles::arrayOfRolesHasRoleByName(session()->get('roles')[0], 'jamMaker'))
                             <i class="generic-tooltip">Check roles in profile.</i>
@@ -47,7 +47,7 @@
     </header>
 
     <!-- chart section -->
-    <div class="container-fluid no-padding">
+    <div class="container-fluid no-padding" id="container-chart">
         <div id="visualization">
             <h3 class="text-center no-game-jam hide" id="no-chart-game-jam">
                 There is currently no active Game Jam.

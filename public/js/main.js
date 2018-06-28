@@ -159,6 +159,7 @@ slamjam.error = (function () {
         _initSelector(type);
 
         var msg = `<div>${ message.replace(/\</g, '&lt;').replace(/\>/g, '&gt;') }</div>`;
+        $(".modal-info-text").html("");
         $selector.prepend(msg);
 
         $('.modal-info').css({"display": "block", "opacity": 1});
@@ -218,14 +219,24 @@ slamjam.games = (function () {
         });
 
         function getGames(url) {
-            $.ajax({
-                url: url
-            }).done(function (data) {
-                slamjam.common.stopLoader();
-                $('.games-container').css('opacity', '1');
-                $('.games-container').html(data);
-            }).fail(function () {
-                alert('Failed to load games.');
+            slamjam.common.ajax({
+                url: url,
+                dataType: "html",
+                success: function (data) {
+                    slamjam.common.stopLoader();
+                    $('.games-container').css('opacity', '1');
+                    $('.games-container').html(data);
+                },
+                error: function (error) {
+                    var message = "Failed to load games.";
+                    try {
+                        message = error.responseJSON.error.message;
+                    } catch (e) {
+                        //todo
+                    }
+    
+                    slamjam.error.print(message, slamjam.error.enumList.ERROR)
+                }
             });
         }
     }
@@ -404,31 +415,27 @@ slamjam.gameJam = (function () {
         // create a dataset with items
         // note that months are zero-based in the JavaScript Date object, so month 3 is April
 
+        var colorArray = ["#5CB2CC", "#5C7fCC", "#6B5CCC", "#CC5CC8", "#CC5C96", "#CC5C64",
+        "#CC875C", "#CCB95C", "#ACCC5C", "#7ACC5C", "#5CCC71", "#5CCCA3", "#5CA1CC", "#7C5CCC",
+        "#5C5ECC", "#FA5C5C", "#5CCC92", "#5CCC71", "#5CA1CC", "#5CCC81", "#5CCCB3", "#69CC5C"];
+
         function _mapChartData(data) {
+
+            var i = 0;
 
             var parsedData = data.map(function (item) {
                 return {
                     id: item.idGameJam,
                     group: item.idGameJam, // so items are in one line
-                    content: item.title + "<span> - Submissions start!</span>",
+                    content: item.title + "<span class='game-jam-chart-count'>(" + item.countJoined + " joined)</span>",
                     start: new Date(Number(item.startDate) * 1000),
-                    end: new Date(Number(item.endDate) * 1000),
-                    link: "game-jams/" + item.idGameJam,
-                    className: "chart-game-jam-bar chart-game-jam-bar-blue"
-                };
-            });
-
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                parsedData.push({
-                    group: item.idGameJam, // so items are in one line
-                    content: item.title + "<span> - Voting starts!</span>",
-                    start: new Date(Number(item.endDate) * 1000),
                     end: new Date(Number(item.votingEndDate) * 1000),
                     link: "game-jams/" + item.idGameJam,
-                    className: "chart-game-jam-bar chart-game-jam-bar-red"
-                });
-            }
+                    //style: "background-color: " + colorArray[Math.floor(Math.random() * colorArray.length)],
+                    style: "background-color: " + colorArray[i++ % colorArray.length],
+                    className: "chart-game-jam-bar"
+                };
+            });
 
             return new vis.DataSet(parsedData);
         }
@@ -438,7 +445,7 @@ slamjam.gameJam = (function () {
                 return {
                     id: item.idGameJam,
                     content: "",
-                    //className: "", // call some type of generator that will return same css class for some value
+                    className: "chart-game-jam-group"
                 };
             });
 
@@ -454,7 +461,7 @@ slamjam.gameJam = (function () {
 
             var container = document.getElementById('visualization');
             var options = {
-                maxHeight: 400,
+                maxHeight: 500,
                 editable: false,
                 clickToUse: false,
                 zoomable: false,
@@ -523,17 +530,27 @@ slamjam.gameJam = (function () {
 
 
         function getGameJams(page, gameJamsType, gameJamsClass) {
-            $.ajax({
+            slamjam.common.ajax({
                 data: {
                     page: page,
                     gameJamsType: gameJamsType
+                },
+                dataType: "html",
+                success: function (data) {
+                    slamjam.common.stopLoader();
+                    $(gameJamsClass).css('opacity', '1');
+                    $(gameJamsClass).html(data);
+                },
+                error: function (error) {
+                    var message = "Failed to load game jams.";
+                    try {
+                        message = error.responseJSON.error.message;
+                    } catch (e) {
+                        //todo
+                    }
+    
+                    slamjam.error.print(message, slamjam.error.enumList.ERROR)
                 }
-            }).done(function (data) {
-                slamjam.common.stopLoader();
-                $(gameJamsClass).css('opacity', '1');
-                $(gameJamsClass).html(data);
-            }).fail(function () {
-                alert('Failed to load game jams.');
             });
         }
     }

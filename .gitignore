@@ -1,6 +1,12 @@
 /node_modules
 /public/hot
 /public/storage
+/public/images/avatars
+/public/images/badges
+/public/images/cover
+/public/images/screenshots
+/public/images/teasers
+/public/downloads
 /storage/*.key
 /vendor
 /.idea

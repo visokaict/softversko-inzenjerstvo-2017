@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Models\GameCategories;
 use App\Http\Models\Navigations;
-use App\Http\Models\Platform;
+use App\Http\Models\Platforms;
 use App\Http\Models\Polls;
 use App\Http\Models\Roles;
 use Illuminate\Http\Request;
@@ -157,7 +157,7 @@ class FrontEndController extends Controller
         }
 
         $gameCategories = new GameCategories();
-        $gamePlatform = new Platform();
+        $gamePlatform = new Platforms();
 
         $this->viewData["gameJamId"] = $idGameJam;
         $this->viewData["gameCategories"] = $gameCategories->getAll();
@@ -193,7 +193,7 @@ class FrontEndController extends Controller
 
 
         $gameCategories = new GameCategories();
-        $gamePlatform = new Platform();
+        $gamePlatform = new Platforms();
 
         $this->viewData["gameSubmissionId"] = $id;
         $this->viewData["gameCategories"] = $gameCategories->getAll();

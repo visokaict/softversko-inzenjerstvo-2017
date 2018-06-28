@@ -23,7 +23,7 @@
             <td class="text-center"><a href="{{ asset('/user/' . $item->username) }}">{{ $item->username }}</a></td>
             <td class="text-center"><a href="{{ asset('/game-jams/' . $item->idGameJam) }}">{{ $item->gameJam }}</a></td>
             <td><img class="data-cover" src="{{ asset($item->cover) }}"/></td>
-            <td>{{ $item->description }}</td>
+            <td title="{{ $item->description }}">{{ strlen($item->description) > 13 ? substr($item->description, 0, 10) . "..." : $item->description }}</td>
             <td>
                 <p>{{ date("d/m/Y h:i A", $item->createdAt) }}</p>
                 <p>{{ date("d/m/Y h:i A", $item->editedAt) }}</p>

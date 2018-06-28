@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Interfaces\IGameSubmissionComment;
-use App\Http\Models\Comment;
+use App\Http\Models\Comments;
 use App\Http\Models\GameSubmission_Comment;
 use Illuminate\Http\Request;
 

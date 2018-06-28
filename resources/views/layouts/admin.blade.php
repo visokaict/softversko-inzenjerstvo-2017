@@ -22,7 +22,6 @@
             var base_view_name = window.base_view_name = "{{ $viewName }}"
             var slamjam = {};
         </script>
-        @yield('header')
         <title>Slam Jam - @yield('title') - Admin panel</title>
     </head>
     <body>

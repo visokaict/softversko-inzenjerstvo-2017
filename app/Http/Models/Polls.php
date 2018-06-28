@@ -45,7 +45,7 @@ class Polls extends Generic
     {
         return DB::table('pollquestions')
             ->select('*')
-            ->where('active', '=', 0)
+            ->where('active', '=', 1)
             ->first();
     }
 

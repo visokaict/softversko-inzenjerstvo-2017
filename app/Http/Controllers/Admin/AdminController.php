@@ -213,8 +213,6 @@ class AdminController extends Controller implements IAdmin
         $type = AdminController::getTypeByTableName($table);
 
         $model = new $type($table);
-        $result = null;
-
         $result = $model->getAll();
         
         return view("admin." . $view, ["tableData" => $result, "tableName" => $table])->render();

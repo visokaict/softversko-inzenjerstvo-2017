@@ -5,7 +5,7 @@
             @foreach($games as $game)
                 <div class="col-md-4 col-sm-6 games-content-item">
                     <div class="card h-100">
-                        <a href="{{asset('games/'. $game->idGameSubmission)}}"><img class="card-img-top" src="{{asset($game->path)}}" alt="{{$game->alt}}"></a>
+                        <a href="{{asset('games/'. $game->idGameSubmission)}}"><img class="card-img-top game-item-img" src="{{asset($game->path)}}" alt="{{$game->alt}}"></a>
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a href="{{asset('games/'. $game->idGameSubmission)}}">{{ $game->title }}</a>
@@ -20,13 +20,12 @@
                     </div>
                 </div>
             @endforeach
-
+            <div class="clearfix"></div>
         @else
             <i>There is currently no games</i>
         @endif
 
     </div>
-    <div class="clearfix"></div>
 </div>
 <div class="row">
     <ul class="pagination" id="pagination-games">

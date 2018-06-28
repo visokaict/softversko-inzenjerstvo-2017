@@ -4,12 +4,7 @@
     Overview
 @endsection
 
-@section('header')
-    <link href="{{asset('/css/admin-dashboard.css')}}" rel="stylesheet">
-@endsection
-
 @section('content')
-
     <!-- cards -->
     <div class="row">
         <!-- users -->

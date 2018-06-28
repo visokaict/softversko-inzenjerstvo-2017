@@ -100,7 +100,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: url,
-            method: "DELETE",
+            method: "POST",
             data: {
                 _token: csrfToken,
                 viewName: viewName,

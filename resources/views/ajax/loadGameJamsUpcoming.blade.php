@@ -5,7 +5,7 @@
             @foreach($upcomingGameJams as $gameJam)
                 <div class="col-lg-4 col-sm-6 portfolio-item">
                     <div class="card h-100">
-                        <a href="{{asset('game-jams/'. $gameJam->idGameJam)}}"><img class="card-img-top" style="height: 190px; object-fit: cover;" src="{{asset($gameJam->path)}}" alt="{{$gameJam->alt}}"></a>
+                        <a href="{{asset('game-jams/'. $gameJam->idGameJam)}}"><img class="card-img-top game-jams-item-img" style="height: 190px; object-fit: cover;" src="{{asset($gameJam->path)}}" alt="{{$gameJam->alt}}"></a>
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a href="{{asset('game-jams/'. $gameJam->idGameJam)}}">{{ $gameJam->title }}</a>
@@ -25,7 +25,7 @@
             @endforeach
 
         @else
-            <i>There is currently no game jams</i>
+            <i>There are currently no game jams.</i>
         @endif
 
     </div>
